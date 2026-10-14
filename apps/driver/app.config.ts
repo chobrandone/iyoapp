@@ -4,6 +4,12 @@ import type { ConfigContext, ExpoConfig } from 'expo/config';
 // is evaluated in Node, outside the Metro bundle.
 const SPLASH_BACKGROUND = '#F6C200';
 
+// Google restricts a key to either iOS or Android apps, so separate keys per platform are
+// supported; both fall back to EXPO_PUBLIC_GOOGLE_MAPS_API_KEY.
+const MAPS_KEY = process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY;
+const MAPS_KEY_IOS = process.env.EXPO_PUBLIC_GOOGLE_MAPS_IOS_API_KEY ?? MAPS_KEY;
+const MAPS_KEY_ANDROID = process.env.EXPO_PUBLIC_GOOGLE_MAPS_ANDROID_API_KEY ?? MAPS_KEY;
+
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: 'iyodriver Driver',
@@ -16,9 +22,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ios: {
     bundleIdentifier: 'com.iyodriver.driver',
     supportsTablet: false,
-    config: {
-      googleMapsApiKey: process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY,
-    },
     // Background location + permission strings are wired up with expo-location in Phase 7.
   },
   android: {
@@ -29,9 +32,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       backgroundImage: './assets/android-icon-background.png',
       monochromeImage: './assets/android-icon-monochrome.png',
     },
-    config: {
-      googleMaps: { apiKey: process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY },
-    },
     predictiveBackGestureEnabled: false,
   },
   web: {
@@ -41,6 +41,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     'expo-router',
     'expo-font',
     'expo-localization',
+    [
+      'react-native-maps',
+      { iosGoogleMapsApiKey: MAPS_KEY_IOS, androidGoogleMapsApiKey: MAPS_KEY_ANDROID },
+    ],
     [
       'expo-splash-screen',
       {

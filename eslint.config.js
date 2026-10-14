@@ -46,4 +46,23 @@ module.exports = defineConfig([
       ],
     },
   },
+  {
+    files: ['**/*.ts', '**/*.tsx'],
+    rules: {
+      // The lucide barrel pulls ~3 800 icon modules into the bundle; import icons one by one.
+      '@typescript-eslint/no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: 'lucide-react-native',
+              message:
+                "Import icons individually: import House from 'lucide-react-native/icons/house'.",
+              allowTypeImports: true,
+            },
+          ],
+        },
+      ],
+    },
+  },
 ]);

@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "rider-web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "web", "--workspace", "@iyodriver/rider", "--", "--port", "8081"],
+      "port": 8081
+    },
+    {
+      "name": "driver-web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "web", "--workspace", "@iyodriver/driver", "--", "--port", "8082"],
+      "port": 8082
+    }
+  ]
+}

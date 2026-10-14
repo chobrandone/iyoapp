@@ -11,11 +11,14 @@ import {
 import { useTheme, type Theme } from '../theme';
 import { Text } from './Text';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'ghost';
+export type ButtonVariant = 'primary' | 'secondary' | 'soft' | 'danger' | 'ghost';
+export type ButtonSize = 'lg' | 'sm';
 
 export type ButtonProps = Omit<PressableProps, 'children' | 'style'> & {
   label: string;
   variant?: ButtonVariant;
+  /** `lg` = 52 px pinned action; `sm` = 40 px quick action ("I'm here", "Call driver"). */
+  size?: ButtonSize;
   loading?: boolean;
   /** Icon rendered before the label. */
   icon?: ReactNode;
@@ -32,14 +35,16 @@ type VariantColors = {
 const variantColors: Record<ButtonVariant, VariantColors> = {
   primary: { bg: 'accent', fg: 'onAccent' },
   secondary: { bg: 'surface', fg: 'ink' },
+  soft: { bg: 'accentSoft', fg: 'ink' },
   danger: { bg: 'danger', fg: 'white' },
   ghost: { bg: 'transparent', fg: 'ink' },
 };
 
-/** 52 px, radius 12 action button used in every pinned bottom action area. */
+/** Figma "Action": 52 px tall, radius 10, 14 px SemiBold label. */
 export function Button({
   label,
   variant = 'primary',
+  size = 'lg',
   loading = false,
   disabled,
   icon,
@@ -50,6 +55,7 @@ export function Button({
   const theme = useTheme();
   const { bg, fg } = variantColors[variant];
   const isDisabled = disabled || loading;
+  const small = size === 'sm';
 
   return (
     <Pressable
@@ -57,13 +63,14 @@ export function Button({
       accessibilityLabel={label}
       accessibilityState={{ disabled: !!isDisabled, busy: loading }}
       disabled={isDisabled}
+      hitSlop={small ? 2 : 0}
       style={({ pressed }) => [
         styles.base,
         {
-          height: theme.sizes.buttonHeight,
+          height: small ? theme.sizes.buttonSmallHeight : theme.sizes.buttonHeight,
           borderRadius: theme.radii.md,
           backgroundColor: theme.colors[bg],
-          paddingHorizontal: theme.spacing.xl,
+          paddingHorizontal: theme.spacing.lg,
           opacity: isDisabled ? 0.5 : pressed ? 0.85 : 1,
         },
         fullWidth ? styles.fullWidth : null,
@@ -76,7 +83,7 @@ export function Button({
       ) : (
         <View style={[styles.content, { gap: theme.spacing.sm }]}>
           {icon}
-          <Text variant="button" color={fg} numberOfLines={1}>
+          <Text variant={small ? 'buttonSmall' : 'button'} color={fg} numberOfLines={1}>
             {label}
           </Text>
         </View>

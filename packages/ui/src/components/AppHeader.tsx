@@ -15,10 +15,11 @@ export type AppHeaderProps = {
   right?: ReactNode;
 };
 
+/** Figma "Flow identification" row: 17 px Bold wordmark left, 9 px flow label right. */
 export function AppHeader({ badge, flowLabel, left, right }: AppHeaderProps) {
   const theme = useTheme();
   return (
-    <View style={[styles.row, { paddingVertical: theme.spacing.md }]}>
+    <View style={[styles.row, { paddingVertical: 6 }]}>
       <View style={[styles.side, { gap: theme.spacing.sm }]}>
         {left ?? (
           <>
@@ -31,7 +32,7 @@ export function AppHeader({ badge, flowLabel, left, right }: AppHeaderProps) {
       </View>
       {right ??
         (flowLabel ? (
-          <Text variant="label" color="muted">
+          <Text variant="label" color="textSecondary">
             {flowLabel}
           </Text>
         ) : null)}
