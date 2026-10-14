@@ -13,10 +13,11 @@ Two independently installable React Native (Expo SDK 57) apps for ride-hailing a
 apps/rider     Expo app (routes in src/app, Expo Router)
 apps/driver    Expo app (routes in src/app, Expo Router)
 packages/ui    @iyodriver/ui   – theme tokens, Poppins, shared components
-packages/core  @iyodriver/core – formatters (FCFA, Africa/Douala dates, +237 phones), zod schemas,
-                                 ride status machine types, i18n (EN/FR)
+packages/core  @iyodriver/core – typed Supabase client + generated DB types, formatters (FCFA,
+                                 Africa/Douala dates, +237 phones), zod schemas, ride status machine, i18n (EN/FR)
 packages/config @iyodriver/config – shared tsconfig + Prettier
-supabase/      migrations, edge functions, seed (Phase 3)
+supabase/      migrations, RLS, RPCs, Edge Functions, seed — see supabase/README.md
+scripts/db/    db:check / db:types (PGlite, no Docker needed)
 ```
 
 Apps never import from each other (enforced by ESLint); shared code lives only in `packages/`.
@@ -44,6 +45,8 @@ Add native libraries with `npx expo install <pkg>` **inside the app folder** so 
 | `npm run lint`                     | ESLint (eslint-config-expo + Prettier) across the repo |
 | `npm run format`                   | Prettier write                                         |
 | `npm run test`                     | Jest (added in Phase 13)                               |
+| `npm run db:check`                 | Apply migrations + seed in PGlite and test RLS / RPCs  |
+| `npm run db:types`                 | Regenerate Supabase DB types from the migrations       |
 
 ## EAS
 

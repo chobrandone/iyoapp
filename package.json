@@ -12,12 +12,16 @@
     "typecheck": "npm run typecheck --workspaces --if-present",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "npm run test --workspaces --if-present"
+    "test": "npm run test --workspaces --if-present",
+    "db:check": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/db/check.mjs",
+    "db:types": "node scripts/db/gen-types.mjs && prettier --write packages/core/src/supabase/database.types.ts supabase/functions/_shared/database.types.ts"
   },
   "engines": {
     "node": ">=20"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.10",
+    "@electric-sql/pglite-postgis": "^0.2.10",
     "eslint": "^9.39.5",
     "eslint-config-expo": "~57.0.2",
     "eslint-config-prettier": "^10.1.8",
