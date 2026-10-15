@@ -77,8 +77,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get welcomeHeadline => 'Drive with iyodriver.\nEarn on your schedule.';
 
   @override
-  String get welcomeBody =>
-      'Accept rides and rental handovers in Douala and Yaoundé, and get paid to your mobile money.';
+  String get welcomeBody => 'Accept rides and rental handovers in Douala and Yaoundé, and get paid to your mobile money.';
 
   @override
   String get getStarted => 'Get started';
@@ -153,8 +152,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get otpInvalid => 'That code is not right. Check the SMS and try again.';
 
   @override
-  String get wrongApp =>
-      'This number is registered as a rider. Use the iyodriver app to book rides.';
+  String get wrongApp => 'This number is registered as a rider. Use the iyodriver app to book rides.';
 
   @override
   String get identityTitle => 'Identity and vehicle';
@@ -222,8 +220,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get documentsTitle => 'Documents';
 
   @override
-  String get documentsSubtitle =>
-      'Take a clear photo of each document. We review them within 24 hours.';
+  String get documentsSubtitle => 'Take a clear photo of each document. We review them within 24 hours.';
 
   @override
   String get docNationalIdFront => 'National ID · front';
@@ -281,8 +278,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reviewTitle => 'Under review';
 
   @override
-  String get reviewSubtitle =>
-      'We\'re checking your documents. You\'ll get a notification when it\'s done.';
+  String get reviewSubtitle => 'We\'re checking your documents. You\'ll get a notification when it\'s done.';
 
   @override
   String get reviewDemo => 'Demo mode: approval is simulated in a few seconds.';
@@ -330,8 +326,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get busyAreaTitle => 'You\'re in a busy area';
 
   @override
-  String get busyAreaBody =>
-      'Akwa & Bonanjo · Stay nearby for your next ride. Keep your phone mounted safely.';
+  String get busyAreaBody => 'Akwa & Bonanjo · Stay nearby for your next ride. Keep your phone mounted safely.';
 
   @override
   String get today => 'Today';
@@ -362,8 +357,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get locationNeeded => 'Location is needed to go online';
 
   @override
-  String get locationNeededBody =>
-      'Allow location \"all the time\" so riders can find you while you are online.';
+  String get locationNeededBody => 'Allow location \"all the time\" so riders can find you while you are online.';
 
   @override
   String get openSettings => 'Open settings';

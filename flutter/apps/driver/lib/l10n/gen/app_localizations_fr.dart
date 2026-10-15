@@ -18,8 +18,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get placeholderTitle => 'Conduisez avec iyodriver. Gagnez à votre rythme.';
 
   @override
-  String get placeholderSubtitle =>
-      'Acceptez des courses et des remises de véhicules à Douala et Yaoundé.';
+  String get placeholderSubtitle => 'Acceptez des courses et des remises de véhicules à Douala et Yaoundé.';
 
   @override
   String placeholderSampleFare(String fare) {
@@ -78,8 +77,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get welcomeHeadline => 'Conduisez avec iyodriver.\nGagnez à votre rythme.';
 
   @override
-  String get welcomeBody =>
-      'Acceptez des courses et des remises de véhicules à Douala et Yaoundé, payées sur votre mobile money.';
+  String get welcomeBody => 'Acceptez des courses et des remises de véhicules à Douala et Yaoundé, payées sur votre mobile money.';
 
   @override
   String get getStarted => 'Commencer';
@@ -103,8 +101,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get fieldMobile => 'Numéro de mobile';
 
   @override
-  String get agreeTerms =>
-      'J\'accepte les Conditions chauffeur et la Politique de confidentialité.';
+  String get agreeTerms => 'J\'accepte les Conditions chauffeur et la Politique de confidentialité.';
 
   @override
   String get createAndVerify => 'Créer le compte et vérifier';
@@ -113,8 +110,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get loginTitle => 'Bon retour';
 
   @override
-  String get loginSubtitle =>
-      'Connectez-vous avec votre numéro. Nous vous enverrons un code par SMS.';
+  String get loginSubtitle => 'Connectez-vous avec votre numéro. Nous vous enverrons un code par SMS.';
 
   @override
   String get sendCode => 'Envoyer le code';
@@ -156,8 +152,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get otpInvalid => 'Ce code n\'est pas correct. Vérifiez le SMS et réessayez.';
 
   @override
-  String get wrongApp =>
-      'Ce numéro est inscrit comme passager. Utilisez l\'application iyodriver pour réserver.';
+  String get wrongApp => 'Ce numéro est inscrit comme passager. Utilisez l\'application iyodriver pour réserver.';
 
   @override
   String get identityTitle => 'Identité et véhicule';
@@ -225,8 +220,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get documentsTitle => 'Documents';
 
   @override
-  String get documentsSubtitle =>
-      'Prenez une photo nette de chaque document. Nous les vérifions sous 24 heures.';
+  String get documentsSubtitle => 'Prenez une photo nette de chaque document. Nous les vérifions sous 24 heures.';
 
   @override
   String get docNationalIdFront => 'CNI · recto';
@@ -284,8 +278,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reviewTitle => 'En cours de vérification';
 
   @override
-  String get reviewSubtitle =>
-      'Nous vérifions vos documents. Vous serez notifié dès que c’est terminé.';
+  String get reviewSubtitle => 'Nous vérifions vos documents. Vous serez notifié dès que c’est terminé.';
 
   @override
   String get reviewDemo => 'Mode démo : la validation est simulée en quelques secondes.';
@@ -303,8 +296,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get approvedTitle => 'Vous êtes validé';
 
   @override
-  String get approvedSubtitle =>
-      'Bienvenue chez iyodriver. Vous pouvez passer en ligne et accepter des courses.';
+  String get approvedSubtitle => 'Bienvenue chez iyodriver. Vous pouvez passer en ligne et accepter des courses.';
 
   @override
   String get startDriving => 'Commencer à conduire';
@@ -334,8 +326,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get busyAreaTitle => 'Vous êtes dans une zone animée';
 
   @override
-  String get busyAreaBody =>
-      'Akwa et Bonanjo · Restez à proximité pour la prochaine course. Gardez votre téléphone fixé.';
+  String get busyAreaBody => 'Akwa et Bonanjo · Restez à proximité pour la prochaine course. Gardez votre téléphone fixé.';
 
   @override
   String get today => 'Aujourd\'hui';
@@ -366,8 +357,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get locationNeeded => 'La localisation est nécessaire pour passer en ligne';
 
   @override
-  String get locationNeededBody =>
-      'Autorisez la localisation « tout le temps » pour que les passagers vous trouvent en ligne.';
+  String get locationNeededBody => 'Autorisez la localisation « tout le temps » pour que les passagers vous trouvent en ligne.';
 
   @override
   String get openSettings => 'Ouvrir les réglages';
@@ -376,8 +366,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get onlineNotificationTitle => 'Vous êtes en ligne';
 
   @override
-  String get onlineNotificationBody =>
-      'iyodriver partage votre position avec les passagers proches.';
+  String get onlineNotificationBody => 'iyodriver partage votre position avec les passagers proches.';
 
   @override
   String get newRequest => 'Nouvelle demande';

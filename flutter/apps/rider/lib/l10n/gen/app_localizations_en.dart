@@ -129,8 +129,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get welcomeHeadline => 'A little less waiting.\nA lot more going.';
 
   @override
-  String get welcomeBody =>
-      'Book a ride or find a car for a few days. Wherever life takes you, go with iyodriver.';
+  String get welcomeBody => 'Book a ride or find a car for a few days. Wherever life takes you, go with iyodriver.';
 
   @override
   String get welcomeGetStarted => 'Get started';
@@ -224,8 +223,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get saferStartTitle => 'A safer start';
 
   @override
-  String get saferStartBody =>
-      'Verification helps keep every iyodriver journey connected to a real person.';
+  String get saferStartBody => 'Verification helps keep every iyodriver journey connected to a real person.';
 
   @override
   String get verifyContinue => 'Verify & continue';
@@ -418,8 +416,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tryAgainShortly => 'Let\'s try again shortly';
 
   @override
-  String get noMatchBody =>
-      'We couldn\'t match your request with an available driver. You haven\'t been charged.';
+  String get noMatchBody => 'We couldn\'t match your request with an available driver. You haven\'t been charged.';
 
   @override
   String toPlace(String place) {
@@ -430,8 +427,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get requestNotBooked => 'Request not booked';
 
   @override
-  String get noDriversHint =>
-      'Try a nearby pickup spot or request again in a few minutes. Availability can change quickly.';
+  String get noDriversHint => 'Try a nearby pickup spot or request again in a few minutes. Availability can change quickly.';
 
   @override
   String get tryAgain => 'Try again';
@@ -533,8 +529,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get messagePreview => 'Message preview';
 
   @override
-  String get defaultAlertMessage =>
-      'I need help. Please check on me and follow my live iyodriver trip.';
+  String get defaultAlertMessage => 'I need help. Please check on me and follow my live iyodriver trip.';
 
   @override
   String currentLocationAt(String place) {
@@ -545,8 +540,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sendAlert => 'Send security alert';
 
   @override
-  String get sendAlertFooter =>
-      'Sends your live location and trip details to your trusted contact and iyodriver safety team.';
+  String get sendAlertFooter => 'Sends your live location and trip details to your trusted contact and iyodriver safety team.';
 
   @override
   String get alertSentTitle => 'Your alert has been sent';
@@ -602,8 +596,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get otherFavourites => 'Other favourites';
 
   @override
-  String get savedFooter =>
-      'Tap a place to edit its name or address. Saved places are only visible to you.';
+  String get savedFooter => 'Tap a place to edit its name or address. Saved places are only visible to you.';
 
   @override
   String get addPlace => 'Add a place';
@@ -621,8 +614,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shareJourneyBody1 => 'Send a live trip link to your contacts from any active ride.';
 
   @override
-  String get shareJourneyBody2 =>
-      'Contacts can see your route, driver and estimated arrival when you choose to share.';
+  String get shareJourneyBody2 => 'Contacts can see your route, driver and estimated arrival when you choose to share.';
 
   @override
   String yourContacts(String count, String max) {
@@ -647,8 +639,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inControl => 'You\'re in control';
 
   @override
-  String get inControlBody =>
-      'Sharing starts only when you send a trip link. You can stop sharing or remove a contact at any time.';
+  String get inControlBody => 'Sharing starts only when you send a trip link. You can stop sharing or remove a contact at any time.';
 
   @override
   String tcFooter(String number) {
@@ -744,8 +735,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get locationDeniedTitle => 'Location is off';
 
   @override
-  String get locationDeniedBody =>
-      'Allow location so drivers can find you, or type your pickup address.';
+  String get locationDeniedBody => 'Allow location so drivers can find you, or type your pickup address.';
 
   @override
   String get openSettings => 'Open settings';
