@@ -1,0 +1,17 @@
+{
+  "@@locale": "en",
+  "actionContinue": "Continue",
+  "actionCancel": "Cancel",
+  "actionBack": "Back",
+  "actionRetry": "Try again",
+  "actionSave": "Save",
+  "actionDone": "Done",
+  "validationPhoneInvalid": "Enter a valid Cameroonian mobile number (9 digits starting with 6).",
+  "validationOtpInvalid": "Enter the 6-digit code.",
+  "validationPinInvalid": "Enter the 4-digit PIN.",
+  "validationRequired": "This field is required.",
+  "errorGeneric": "Something went wrong. Please try again.",
+  "errorOffline": "You're offline. We'll retry when you're back online.",
+  "languageEn": "English",
+  "languageFr": "Français"
+}

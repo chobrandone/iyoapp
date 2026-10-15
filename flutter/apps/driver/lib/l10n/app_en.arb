@@ -1,0 +1,33 @@
+{
+  "@@locale": "en",
+  "placeholderBadge": "Driver",
+  "placeholderFlowLabel": "Driver · 00",
+  "placeholderTitle": "Drive with iyodriver. Earn on your schedule.",
+  "placeholderSubtitle": "Accept rides and rental handovers in Douala and Yaoundé.",
+  "placeholderSampleFare": "Today's earnings: {fare}",
+  "@placeholderSampleFare": {
+    "placeholders": {
+      "fare": {
+        "type": "String"
+      }
+    }
+  },
+  "placeholderSampleTime": "Local time (Douala): {time}",
+  "@placeholderSampleTime": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "placeholderSamplePhone": "Payout number: {phone}",
+  "@placeholderSamplePhone": {
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "placeholderPrimary": "Get started",
+  "placeholderSecondary": "Switch to Français"
+}

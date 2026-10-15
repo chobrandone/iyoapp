@@ -1,0 +1,32 @@
+{
+  "@@locale": "en",
+  "placeholderFlowLabel": "Rider · 00",
+  "placeholderTitle": "Your city. Your way.",
+  "placeholderSubtitle": "Rides and car rentals across Douala and Yaoundé.",
+  "placeholderSampleFare": "Sample fare: {fare}",
+  "@placeholderSampleFare": {
+    "placeholders": {
+      "fare": {
+        "type": "String"
+      }
+    }
+  },
+  "placeholderSampleTime": "Local time (Douala): {time}",
+  "@placeholderSampleTime": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "placeholderSamplePhone": "Support line: {phone}",
+  "@placeholderSamplePhone": {
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "placeholderPrimary": "Get started",
+  "placeholderSecondary": "Switch to Français"
+}

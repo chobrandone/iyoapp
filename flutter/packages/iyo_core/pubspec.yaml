@@ -1,0 +1,21 @@
+name: iyo_core
+description: Shared business logic for the iyodriver apps — Supabase client, DB enums, formatters, validators, ride state machine, shared strings.
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.7.0
+  flutter: ">=3.29.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  flutter_riverpod: ^3.3.2
+  intl: ^0.19.0
+  supabase_flutter: ^2.15.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

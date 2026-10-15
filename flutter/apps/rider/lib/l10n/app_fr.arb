@@ -1,0 +1,11 @@
+{
+  "@@locale": "fr",
+  "placeholderFlowLabel": "Passager · 00",
+  "placeholderTitle": "Votre ville. À votre façon.",
+  "placeholderSubtitle": "Courses et location de voitures à Douala et Yaoundé.",
+  "placeholderSampleFare": "Exemple de tarif : {fare}",
+  "placeholderSampleTime": "Heure locale (Douala) : {time}",
+  "placeholderSamplePhone": "Ligne d'assistance : {phone}",
+  "placeholderPrimary": "Commencer",
+  "placeholderSecondary": "Switch to English"
+}

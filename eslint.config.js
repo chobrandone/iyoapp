@@ -14,6 +14,7 @@ module.exports = defineConfig([
       'apps/*/ios/**',
       'apps/*/android/**',
       'supabase/functions/**',
+      'flutter/**',
       '**/expo-env.d.ts',
     ],
   },

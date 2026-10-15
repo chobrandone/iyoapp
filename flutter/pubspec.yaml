@@ -1,0 +1,15 @@
+name: iyodriver_workspace
+description: Pub workspace for the iyodriver rider and driver Flutter apps.
+publish_to: none
+
+environment:
+  sdk: ^3.7.0
+
+workspace:
+  - packages/iyo_core
+  - packages/iyo_ui
+  - apps/rider
+  - apps/driver
+
+dev_dependencies:
+  flutter_lints: ^5.0.0

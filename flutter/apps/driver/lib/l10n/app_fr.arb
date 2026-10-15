@@ -1,0 +1,12 @@
+{
+  "@@locale": "fr",
+  "placeholderBadge": "Chauffeur",
+  "placeholderFlowLabel": "Chauffeur · 00",
+  "placeholderTitle": "Conduisez avec iyodriver. Gagnez à votre rythme.",
+  "placeholderSubtitle": "Acceptez des courses et des remises de véhicules à Douala et Yaoundé.",
+  "placeholderSampleFare": "Gains du jour : {fare}",
+  "placeholderSampleTime": "Heure locale (Douala) : {time}",
+  "placeholderSamplePhone": "Numéro de paiement : {phone}",
+  "placeholderPrimary": "Commencer",
+  "placeholderSecondary": "Switch to English"
+}

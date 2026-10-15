@@ -1,0 +1,18 @@
+# Flutter / Dart
+.dart_tool/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+*.iml
+.idea/
+pubspec_overrides.yaml
+
+# Per-environment keys (keep the example)
+config/*.json
+!config/*.example.json
+
+# Android / iOS local files
+**/android/local.properties
+**/android/key.properties
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh

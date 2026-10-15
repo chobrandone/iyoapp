@@ -1,0 +1,17 @@
+{
+  "@@locale": "fr",
+  "actionContinue": "Continuer",
+  "actionCancel": "Annuler",
+  "actionBack": "Retour",
+  "actionRetry": "Réessayer",
+  "actionSave": "Enregistrer",
+  "actionDone": "Terminé",
+  "validationPhoneInvalid": "Saisissez un numéro mobile camerounais valide (9 chiffres commençant par 6).",
+  "validationOtpInvalid": "Saisissez le code à 6 chiffres.",
+  "validationPinInvalid": "Saisissez le code PIN à 4 chiffres.",
+  "validationRequired": "Ce champ est obligatoire.",
+  "errorGeneric": "Une erreur s'est produite. Veuillez réessayer.",
+  "errorOffline": "Vous êtes hors ligne. Nous réessaierons dès le retour de la connexion.",
+  "languageEn": "English",
+  "languageFr": "Français"
+}
