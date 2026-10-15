@@ -195,8 +195,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               autofillHints: const [AutofillHints.telephoneNumber],
             ),
             gap(16),
-            // TODO(owner decision): the frame asks for a password, but both apps sign in with
-            // phone OTP (spec §3). Keep or drop this field before Phase 4 wires real sign-up.
+            // Owner decision (15/10/2026): keep the field visually as in Figma; sign-in stays
+            // phone OTP. Nothing reads this value. Revisit before Phase 4 wires real sign-up.
             IyoTextField(
               label: t.fieldPassword,
               initialValue: 'motdepasse!2026',

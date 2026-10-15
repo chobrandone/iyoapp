@@ -129,8 +129,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get welcomeHeadline => 'Moins d\'attente.\nPlus de mouvement.';
 
   @override
-  String get welcomeBody =>
-      'Réservez une course ou une voiture pour quelques jours. Où que la vie vous mène, allez-y avec iyodriver.';
+  String get welcomeBody => 'Réservez une course ou une voiture pour quelques jours. Où que la vie vous mène, allez-y avec iyodriver.';
 
   @override
   String get welcomeGetStarted => 'Commencer';
@@ -172,8 +171,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get showPassword => 'Afficher le mot de passe';
 
   @override
-  String get agreeTerms =>
-      'J\'accepte les Conditions d\'utilisation et la Politique de confidentialité.';
+  String get agreeTerms => 'J\'accepte les Conditions d\'utilisation et la Politique de confidentialité.';
 
   @override
   String get alreadyRegistered => 'Déjà inscrit ?';
@@ -185,8 +183,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get loginTitle => 'Bon retour';
 
   @override
-  String get loginSubtitle =>
-      'Connectez-vous avec votre numéro. Nous vous enverrons un code par SMS.';
+  String get loginSubtitle => 'Connectez-vous avec votre numéro. Nous vous enverrons un code par SMS.';
 
   @override
   String get loginSendCode => 'Envoyer le code';
@@ -226,8 +223,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get saferStartTitle => 'Un départ plus sûr';
 
   @override
-  String get saferStartBody =>
-      'La vérification relie chaque trajet iyodriver à une vraie personne.';
+  String get saferStartBody => 'La vérification relie chaque trajet iyodriver à une vraie personne.';
 
   @override
   String get verifyContinue => 'Vérifier et continuer';
@@ -420,8 +416,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tryAgainShortly => 'Réessayons dans un instant';
 
   @override
-  String get noMatchBody =>
-      'Aucun chauffeur disponible n\'a pu accepter votre demande. Vous n\'avez pas été débité.';
+  String get noMatchBody => 'Aucun chauffeur disponible n\'a pu accepter votre demande. Vous n\'avez pas été débité.';
 
   @override
   String toPlace(String place) {
@@ -432,8 +427,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get requestNotBooked => 'Demande non réservée';
 
   @override
-  String get noDriversHint =>
-      'Essayez un point de départ proche ou réessayez dans quelques minutes. La disponibilité change vite.';
+  String get noDriversHint => 'Essayez un point de départ proche ou réessayez dans quelques minutes. La disponibilité change vite.';
 
   @override
   String get tryAgain => 'Réessayer';
@@ -529,15 +523,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get trustedContactSelected => 'Contact de confiance · Sélectionné';
 
   @override
-  String get trustedContactHelper =>
-      'Position en direct, chauffeur, véhicule et lien du trajet seront envoyés.';
+  String get trustedContactHelper => 'Position en direct, chauffeur, véhicule et lien du trajet seront envoyés.';
 
   @override
   String get messagePreview => 'Aperçu du message';
 
   @override
-  String get defaultAlertMessage =>
-      'J\'ai besoin d\'aide. Prends de mes nouvelles et suis mon trajet iyodriver en direct.';
+  String get defaultAlertMessage => 'J\'ai besoin d\'aide. Prends de mes nouvelles et suis mon trajet iyodriver en direct.';
 
   @override
   String currentLocationAt(String place) {
@@ -548,8 +540,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get sendAlert => 'Envoyer l\'alerte';
 
   @override
-  String get sendAlertFooter =>
-      'Envoie votre position et les détails du trajet à votre contact de confiance et à l\'équipe sécurité iyodriver.';
+  String get sendAlertFooter => 'Envoie votre position et les détails du trajet à votre contact de confiance et à l\'équipe sécurité iyodriver.';
 
   @override
   String get alertSentTitle => 'Votre alerte a été envoyée';
@@ -605,8 +596,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get otherFavourites => 'Autres favoris';
 
   @override
-  String get savedFooter =>
-      'Touchez une adresse pour la modifier. Vos adresses ne sont visibles que par vous.';
+  String get savedFooter => 'Touchez une adresse pour la modifier. Vos adresses ne sont visibles que par vous.';
 
   @override
   String get addPlace => 'Ajouter une adresse';
@@ -621,12 +611,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get shareJourney => 'Partagez votre trajet';
 
   @override
-  String get shareJourneyBody1 =>
-      'Envoyez un lien de suivi à vos contacts pendant n\'importe quelle course.';
+  String get shareJourneyBody1 => 'Envoyez un lien de suivi à vos contacts pendant n\'importe quelle course.';
 
   @override
-  String get shareJourneyBody2 =>
-      'Vos contacts voient l\'itinéraire, le chauffeur et l\'heure d\'arrivée quand vous partagez.';
+  String get shareJourneyBody2 => 'Vos contacts voient l\'itinéraire, le chauffeur et l\'heure d\'arrivée quand vous partagez.';
 
   @override
   String yourContacts(String count, String max) {
@@ -651,8 +639,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get inControl => 'C\'est vous qui décidez';
 
   @override
-  String get inControlBody =>
-      'Le partage ne commence que lorsque vous envoyez un lien. Vous pouvez l\'arrêter ou retirer un contact à tout moment.';
+  String get inControlBody => 'Le partage ne commence que lorsque vous envoyez un lien. Vous pouvez l\'arrêter ou retirer un contact à tout moment.';
 
   @override
   String tcFooter(String number) {
