@@ -10,6 +10,7 @@ import '../format/currency.dart';
 import '../rides/ride_status.dart';
 import '../supabase/db_enums.dart';
 import 'models.dart';
+import 'safety_rental_models.dart';
 import 'repositories.dart';
 
 /// Timings of the simulation; tests shrink them.
@@ -199,6 +200,146 @@ int demoFare(int meters, int seconds, double multiplier) {
   final metered = 500 + 150 * meters / 1000 + 25 * seconds / 60;
   return roundToNearest50((metered < 1000 ? 1000 : metered) * multiplier);
 }
+
+/// Demo rental fleet (same cars and PLACEHOLDER prices as supabase/seed.sql).
+const List<RentalVehicle> demoRentalFleet = [
+  RentalVehicle(
+    id: 'demo-car-corolla',
+    cityCode: 'douala',
+    make: 'Toyota',
+    model: 'Corolla',
+    year: 2020,
+    category: 'sedan',
+    transmission: TransmissionType.automatic,
+    seats: 5,
+    fuelType: FuelType.petrol,
+    plate: 'LT 211 RB',
+    color: 'Blanc',
+    dailyRate: 25000,
+    depositAmount: 100000,
+    kmPerDay: 200,
+    extraKmRate: 150,
+    features: ['ac', 'bluetooth'],
+    airportPickupAvailable: true,
+  ),
+  RentalVehicle(
+    id: 'demo-car-rav4',
+    cityCode: 'douala',
+    make: 'Toyota',
+    model: 'RAV4',
+    year: 2021,
+    category: 'suv',
+    transmission: TransmissionType.automatic,
+    seats: 5,
+    fuelType: FuelType.petrol,
+    plate: 'LT 210 RA',
+    color: 'Gris',
+    dailyRate: 35000,
+    depositAmount: 150000,
+    kmPerDay: 200,
+    extraKmRate: 200,
+    features: ['ac', 'bluetooth', 'reverse_camera'],
+    airportPickupAvailable: true,
+  ),
+  RentalVehicle(
+    id: 'demo-car-tucson',
+    cityCode: 'douala',
+    make: 'Hyundai',
+    model: 'Tucson',
+    year: 2022,
+    category: 'suv',
+    transmission: TransmissionType.automatic,
+    seats: 5,
+    fuelType: FuelType.diesel,
+    plate: 'LT 212 RC',
+    color: 'Noir',
+    dailyRate: 40000,
+    depositAmount: 150000,
+    kmPerDay: 200,
+    extraKmRate: 200,
+    features: ['ac', 'carplay'],
+    airportPickupAvailable: true,
+  ),
+  RentalVehicle(
+    id: 'demo-car-prado',
+    cityCode: 'douala',
+    make: 'Toyota',
+    model: 'Land Cruiser Prado',
+    year: 2019,
+    category: 'suv',
+    transmission: TransmissionType.automatic,
+    seats: 7,
+    fuelType: FuelType.diesel,
+    plate: 'LT 213 RD',
+    color: 'Blanc',
+    dailyRate: 60000,
+    depositAmount: 250000,
+    kmPerDay: 250,
+    extraKmRate: 250,
+    features: ['ac', '4x4'],
+    airportPickupAvailable: true,
+  ),
+  RentalVehicle(
+    id: 'demo-car-swift',
+    cityCode: 'yaounde',
+    make: 'Suzuki',
+    model: 'Swift',
+    year: 2021,
+    category: 'economy',
+    transmission: TransmissionType.manual,
+    seats: 5,
+    fuelType: FuelType.petrol,
+    plate: 'CE 101 RA',
+    color: 'Rouge',
+    dailyRate: 20000,
+    depositAmount: 80000,
+    kmPerDay: 150,
+    extraKmRate: 150,
+    features: ['ac'],
+  ),
+  RentalVehicle(
+    id: 'demo-car-hilux',
+    cityCode: 'yaounde',
+    make: 'Toyota',
+    model: 'Hilux',
+    year: 2020,
+    category: 'pickup',
+    transmission: TransmissionType.manual,
+    seats: 5,
+    fuelType: FuelType.diesel,
+    plate: 'CE 102 RB',
+    color: 'Blanc',
+    dailyRate: 45000,
+    depositAmount: 200000,
+    kmPerDay: 200,
+    extraKmRate: 250,
+    features: ['ac', '4x4'],
+    airportPickupAvailable: true,
+  ),
+];
+
+/// PLACEHOLDER airport pickup fees (airports table).
+const List<Airport> demoAirports = [
+  Airport(
+    code: 'DLA',
+    name: 'Douala International Airport',
+    cityCode: 'douala',
+    pickupFee: 5000,
+    terminals: ['Arrivals'],
+  ),
+  Airport(
+    code: 'NSI',
+    name: 'Yaoundé Nsimalen International Airport',
+    cityCode: 'yaounde',
+    pickupFee: 5000,
+    terminals: ['Arrivals'],
+  ),
+];
+
+const _shareBase = String.fromEnvironment(
+  'TRIP_SHARE_BASE_URL',
+  defaultValue: 'https://iyodriver.cm/trip',
+);
 
 class DemoBackend implements IyoBackend {
   DemoBackend({this.role = AppRole.rider, this.timing = const DemoTiming(), math.Random? random})
@@ -587,6 +728,7 @@ class DemoBackend implements IyoBackend {
   void _setAccount(DriverAccount a) {
     _account = a;
     _accountCtrl.add(a);
+    if (a.status == VerificationStatus.approved) _seedDriverRental();
   }
 
   @override
@@ -850,6 +992,377 @@ class DemoBackend implements IyoBackend {
 
   @override
   Future<List<CompletedTrip>> recentTrips() async => List.unmodifiable(_trips);
+
+  // ---------------------------------------------------------------------------
+  // Safety
+  // ---------------------------------------------------------------------------
+
+  final List<TrustedContact> _contacts = [];
+
+  @override
+  Future<List<TrustedContact>> trustedContacts() async => List.unmodifiable(_contacts);
+
+  @override
+  Future<TrustedContact> addTrustedContact({
+    required String name,
+    required String phoneE164,
+    String? relationship,
+  }) async {
+    if (_contacts.length >= 5) throw const BackendException('trusted_contacts_limit_reached');
+    if (_contacts.any((c) => c.phone == phoneE164)) {
+      throw const BackendException('invalid_request', 'duplicate');
+    }
+    final c = TrustedContact(
+      id: _id('contact'),
+      name: name,
+      phone: phoneE164,
+      relationship: relationship,
+    );
+    _contacts.add(c);
+    return c;
+  }
+
+  @override
+  Future<void> removeTrustedContact(String id) async => _contacts.removeWhere((c) => c.id == id);
+
+  @override
+  Future<void> setNotifyOnAlert(String id, {required bool notify}) async {
+    final i = _contacts.indexWhere((c) => c.id == id);
+    if (i < 0) return;
+    final c = _contacts[i];
+    _contacts[i] = TrustedContact(
+      id: c.id,
+      name: c.name,
+      phone: c.phone,
+      relationship: c.relationship,
+      notifyOnAlert: notify,
+    );
+  }
+
+  @override
+  Future<List<EmergencyNumber>> emergencyNumbers() async => defaultEmergencyNumbers;
+
+  @override
+  Future<SafetyAlert> raiseAlert({
+    String? rideId,
+    GeoPoint? at,
+    String? reason,
+    String? note,
+  }) async {
+    if (role != AppRole.rider) throw const BackendException('wrong_role');
+    return SafetyAlert(id: _id('alert'), createdAt: DateTime.now(), rideId: rideId);
+  }
+
+  @override
+  Future<int> notifyTrustedContacts(String alertId) async =>
+      _contacts.where((c) => c.notifyOnAlert).length; // demo: nothing is sent
+
+  @override
+  Future<TripShare> shareTrip(String rideId) async {
+    final token = _id('share').hashCode.toRadixString(16).padLeft(8, '0') * 4;
+    return TripShare(
+      token: token,
+      expiresAt: DateTime.now().add(const Duration(hours: 4)),
+      url: '$_shareBase?t=$token',
+    );
+  }
+
+  @override
+  Future<IncidentReport> reportIncident({
+    required String category,
+    String? description,
+    String? rideId,
+    String? rentalBookingId,
+    GeoPoint? at,
+    bool urgent = false,
+  }) async {
+    if (role != AppRole.driver) throw const BackendException('wrong_role');
+    return IncidentReport(id: _id('incident'), createdAt: DateTime.now(), category: category);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Rentals
+  // ---------------------------------------------------------------------------
+
+  final Map<String, RentalBooking> _rentals = {};
+  final _rentalsCtrl = StreamController<void>.broadcast();
+
+  void _saveRental(RentalBooking b) {
+    _rentals[b.id] = b;
+    _rentalsCtrl.add(null);
+  }
+
+  Stream<T> _rentalStream<T>(T Function() read) async* {
+    yield read();
+    await for (final _ in _rentalsCtrl.stream) {
+      yield read();
+    }
+  }
+
+  @override
+  Future<List<RentalVehicle>> rentalVehicles(String cityCode) async =>
+      demoRentalFleet.where((v) => v.cityCode == cityCode).toList();
+
+  @override
+  Future<List<Airport>> airports() async => demoAirports;
+
+  @override
+  Future<RentalBooking> bookRental(RentalRequest r) async {
+    if (role != AppRole.rider) throw const BackendException('wrong_role');
+    if (r.endsAt.isBefore(r.startsAt) || r.startsAt.isBefore(DateTime.now())) {
+      throw const BackendException('invalid_rental_period');
+    }
+    if (r.pickupType == RentalPickupType.airport &&
+        (!r.vehicle.airportPickupAvailable || !isValidFlightNumber(r.flightNumber ?? ''))) {
+      throw const BackendException('airport_pickup_unavailable');
+    }
+    final overlap = _rentals.values.any(
+      (b) =>
+          b.vehicle.id == r.vehicle.id &&
+          b.status != RentalBookingStatus.cancelled &&
+          b.startsAt.isBefore(r.endsAt) &&
+          r.startsAt.isBefore(b.endsAt),
+    );
+    if (overlap) throw const BackendException('vehicle_unavailable_for_dates');
+    final booking = RentalBooking(
+      id: _id('rental'),
+      reference: 'RN-${1000 + _random.nextInt(9000)}',
+      vehicle: r.vehicle,
+      status:
+          r.paymentMethod == PaymentMethodType.cash
+              ? RentalBookingStatus.confirmed
+              : RentalBookingStatus.pendingPayment,
+      startsAt: r.startsAt,
+      endsAt: r.endsAt,
+      pickupType: r.pickupType,
+      days: r.days,
+      dailyRate: r.vehicle.dailyRate,
+      rentalAmount: r.rentalAmount,
+      airportFee: r.airportFee,
+      depositAmount: r.vehicle.depositAmount,
+      totalAmount: r.total,
+      kmAllowance: r.kmAllowance,
+      paymentMethod: r.paymentMethod,
+      pickupAddress: r.pickupType == RentalPickupType.airport ? r.airport?.name : r.pickupAddress,
+      airportCode: r.airport?.code,
+      terminal: r.terminal,
+      flightNumber: r.flightNumber?.toUpperCase().replaceAll(' ', ''),
+      flightArrivalAt: r.flightArrivalAt,
+    );
+    _saveRental(booking);
+    // Simulated: mobile money approved, then the team assigns a driver who hands the car over.
+    _after(timing.matching, () {
+      final b = _rentals[booking.id];
+      if (b == null || b.status == RentalBookingStatus.cancelled) return;
+      _saveRental(b.copyWith(status: RentalBookingStatus.confirmed));
+      _after(timing.matching, () {
+        final c = _rentals[booking.id];
+        if (c == null || c.status != RentalBookingStatus.confirmed) return;
+        _saveRental(
+          c.copyWith(status: RentalBookingStatus.driverAssigned, assignedDriverId: _demoDriver.id),
+        );
+        _after(timing.matching, () {
+          final d = _rentals[booking.id];
+          if (d == null || d.status != RentalBookingStatus.driverAssigned) return;
+          _saveRental(d.copyWith(handover: _demoInspection(InspectionType.handover, 8, 41200)));
+        });
+      });
+    });
+    return booking;
+  }
+
+  RentalInspection _demoInspection(
+    InspectionType type,
+    int fuel,
+    int km, {
+    int hold = 0,
+    String? notes,
+  }) => RentalInspection(
+    type: type,
+    fuelLevel: fuel,
+    odometerKm: km,
+    photoPaths: {for (final side in inspectionSides) side: 'demo/$side.jpg'},
+    damageNotes: notes,
+    depositHoldAmount: hold,
+    inspectorConfirmedAt: DateTime.now(),
+  );
+
+  RentalBooking _rental(String id) {
+    final b = _rentals[id];
+    if (b == null) throw const BackendException('booking_not_found');
+    return b;
+  }
+
+  @override
+  Stream<List<RentalBooking>> watchMyRentals() => _rentalStream(
+    () =>
+        _rentals.values.where((b) => b.riderName == null).toList()
+          ..sort((a, b) => b.startsAt.compareTo(a.startsAt)),
+  );
+
+  @override
+  Stream<RentalBooking> watchRental(String bookingId) => _rentalStream(() => _rental(bookingId));
+
+  @override
+  Future<RentalBooking> cancelRental(String bookingId, {String? reason}) async {
+    final b = _rental(bookingId);
+    if (!b.isCancellable) throw const BackendException('booking_not_cancellable');
+    final c = b.copyWith(status: RentalBookingStatus.cancelled);
+    _saveRental(c);
+    return c;
+  }
+
+  @override
+  Future<void> confirmInspection(String bookingId, InspectionType type) async {
+    final b = _rental(bookingId);
+    if (type == InspectionType.handover) {
+      if (b.status != RentalBookingStatus.driverAssigned || b.handover == null) {
+        throw const BackendException('inspection_not_ready');
+      }
+      _saveRental(
+        b.copyWith(status: RentalBookingStatus.active, depositStatus: DepositStatus.held),
+      );
+    } else {
+      final r = b.returnInspection;
+      if (b.status != RentalBookingStatus.returnPending || r == null) {
+        throw const BackendException('inspection_not_ready');
+      }
+      _saveRental(
+        b.copyWith(
+          status: RentalBookingStatus.completed,
+          depositHeldAmount: r.depositHoldAmount,
+          depositStatus:
+              r.depositHoldAmount == 0 ? DepositStatus.released : DepositStatus.partiallyHeld,
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<void> requestReturn(String bookingId) async {
+    final b = _rental(bookingId);
+    if (b.status != RentalBookingStatus.active) throw const BackendException('return_not_allowed');
+    // Simulated: the driver inspects the returned car (no damage → full deposit back).
+    _after(timing.matching, () {
+      final c = _rentals[bookingId];
+      if (c == null || c.status != RentalBookingStatus.active) return;
+      _saveRental(
+        c.copyWith(
+          status: RentalBookingStatus.returnPending,
+          returnInspection: _demoInspection(InspectionType.return_, 6, 41200 + c.kmAllowance ~/ 2),
+        ),
+      );
+    });
+  }
+
+  /// Driver: one airport delivery to practise the handover on, once approved.
+  void _seedDriverRental() {
+    if (_rentals.values.any((b) => b.riderName != null)) return;
+    final car = demoRentalFleet[1];
+    final start = DateTime.now().add(const Duration(days: 1, hours: 2));
+    _saveRental(
+      RentalBooking(
+        id: _id('rental'),
+        reference: 'RN-2048',
+        vehicle: car,
+        status: RentalBookingStatus.driverAssigned,
+        startsAt: start,
+        endsAt: start.add(const Duration(days: 3)),
+        pickupType: RentalPickupType.airport,
+        days: 3,
+        dailyRate: car.dailyRate,
+        rentalAmount: car.dailyRate * 3,
+        airportFee: 5000,
+        depositAmount: car.depositAmount,
+        totalAmount: car.dailyRate * 3 + 5000,
+        kmAllowance: car.kmPerDay * 3,
+        paymentMethod: PaymentMethodType.mtnMomo,
+        pickupAddress: demoAirports.first.name,
+        airportCode: 'DLA',
+        terminal: 'Arrivals',
+        flightNumber: 'AF900',
+        flightArrivalAt: start,
+        assignedDriverId: _profile?.id,
+        riderName: 'Aïcha Ngo Mbappe',
+        riderPhone: '+237671234567',
+      ),
+    );
+  }
+
+  @override
+  Stream<List<RentalBooking>> watchAssignedRentals() => _rentalStream(
+    () =>
+        _rentals.values
+            .where((b) => b.riderName != null && b.status != RentalBookingStatus.cancelled)
+            .toList()
+          ..sort((a, b) => a.startsAt.compareTo(b.startsAt)),
+  );
+
+  @override
+  Future<void> submitInspection(
+    String bookingId,
+    InspectionType type,
+    InspectionDraft draft, {
+    void Function(double)? onProgress,
+  }) async {
+    final b = _rental(bookingId);
+    if (!inspectionSides.every(draft.localPhotos.containsKey)) {
+      throw const BackendException('photos_missing');
+    }
+    if (type == InspectionType.handover && b.status != RentalBookingStatus.driverAssigned) {
+      throw const BackendException('handover_not_allowed');
+    }
+    if (type == InspectionType.return_ && b.status != RentalBookingStatus.active) {
+      throw const BackendException('return_not_allowed');
+    }
+    if (draft.depositHoldAmount < 0 || draft.depositHoldAmount > b.depositAmount) {
+      throw const BackendException('invalid_deposit_hold');
+    }
+    for (var i = 1; i <= inspectionSides.length; i++) {
+      await Future<void>.delayed(const Duration(milliseconds: 80));
+      onProgress?.call(i / inspectionSides.length);
+    }
+    final inspection = RentalInspection(
+      type: type,
+      fuelLevel: draft.fuelLevel,
+      odometerKm: draft.odometerKm,
+      photoPaths: draft.localPhotos,
+      damageNotes: draft.damageNotes,
+      depositHoldAmount: draft.depositHoldAmount,
+      inspectorConfirmedAt: DateTime.now(),
+    );
+    if (type == InspectionType.handover) {
+      _saveRental(b.copyWith(handover: inspection));
+      // Simulated: the rider confirms the handover on their phone.
+      _after(timing.matching, () {
+        final c = _rentals[bookingId];
+        if (c?.status == RentalBookingStatus.driverAssigned) {
+          _saveRental(
+            c!.copyWith(status: RentalBookingStatus.active, depositStatus: DepositStatus.held),
+          );
+        }
+      });
+    } else {
+      _saveRental(
+        b.copyWith(status: RentalBookingStatus.returnPending, returnInspection: inspection),
+      );
+      _after(timing.matching, () {
+        final c = _rentals[bookingId];
+        if (c?.status == RentalBookingStatus.returnPending) {
+          _saveRental(
+            c!.copyWith(
+              status: RentalBookingStatus.completed,
+              depositHeldAmount: draft.depositHoldAmount,
+              depositStatus:
+                  draft.depositHoldAmount == 0
+                      ? DepositStatus.released
+                      : DepositStatus.partiallyHeld,
+            ),
+          );
+        }
+      });
+    }
+  }
 
   /// Debug helper: make a new demo driver approved straight away.
   void approveDemoDriver() {

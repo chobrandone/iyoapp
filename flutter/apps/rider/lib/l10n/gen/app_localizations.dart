@@ -82,18 +82,16 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
-    delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-  ];
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[
-    Locale('en'),
-    Locale('fr')
-  ];
+  static const List<Locale> supportedLocales = <Locale>[Locale('en'), Locale('fr')];
 
   /// No description provided for @placeholderFlowLabel.
   ///
@@ -1630,6 +1628,864 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'All screens (dev)'**
   String get menuScreens;
+
+  /// No description provided for @noActiveTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'No active trip'**
+  String get noActiveTrip;
+
+  /// No description provided for @emergencyCallTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Call emergency services'**
+  String get emergencyCallTitle;
+
+  /// No description provided for @emergencyPolice.
+  ///
+  /// In en, this message translates to:
+  /// **'Police'**
+  String get emergencyPolice;
+
+  /// No description provided for @emergencyFire.
+  ///
+  /// In en, this message translates to:
+  /// **'Fire brigade'**
+  String get emergencyFire;
+
+  /// No description provided for @emergencyAmbulance.
+  ///
+  /// In en, this message translates to:
+  /// **'Ambulance'**
+  String get emergencyAmbulance;
+
+  /// No description provided for @shareNeedsTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Available during a trip.'**
+  String get shareNeedsTrip;
+
+  /// No description provided for @shareTripSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'My iyodriver trip'**
+  String get shareTripSubject;
+
+  /// No description provided for @shareTripText.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow my iyodriver trip live (link valid until {time}): {link}'**
+  String shareTripText(String time, String link);
+
+  /// No description provided for @shareFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not create a share link. Try again.'**
+  String get shareFailed;
+
+  /// No description provided for @contactsToNotify.
+  ///
+  /// In en, this message translates to:
+  /// **'Trusted contacts to text'**
+  String get contactsToNotify;
+
+  /// No description provided for @noContactsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No trusted contacts yet.'**
+  String get noContactsYet;
+
+  /// No description provided for @addContactLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a trusted contact'**
+  String get addContactLink;
+
+  /// No description provided for @locationUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Current location unavailable'**
+  String get locationUnknown;
+
+  /// No description provided for @alertFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The alert could not be sent. Check your connection, or call {number}.'**
+  String alertFailed(String number);
+
+  /// No description provided for @contactsNotifiedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} trusted contacts notified'**
+  String contactsNotifiedCount(String count);
+
+  /// No description provided for @noContactNotified.
+  ///
+  /// In en, this message translates to:
+  /// **'No trusted contact was texted'**
+  String get noContactNotified;
+
+  /// No description provided for @noContactNotifiedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add trusted contacts so we can text them next time.'**
+  String get noContactNotifiedBody;
+
+  /// No description provided for @alertsOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Alerts on'**
+  String get alertsOn;
+
+  /// No description provided for @alertsOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Alerts off'**
+  String get alertsOff;
+
+  /// No description provided for @textOnAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'Text {name} if I raise an alert'**
+  String textOnAlert(String name);
+
+  /// No description provided for @removeContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get removeContact;
+
+  /// No description provided for @removeContactTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {name}?'**
+  String removeContactTitle(String name);
+
+  /// No description provided for @removeContactBody.
+  ///
+  /// In en, this message translates to:
+  /// **'They will no longer be texted when you raise an alert.'**
+  String get removeContactBody;
+
+  /// No description provided for @contactName.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name'**
+  String get contactName;
+
+  /// No description provided for @contactPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile number'**
+  String get contactPhone;
+
+  /// No description provided for @contactRelationship.
+  ///
+  /// In en, this message translates to:
+  /// **'Relationship (optional)'**
+  String get contactRelationship;
+
+  /// No description provided for @contactRelationshipHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Sister, friend, colleague…'**
+  String get contactRelationshipHint;
+
+  /// No description provided for @saveContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Save contact'**
+  String get saveContact;
+
+  /// No description provided for @contactLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'You can add up to {max} trusted contacts.'**
+  String contactLimit(String max);
+
+  /// No description provided for @contactDuplicate.
+  ///
+  /// In en, this message translates to:
+  /// **'This number is already one of your trusted contacts.'**
+  String get contactDuplicate;
+
+  /// No description provided for @contactsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add someone you trust'**
+  String get contactsEmptyTitle;
+
+  /// No description provided for @contactsEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'They get a text with your live trip if you raise a safety alert.'**
+  String get contactsEmptyBody;
+
+  /// No description provided for @flowRent.
+  ///
+  /// In en, this message translates to:
+  /// **'Rider · Rent'**
+  String get flowRent;
+
+  /// No description provided for @rentHomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rent a car'**
+  String get rentHomeTitle;
+
+  /// No description provided for @rentHomeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily rentals with delivery to your address or the airport.'**
+  String get rentHomeBody;
+
+  /// No description provided for @browseCars.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse cars'**
+  String get browseCars;
+
+  /// No description provided for @myRentals.
+  ///
+  /// In en, this message translates to:
+  /// **'My rentals'**
+  String get myRentals;
+
+  /// No description provided for @rentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rent a car'**
+  String get rentTitle;
+
+  /// No description provided for @rentSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a car, then your dates and where we hand it over.'**
+  String get rentSubtitle;
+
+  /// No description provided for @cityDouala.
+  ///
+  /// In en, this message translates to:
+  /// **'Douala'**
+  String get cityDouala;
+
+  /// No description provided for @cityYaounde.
+  ///
+  /// In en, this message translates to:
+  /// **'Yaoundé'**
+  String get cityYaounde;
+
+  /// No description provided for @noCarsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No cars available'**
+  String get noCarsTitle;
+
+  /// No description provided for @noCarsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Try the other city or check again later.'**
+  String get noCarsBody;
+
+  /// No description provided for @airportPickupBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Airport pickup'**
+  String get airportPickupBadge;
+
+  /// No description provided for @placeholderPricing.
+  ///
+  /// In en, this message translates to:
+  /// **'Prices shown are placeholders until the fleet rates are confirmed.'**
+  String get placeholderPricing;
+
+  /// No description provided for @transmissionAutomatic.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic'**
+  String get transmissionAutomatic;
+
+  /// No description provided for @transmissionManual.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual'**
+  String get transmissionManual;
+
+  /// No description provided for @fuelPetrol.
+  ///
+  /// In en, this message translates to:
+  /// **'Petrol'**
+  String get fuelPetrol;
+
+  /// No description provided for @fuelDiesel.
+  ///
+  /// In en, this message translates to:
+  /// **'Diesel'**
+  String get fuelDiesel;
+
+  /// No description provided for @fuelHybrid.
+  ///
+  /// In en, this message translates to:
+  /// **'Hybrid'**
+  String get fuelHybrid;
+
+  /// No description provided for @fuelElectric.
+  ///
+  /// In en, this message translates to:
+  /// **'Electric'**
+  String get fuelElectric;
+
+  /// No description provided for @seatsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} seats'**
+  String seatsCount(String count);
+
+  /// No description provided for @carSpecs.
+  ///
+  /// In en, this message translates to:
+  /// **'Car details'**
+  String get carSpecs;
+
+  /// No description provided for @specDailyRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily rate'**
+  String get specDailyRate;
+
+  /// No description provided for @specDeposit.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit (held at handover)'**
+  String get specDeposit;
+
+  /// No description provided for @specKmPerDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Included distance'**
+  String get specKmPerDay;
+
+  /// No description provided for @kmPerDayValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{km} km / day'**
+  String kmPerDayValue(String km);
+
+  /// No description provided for @specExtraKm.
+  ///
+  /// In en, this message translates to:
+  /// **'Extra distance'**
+  String get specExtraKm;
+
+  /// No description provided for @perKm.
+  ///
+  /// In en, this message translates to:
+  /// **'{price} / km'**
+  String perKm(String price);
+
+  /// No description provided for @specPlate.
+  ///
+  /// In en, this message translates to:
+  /// **'Plate'**
+  String get specPlate;
+
+  /// No description provided for @chooseDates.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose dates'**
+  String get chooseDates;
+
+  /// No description provided for @datesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Dates and pickup'**
+  String get datesTitle;
+
+  /// No description provided for @datesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rentals are charged per started day (24 h).'**
+  String get datesSubtitle;
+
+  /// No description provided for @startLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get startLabel;
+
+  /// No description provided for @endLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Return'**
+  String get endLabel;
+
+  /// No description provided for @pickDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a date'**
+  String get pickDate;
+
+  /// No description provided for @daysCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days'**
+  String daysCount(String days);
+
+  /// No description provided for @oneDay.
+  ///
+  /// In en, this message translates to:
+  /// **'1 day'**
+  String get oneDay;
+
+  /// No description provided for @pickupAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get pickupAddress;
+
+  /// No description provided for @pickupAirport.
+  ///
+  /// In en, this message translates to:
+  /// **'Airport'**
+  String get pickupAirport;
+
+  /// No description provided for @deliveryAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery address'**
+  String get deliveryAddress;
+
+  /// No description provided for @deliveryAddressHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Street, area, landmark'**
+  String get deliveryAddressHint;
+
+  /// No description provided for @airportLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Airport'**
+  String get airportLabel;
+
+  /// No description provided for @terminalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Terminal'**
+  String get terminalLabel;
+
+  /// No description provided for @flightNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Flight number'**
+  String get flightNumber;
+
+  /// No description provided for @flightNumberHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. AF900'**
+  String get flightNumberHint;
+
+  /// No description provided for @flightInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a flight number like AF900.'**
+  String get flightInvalid;
+
+  /// No description provided for @flightArrival.
+  ///
+  /// In en, this message translates to:
+  /// **'Arrival time'**
+  String get flightArrival;
+
+  /// No description provided for @airportFeeNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Airport delivery: {fee}. The driver waits with a name sign at arrivals.'**
+  String airportFeeNote(String fee);
+
+  /// No description provided for @airportUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'This car cannot be delivered to the airport.'**
+  String get airportUnavailable;
+
+  /// No description provided for @periodInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'The return must be after the start, and the start in the future.'**
+  String get periodInvalid;
+
+  /// No description provided for @reviewAndPay.
+  ///
+  /// In en, this message translates to:
+  /// **'Review and pay'**
+  String get reviewAndPay;
+
+  /// No description provided for @reviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review your rental'**
+  String get reviewTitle;
+
+  /// No description provided for @reviewSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You pay the rental now. The deposit is held when the car is handed over.'**
+  String get reviewSubtitle;
+
+  /// No description provided for @rentalDates.
+  ///
+  /// In en, this message translates to:
+  /// **'{start} → {end}'**
+  String rentalDates(String start, String end);
+
+  /// No description provided for @rentalAmountLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Rental · {days}'**
+  String rentalAmountLine(String days);
+
+  /// No description provided for @airportFeeLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Airport delivery'**
+  String get airportFeeLine;
+
+  /// No description provided for @totalNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Total to pay now'**
+  String get totalNow;
+
+  /// No description provided for @depositLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit held at handover'**
+  String get depositLater;
+
+  /// No description provided for @kmAllowance.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance included: {km} km'**
+  String kmAllowance(String km);
+
+  /// No description provided for @paymentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment'**
+  String get paymentLabel;
+
+  /// No description provided for @cashAtHandover.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash is paid to the driver at handover.'**
+  String get cashAtHandover;
+
+  /// No description provided for @rentalTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'I accept the rental terms and the deposit hold.'**
+  String get rentalTerms;
+
+  /// No description provided for @payAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay {amount}'**
+  String payAmount(String amount);
+
+  /// No description provided for @bookCash.
+  ///
+  /// In en, this message translates to:
+  /// **'Book · pay cash at handover'**
+  String get bookCash;
+
+  /// No description provided for @carTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'This car is already booked for those dates. Pick other dates or another car.'**
+  String get carTaken;
+
+  /// No description provided for @paymentMethodMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'Add this payment method in your wallet first.'**
+  String get paymentMethodMissing;
+
+  /// No description provided for @bookingRef.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking {ref}'**
+  String bookingRef(String ref);
+
+  /// No description provided for @rentalPendingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve the payment'**
+  String get rentalPendingTitle;
+
+  /// No description provided for @rentalPendingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm {amount} on your phone to secure the car.'**
+  String rentalPendingBody(String amount);
+
+  /// No description provided for @rentalConfirmedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking confirmed'**
+  String get rentalConfirmedTitle;
+
+  /// No description provided for @rentalConfirmedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'We are assigning the driver who will deliver your car.'**
+  String get rentalConfirmedBody;
+
+  /// No description provided for @rentalAssignedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Driver assigned'**
+  String get rentalAssignedTitle;
+
+  /// No description provided for @rentalAssignedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your driver brings the car on {date}.'**
+  String rentalAssignedBody(String date);
+
+  /// No description provided for @handoverReadyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the car'**
+  String get handoverReadyTitle;
+
+  /// No description provided for @handoverReadyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The driver recorded the car’s condition. Check it with them, then confirm.'**
+  String get handoverReadyBody;
+
+  /// No description provided for @confirmHandover.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm handover'**
+  String get confirmHandover;
+
+  /// No description provided for @rentalActiveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enjoy the drive'**
+  String get rentalActiveTitle;
+
+  /// No description provided for @rentalActiveBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Return the car by {date}.'**
+  String rentalActiveBody(String date);
+
+  /// No description provided for @returnCar.
+  ///
+  /// In en, this message translates to:
+  /// **'Return the car'**
+  String get returnCar;
+
+  /// No description provided for @returnRequested.
+  ///
+  /// In en, this message translates to:
+  /// **'Return requested. The driver will inspect the car with you.'**
+  String get returnRequested;
+
+  /// No description provided for @returnReadyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the return'**
+  String get returnReadyTitle;
+
+  /// No description provided for @returnReadyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the return inspection. Your deposit is released when you confirm.'**
+  String get returnReadyBody;
+
+  /// No description provided for @confirmReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm return'**
+  String get confirmReturn;
+
+  /// No description provided for @rentalCompletedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rental complete'**
+  String get rentalCompletedTitle;
+
+  /// No description provided for @depositReleased.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit released in full'**
+  String get depositReleased;
+
+  /// No description provided for @depositPartiallyHeld.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} kept from the deposit'**
+  String depositPartiallyHeld(String amount);
+
+  /// No description provided for @rentalCancelledTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking cancelled'**
+  String get rentalCancelledTitle;
+
+  /// No description provided for @cancelBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel booking'**
+  String get cancelBooking;
+
+  /// No description provided for @cancelBookingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this booking?'**
+  String get cancelBookingTitle;
+
+  /// No description provided for @cancelBookingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You can cancel free of charge until the rental starts.'**
+  String get cancelBookingBody;
+
+  /// No description provided for @keepBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep booking'**
+  String get keepBooking;
+
+  /// No description provided for @inspectionHandover.
+  ///
+  /// In en, this message translates to:
+  /// **'Handover inspection'**
+  String get inspectionHandover;
+
+  /// No description provided for @inspectionReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'Return inspection'**
+  String get inspectionReturn;
+
+  /// No description provided for @fuelLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel'**
+  String get fuelLevel;
+
+  /// No description provided for @fuelEighths.
+  ///
+  /// In en, this message translates to:
+  /// **'{n}/8 tank'**
+  String fuelEighths(String n);
+
+  /// No description provided for @odometer.
+  ///
+  /// In en, this message translates to:
+  /// **'Odometer'**
+  String get odometer;
+
+  /// No description provided for @kmValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{km} km'**
+  String kmValue(String km);
+
+  /// No description provided for @photosTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos'**
+  String get photosTaken;
+
+  /// No description provided for @photosCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of 5 sides'**
+  String photosCount(String n);
+
+  /// No description provided for @damageNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Damage notes'**
+  String get damageNotes;
+
+  /// No description provided for @noDamage.
+  ///
+  /// In en, this message translates to:
+  /// **'No damage noted'**
+  String get noDamage;
+
+  /// No description provided for @depositHoldProposed.
+  ///
+  /// In en, this message translates to:
+  /// **'Kept from deposit'**
+  String get depositHoldProposed;
+
+  /// No description provided for @statusPendingPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting payment'**
+  String get statusPendingPayment;
+
+  /// No description provided for @statusDriverAssigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Driver assigned'**
+  String get statusDriverAssigned;
+
+  /// No description provided for @statusActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get statusActive;
+
+  /// No description provided for @statusReturnPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Return check'**
+  String get statusReturnPending;
+
+  /// No description provided for @statusCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get statusCancelled;
+
+  /// No description provided for @rentalsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No rentals yet'**
+  String get rentalsEmptyTitle;
+
+  /// No description provided for @rentalsEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your bookings appear here.'**
+  String get rentalsEmptyBody;
+
+  /// No description provided for @rentalFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The booking could not be made. Try again.'**
+  String get rentalFailed;
+
+  /// No description provided for @pickupAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup: {place}'**
+  String pickupAt(String place);
+
+  /// No description provided for @rentalReportProblem.
+  ///
+  /// In en, this message translates to:
+  /// **'Report a problem'**
+  String get rentalReportProblem;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
@@ -1648,18 +2504,18 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
-
-
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'en': return AppLocalizationsEn();
-    case 'fr': return AppLocalizationsFr();
+    case 'en':
+      return AppLocalizationsEn();
+    case 'fr':
+      return AppLocalizationsFr();
   }
 
   throw FlutterError(
     'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
     'an issue with the localizations generation tool. Please file an issue '
     'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.'
+    'that was used.',
   );
 }

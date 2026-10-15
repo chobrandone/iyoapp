@@ -9,6 +9,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../supabase/db_enums.dart';
 import '../supabase/server_errors.dart';
 import 'models.dart';
+import 'safety_rental_models.dart';
 import 'repositories.dart';
 
 const _activeStatuses = [
@@ -19,6 +20,11 @@ const _activeStatuses = [
   'driver_arrived',
   'in_progress',
 ];
+
+const _shareBase = String.fromEnvironment(
+  'TRIP_SHARE_BASE_URL',
+  defaultValue: 'https://iyodriver.cm/trip',
+);
 
 class SupabaseBackend implements IyoBackend {
   SupabaseBackend({required this.role, SupabaseClient? client})
@@ -277,21 +283,24 @@ class SupabaseBackend implements IyoBackend {
     return row == null ? null : _rideFrom(row);
   });
 
+  Future<String?> _paymentMethodId(PaymentMethodType method) async {
+    if (method == PaymentMethodType.cash) return null;
+    final row =
+        await _db
+            .from('payment_methods')
+            .select('id')
+            .eq('type', method.value)
+            .order('is_default', ascending: false)
+            .limit(1)
+            .maybeSingle();
+    final id = row?['id'] as String?;
+    if (id == null) throw const BackendException('invalid_payment_method');
+    return id;
+  }
+
   @override
   Future<Ride> requestRide(FareOption option, PaymentMethodType method) => _call(() async {
-    String? methodId;
-    if (method != PaymentMethodType.cash) {
-      final row =
-          await _db
-              .from('payment_methods')
-              .select('id')
-              .eq('type', method.value)
-              .order('is_default', ascending: false)
-              .limit(1)
-              .maybeSingle();
-      methodId = row?['id'] as String?;
-      if (methodId == null) throw const BackendException('invalid_payment_method');
-    }
+    final methodId = await _paymentMethodId(method);
     final row = await _db.rpc<Map<String, dynamic>>(
       'request_ride',
       params: {
@@ -696,6 +705,431 @@ class SupabaseBackend implements IyoBackend {
           completedAt: DateTime.parse(r['completed_at'] as String),
         ),
     ];
+  });
+
+  // ---------------------------------------------------------------------------
+  // Safety (trusted contacts are capped at 5 by a trigger; alerts snapshot the trip server-side)
+  // ---------------------------------------------------------------------------
+
+  TrustedContact _contactFrom(Map<String, dynamic> r) => TrustedContact(
+    id: r['id'] as String,
+    name: r['name'] as String,
+    phone: r['phone'] as String,
+    relationship: r['relationship'] as String?,
+    notifyOnAlert: r['notify_on_alert'] as bool? ?? true,
+  );
+
+  @override
+  Future<List<TrustedContact>> trustedContacts() => _call(() async {
+    final rows = await _db
+        .from('trusted_contacts')
+        .select()
+        .eq('user_id', _uid)
+        .order('created_at');
+    return rows.map(_contactFrom).toList();
+  });
+
+  @override
+  Future<TrustedContact> addTrustedContact({
+    required String name,
+    required String phoneE164,
+    String? relationship,
+  }) => _call(() async {
+    final row =
+        await _db
+            .from('trusted_contacts')
+            .insert({
+              'user_id': _uid,
+              'name': name,
+              'phone': phoneE164,
+              if (relationship != null && relationship.isNotEmpty) 'relationship': relationship,
+            })
+            .select()
+            .single();
+    return _contactFrom(row);
+  });
+
+  @override
+  Future<void> removeTrustedContact(String id) =>
+      _call(() => _db.from('trusted_contacts').delete().eq('id', id));
+
+  @override
+  Future<void> setNotifyOnAlert(String id, {required bool notify}) => _call(
+    () => _db.from('trusted_contacts').update({'notify_on_alert': notify}).eq('id', id),
+  );
+
+  @override
+  Future<List<EmergencyNumber>> emergencyNumbers() async {
+    try {
+      final row =
+          await _db.from('app_config').select('value').eq('key', 'emergency_numbers').maybeSingle();
+      final list = row?['value'];
+      if (list is! List || list.isEmpty) return defaultEmergencyNumbers;
+      return [
+        for (final e in list.cast<Map<String, dynamic>>())
+          EmergencyNumber(service: e['service'] as String, number: e['number'] as String),
+      ];
+    } on Object {
+      // Offline: the numbers must still be callable.
+      return defaultEmergencyNumbers;
+    }
+  }
+
+  @override
+  Future<SafetyAlert> raiseAlert({String? rideId, GeoPoint? at, String? reason, String? note}) =>
+      _call(() async {
+        final row = await _db.rpc<Map<String, dynamic>>(
+          'raise_safety_alert',
+          params: {
+            'p_ride_id': rideId,
+            'p_lat': at?.lat,
+            'p_lng': at?.lng,
+            'p_reason': reason,
+            'p_note': note,
+          },
+        );
+        return SafetyAlert(
+          id: row['id'] as String,
+          createdAt: DateTime.parse(row['created_at'] as String),
+          rideId: row['ride_id'] as String?,
+        );
+      });
+
+  @override
+  Future<int> notifyTrustedContacts(String alertId) async =>
+      (await _invoke('safety-notify', {'alertId': alertId}))['notified'] as int? ?? 0;
+
+  @override
+  Future<TripShare> shareTrip(String rideId) => _call(() async {
+    final row = await _db.rpc<Map<String, dynamic>>(
+      'create_trip_share',
+      params: {'p_ride_id': rideId},
+    );
+    final token = row['token'] as String;
+    return TripShare(
+      token: token,
+      expiresAt: DateTime.parse(row['expires_at'] as String),
+      url: '$_shareBase?t=$token',
+    );
+  });
+
+  @override
+  Future<IncidentReport> reportIncident({
+    required String category,
+    String? description,
+    String? rideId,
+    String? rentalBookingId,
+    GeoPoint? at,
+    bool urgent = false,
+  }) => _call(() async {
+    final row = await _db.rpc<Map<String, dynamic>>(
+      'report_incident',
+      params: {
+        'p_category': category,
+        'p_description': description,
+        'p_ride_id': rideId,
+        'p_rental_booking_id': rentalBookingId,
+        'p_lat': at?.lat,
+        'p_lng': at?.lng,
+        'p_is_urgent': urgent,
+      },
+    );
+    return IncidentReport(
+      id: row['id'] as String,
+      createdAt: DateTime.parse(row['created_at'] as String),
+      category: row['category'] as String,
+    );
+  });
+
+  // ---------------------------------------------------------------------------
+  // Rentals (prices and availability are computed by create_rental_booking)
+  // ---------------------------------------------------------------------------
+
+  static const _bookingSelect = '*, vehicle:rental_vehicles(*), inspections:rental_inspections(*)';
+
+  RentalVehicle _vehicleFrom(Map<String, dynamic> r) => RentalVehicle(
+    id: r['id'] as String,
+    cityCode: r['city_code'] as String,
+    make: r['make'] as String,
+    model: r['model'] as String,
+    year: r['year'] as int?,
+    category: r['category'] as String,
+    transmission: TransmissionType.fromValue(r['transmission'] as String),
+    seats: r['seats'] as int,
+    fuelType: FuelType.fromValue(r['fuel_type'] as String),
+    plate: r['plate'] as String,
+    color: r['color'] as String?,
+    dailyRate: r['daily_rate'] as int,
+    depositAmount: r['deposit_amount'] as int,
+    kmPerDay: r['km_per_day'] as int,
+    extraKmRate: r['extra_km_rate'] as int? ?? 0,
+    features: List<String>.from(r['features'] as List? ?? const []),
+    airportPickupAvailable: r['airport_pickup_available'] as bool? ?? false,
+    imagePaths: List<String>.from(r['image_paths'] as List? ?? const []),
+    isPlaceholderPricing: r['is_placeholder_pricing'] as bool? ?? true,
+  );
+
+  RentalInspection _inspectionFrom(Map<String, dynamic> r) => RentalInspection(
+    type: InspectionType.fromValue(r['type'] as String),
+    fuelLevel: r['fuel_level'] as int,
+    odometerKm: r['odometer_km'] as int,
+    photoPaths: Map<String, String>.from(r['photo_paths'] as Map? ?? const {}),
+    damageNotes: r['damage_notes'] as String?,
+    depositHoldAmount: r['deposit_hold_amount'] as int? ?? 0,
+    inspectorConfirmedAt: _date(r['inspector_confirmed_at']),
+    riderConfirmedAt: _date(r['rider_confirmed_at']),
+  );
+
+  static DateTime? _date(Object? v) => v == null ? null : DateTime.parse(v as String);
+
+  RentalBooking _bookingFrom(Map<String, dynamic> r, {Map<String, dynamic>? rider}) {
+    final inspections = [
+      for (final i in (r['inspections'] as List? ?? const []).cast<Map<String, dynamic>>())
+        _inspectionFrom(i),
+    ];
+    RentalInspection? find(InspectionType t) {
+      for (final i in inspections) {
+        if (i.type == t) return i;
+      }
+      return null;
+    }
+
+    return RentalBooking(
+      id: r['id'] as String,
+      reference: r['reference'] as String,
+      vehicle: _vehicleFrom(Map<String, dynamic>.from(r['vehicle'] as Map)),
+      status: RentalBookingStatus.fromValue(r['status'] as String),
+      startsAt: DateTime.parse(r['starts_at'] as String),
+      endsAt: DateTime.parse(r['ends_at'] as String),
+      pickupType: RentalPickupType.fromValue(r['pickup_type'] as String),
+      days: r['days'] as int,
+      dailyRate: r['daily_rate'] as int,
+      rentalAmount: r['rental_amount'] as int,
+      airportFee: r['airport_fee'] as int? ?? 0,
+      depositAmount: r['deposit_amount'] as int,
+      totalAmount: r['total_amount'] as int,
+      kmAllowance: r['km_allowance'] as int,
+      paymentMethod: PaymentMethodType.fromValue(r['payment_method'] as String),
+      pickupAddress: r['pickup_address'] as String?,
+      airportCode: r['airport_code'] as String?,
+      terminal: r['terminal'] as String?,
+      flightNumber: r['flight_number'] as String?,
+      flightArrivalAt: _date(r['flight_arrival_at']),
+      depositStatus: DepositStatus.fromValue(r['deposit_status'] as String),
+      depositHeldAmount: r['deposit_held_amount'] as int? ?? 0,
+      assignedDriverId: r['assigned_driver_id'] as String?,
+      riderName: rider?['name'] as String?,
+      riderPhone: rider?['phone'] as String?,
+      handover: find(InspectionType.handover),
+      returnInspection: find(InspectionType.return_),
+    );
+  }
+
+  /// Re-runs [load] whenever any of [triggers] emits (bookings and their inspections change apart).
+  Stream<T> _reloadOn<T>(List<Stream<Object?>> triggers, Future<T> Function() load) {
+    late final StreamController<T> out;
+    final subs = <StreamSubscription<Object?>>[];
+    var loading = false, again = false;
+    Future<void> reload() async {
+      if (loading) {
+        again = true;
+        return;
+      }
+      loading = true;
+      try {
+        do {
+          again = false;
+          final v = await load();
+          if (!out.isClosed) out.add(v);
+        } while (again);
+      } on Object catch (e, s) {
+        if (!out.isClosed) out.addError(e, s);
+      } finally {
+        loading = false;
+      }
+    }
+
+    out = StreamController<T>(
+      onListen: () {
+        for (final t in triggers) {
+          subs.add(t.listen((_) => unawaited(reload()), onError: out.addError));
+        }
+      },
+      onCancel: () async {
+        for (final s in subs) {
+          await s.cancel();
+        }
+      },
+    );
+    return out.stream;
+  }
+
+  Stream<Object?> _inspectionChanges() => _db.from('rental_inspections').stream(primaryKey: ['id']);
+
+  @override
+  Future<List<RentalVehicle>> rentalVehicles(String cityCode) => _call(() async {
+    final rows = await _db
+        .from('rental_vehicles')
+        .select()
+        .eq('city_code', cityCode)
+        .eq('status', 'available')
+        .order('daily_rate');
+    return rows.map(_vehicleFrom).toList();
+  });
+
+  @override
+  Future<List<Airport>> airports() => _call(() async {
+    final rows = await _db.from('airports').select().order('code');
+    return [
+      for (final r in rows)
+        Airport(
+          code: r['code'] as String,
+          name: r['name'] as String,
+          cityCode: r['city_code'] as String,
+          pickupFee: r['pickup_fee'] as int,
+          terminals: List<String>.from(r['terminals'] as List? ?? const []),
+        ),
+    ];
+  });
+
+  Future<RentalBooking> _loadBooking(String id, {bool withRider = false}) async {
+    final row = await _db.from('rental_bookings').select(_bookingSelect).eq('id', id).single();
+    return _bookingFrom(row, rider: withRider ? await _rentalRider(id) : null);
+  }
+
+  Future<Map<String, dynamic>> _rentalRider(String bookingId) async => Map<String, dynamic>.from(
+    await _db.rpc<dynamic>('get_rental_rider', params: {'p_booking_id': bookingId}) as Map,
+  );
+
+  @override
+  Future<RentalBooking> bookRental(RentalRequest r) => _call(() async {
+    final methodId = await _paymentMethodId(r.paymentMethod);
+    final airport = r.pickupType == RentalPickupType.airport;
+    final row = await _db.rpc<Map<String, dynamic>>(
+      'create_rental_booking',
+      params: {
+        'p_vehicle_id': r.vehicle.id,
+        'p_starts_at': r.startsAt.toUtc().toIso8601String(),
+        'p_ends_at': r.endsAt.toUtc().toIso8601String(),
+        'p_pickup_type': r.pickupType.value,
+        'p_payment_method': r.paymentMethod.value,
+        'p_payment_method_id': methodId,
+        if (!airport) 'p_pickup_address': r.pickupAddress,
+        if (airport) 'p_airport_code': r.airport?.code,
+        if (airport) 'p_terminal': r.terminal,
+        if (airport) 'p_flight_number': r.flightNumber?.toUpperCase().replaceAll(' ', ''),
+        if (airport) 'p_flight_arrival_at': r.flightArrivalAt?.toUtc().toIso8601String(),
+      },
+    );
+    // TODO(payments): start the provider flow (USSD push / card sheet) here once one is chosen;
+    // until then the payment row stays pending and the payment webhook confirms it.
+    return _loadBooking(row['id'] as String);
+  });
+
+  @override
+  Stream<List<RentalBooking>> watchMyRentals() => _reloadOn(
+    [
+      _db.from('rental_bookings').stream(primaryKey: ['id']).eq('rider_id', _uid),
+      _inspectionChanges(),
+    ],
+    () async {
+      final rows = await _db
+          .from('rental_bookings')
+          .select(_bookingSelect)
+          .eq('rider_id', _uid)
+          .order('starts_at', ascending: false);
+      return rows.map(_bookingFrom).toList();
+    },
+  );
+
+  @override
+  Stream<RentalBooking> watchRental(String bookingId) {
+    final triggers = [
+      _db.from('rental_bookings').stream(primaryKey: ['id']).eq('id', bookingId),
+      _db.from('rental_inspections').stream(primaryKey: ['id']).eq('booking_id', bookingId),
+    ];
+    return _reloadOn(triggers, () => _loadBooking(bookingId, withRider: role == AppRole.driver));
+  }
+
+  @override
+  Future<RentalBooking> cancelRental(String bookingId, {String? reason}) => _call(() async {
+    await _db.rpc<dynamic>(
+      'cancel_rental_booking',
+      params: {'p_booking_id': bookingId, 'p_reason': reason},
+    );
+    return _loadBooking(bookingId);
+  });
+
+  @override
+  Future<void> confirmInspection(String bookingId, InspectionType type) => _call(
+    () => _db.rpc<dynamic>(
+      'confirm_rental_inspection',
+      params: {'p_booking_id': bookingId, 'p_type': type.value},
+    ),
+  );
+
+  @override
+  Future<void> requestReturn(String bookingId) => _call(() async {
+    // Nothing to write: the assigned driver meets the rider and submits the return inspection.
+    final b = await _loadBooking(bookingId);
+    if (b.status != RentalBookingStatus.active) throw const BackendException('return_not_allowed');
+  });
+
+  @override
+  Stream<List<RentalBooking>> watchAssignedRentals() => _reloadOn(
+    [
+      _db.from('rental_bookings').stream(primaryKey: ['id']).eq('assigned_driver_id', _uid),
+      _inspectionChanges(),
+    ],
+    () async {
+      final rows = await _db
+          .from('rental_bookings')
+          .select(_bookingSelect)
+          .eq('assigned_driver_id', _uid)
+          .neq('status', 'cancelled')
+          .order('starts_at');
+      return [for (final r in rows) _bookingFrom(r, rider: await _rentalRider(r['id'] as String))];
+    },
+  );
+
+  @override
+  Future<void> submitInspection(
+    String bookingId,
+    InspectionType type,
+    InspectionDraft draft, {
+    void Function(double)? onProgress,
+  }) => _call(() async {
+    if (!inspectionSides.every(draft.localPhotos.containsKey)) {
+      throw const BackendException('photos_missing');
+    }
+    final paths = <String, String>{};
+    var done = 0;
+    for (final side in inspectionSides) {
+      final path = '$bookingId/${type.value}/$side.jpg';
+      await _db.storage
+          .from('inspection-photos')
+          .upload(
+            path,
+            File(draft.localPhotos[side]!),
+            fileOptions: const FileOptions(upsert: true, contentType: 'image/jpeg'),
+          );
+      paths[side] = path;
+      onProgress?.call(++done / (inspectionSides.length + 1));
+    }
+    await _db.rpc<dynamic>(
+      'submit_rental_inspection',
+      params: {
+        'p_booking_id': bookingId,
+        'p_type': type.value,
+        'p_fuel_level': draft.fuelLevel,
+        'p_odometer_km': draft.odometerKm,
+        'p_photo_paths': paths,
+        'p_damage_notes': draft.damageNotes,
+        'p_checklist': draft.checklist,
+        'p_deposit_hold_amount': draft.depositHoldAmount,
+      },
+    );
+    onProgress?.call(1);
   });
 }
 

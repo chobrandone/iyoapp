@@ -12,6 +12,7 @@ import 'locale_controller.dart';
 import 'screens/account_screens.dart';
 import 'screens/auth_flow_screens.dart';
 import 'screens/auth_screens.dart';
+import 'screens/rental_screens.dart';
 import 'screens/ride_screens.dart';
 import 'screens/safety_screens.dart';
 import 'screens/trip_view.dart';
@@ -34,12 +35,12 @@ const List<(String, String)> designScreens = [
   ('/trip/complete', 'RIDER · 07 · Arrived & rating'),
   ('/trip/chat', 'Chat with driver'),
   ('/trip/no-drivers', 'No drivers nearby'),
-  ('/safety-alert', 'RIDER · SAFETY · Safety alert'),
-  ('/safety-sent', 'RIDER · SAFETY SENT · Alert sent'),
+  ('/design/safety-alert', 'RIDER · SAFETY · Safety alert'),
+  ('/design/safety-sent', 'RIDER · SAFETY SENT · Alert sent'),
   ('/design/activity', 'Your activity'),
   ('/design/notifications', 'Notifications'),
   ('/saved-places', 'Saved places'),
-  ('/trusted-contacts', 'Trusted contacts'),
+  ('/design/trusted-contacts', 'Trusted contacts'),
   ('/wallet', 'Wallet'),
   ('/support', 'iyodriver support'),
   ('/design/account', 'Account (interim, no frame attached)'),
@@ -56,6 +57,11 @@ bool _needsAuth(String path) => const [
   '/plan',
   '/choose',
   '/ride',
+  '/safety-alert',
+  '/safety-sent',
+  '/trusted-contacts',
+  '/rent',
+  '/rentals',
 ].any((p) => path == p || path.startsWith('$p/'));
 
 /// Re-runs the redirect when the signed-in profile changes.
@@ -95,7 +101,9 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [GoRoute(path: '/home', builder: (_, _) => const HomeScreen())],
           ),
           StatefulShellBranch(
-            routes: [GoRoute(path: '/activity', builder: (_, _) => const ActivityScreen())],
+            routes: [
+              GoRoute(path: '/activity', builder: (_, _) => const ActivityScreen(live: true)),
+            ],
           ),
           StatefulShellBranch(
             routes: [GoRoute(path: '/safety', builder: (_, _) => const SafetyScreen(inTabs: true))],
@@ -125,13 +133,44 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
         ],
       ),
-      GoRoute(path: '/safety-alert', builder: (_, _) => const SafetyScreen()),
-      GoRoute(path: '/safety-sent', builder: (_, _) => const AlertSentScreen()),
+      GoRoute(
+        path: '/rent',
+        builder: (_, _) => const RentBrowseScreen(),
+        routes: [
+          GoRoute(path: 'car', builder: (_, _) => const RentalCarScreen()),
+          GoRoute(path: 'dates', builder: (_, _) => const RentalDatesScreen()),
+          GoRoute(path: 'review', builder: (_, _) => const RentalReviewScreen()),
+        ],
+      ),
+      GoRoute(
+        path: '/rentals',
+        builder: (_, _) => const MyRentalsScreen(),
+        routes: [
+          GoRoute(
+            path: ':id',
+            builder: (_, state) => RentalBookingScreen(bookingId: state.pathParameters['id']!),
+          ),
+        ],
+      ),
+      GoRoute(
+        path: '/safety-alert',
+        builder: (_, state) => SafetyScreen(rideId: state.uri.queryParameters['ride']),
+      ),
+      GoRoute(
+        path: '/safety-sent',
+        builder: (_, state) => AlertSentScreen(args: state.extra as AlertSentArgs?),
+      ),
       GoRoute(path: '/saved-places', builder: (_, _) => const SavedPlacesScreen()),
       GoRoute(path: '/trusted-contacts', builder: (_, _) => const TrustedContactsScreen()),
       GoRoute(path: '/wallet', builder: (_, _) => const WalletScreen()),
       GoRoute(path: '/support', builder: (_, _) => const SupportChatScreen()),
       // Design previews with the Figma sample content (no sign-in, no live data).
+      GoRoute(path: '/design/safety-alert', builder: (_, _) => const SafetyScreen(preview: true)),
+      GoRoute(path: '/design/safety-sent', builder: (_, _) => const AlertSentScreen()),
+      GoRoute(
+        path: '/design/trusted-contacts',
+        builder: (_, _) => const TrustedContactsScreen(preview: true),
+      ),
       GoRoute(path: '/design/verify', builder: (_, _) => const VerifyScreen()),
       GoRoute(
         path: '/design/home',

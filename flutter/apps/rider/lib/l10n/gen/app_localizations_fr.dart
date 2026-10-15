@@ -129,7 +129,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get welcomeHeadline => 'Moins d\'attente.\nPlus de mouvement.';
 
   @override
-  String get welcomeBody => 'Réservez une course ou une voiture pour quelques jours. Où que la vie vous mène, allez-y avec iyodriver.';
+  String get welcomeBody =>
+      'Réservez une course ou une voiture pour quelques jours. Où que la vie vous mène, allez-y avec iyodriver.';
 
   @override
   String get welcomeGetStarted => 'Commencer';
@@ -171,7 +172,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get showPassword => 'Afficher le mot de passe';
 
   @override
-  String get agreeTerms => 'J\'accepte les Conditions d\'utilisation et la Politique de confidentialité.';
+  String get agreeTerms =>
+      'J\'accepte les Conditions d\'utilisation et la Politique de confidentialité.';
 
   @override
   String get alreadyRegistered => 'Déjà inscrit ?';
@@ -183,7 +185,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get loginTitle => 'Bon retour';
 
   @override
-  String get loginSubtitle => 'Connectez-vous avec votre numéro. Nous vous enverrons un code par SMS.';
+  String get loginSubtitle =>
+      'Connectez-vous avec votre numéro. Nous vous enverrons un code par SMS.';
 
   @override
   String get loginSendCode => 'Envoyer le code';
@@ -223,7 +226,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get saferStartTitle => 'Un départ plus sûr';
 
   @override
-  String get saferStartBody => 'La vérification relie chaque trajet iyodriver à une vraie personne.';
+  String get saferStartBody =>
+      'La vérification relie chaque trajet iyodriver à une vraie personne.';
 
   @override
   String get verifyContinue => 'Vérifier et continuer';
@@ -416,7 +420,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tryAgainShortly => 'Réessayons dans un instant';
 
   @override
-  String get noMatchBody => 'Aucun chauffeur disponible n\'a pu accepter votre demande. Vous n\'avez pas été débité.';
+  String get noMatchBody =>
+      'Aucun chauffeur disponible n\'a pu accepter votre demande. Vous n\'avez pas été débité.';
 
   @override
   String toPlace(String place) {
@@ -427,7 +432,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get requestNotBooked => 'Demande non réservée';
 
   @override
-  String get noDriversHint => 'Essayez un point de départ proche ou réessayez dans quelques minutes. La disponibilité change vite.';
+  String get noDriversHint =>
+      'Essayez un point de départ proche ou réessayez dans quelques minutes. La disponibilité change vite.';
 
   @override
   String get tryAgain => 'Réessayer';
@@ -523,13 +529,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get trustedContactSelected => 'Contact de confiance · Sélectionné';
 
   @override
-  String get trustedContactHelper => 'Position en direct, chauffeur, véhicule et lien du trajet seront envoyés.';
+  String get trustedContactHelper =>
+      'Position en direct, chauffeur, véhicule et lien du trajet seront envoyés.';
 
   @override
   String get messagePreview => 'Aperçu du message';
 
   @override
-  String get defaultAlertMessage => 'J\'ai besoin d\'aide. Prends de mes nouvelles et suis mon trajet iyodriver en direct.';
+  String get defaultAlertMessage =>
+      'J\'ai besoin d\'aide. Prends de mes nouvelles et suis mon trajet iyodriver en direct.';
 
   @override
   String currentLocationAt(String place) {
@@ -540,7 +548,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get sendAlert => 'Envoyer l\'alerte';
 
   @override
-  String get sendAlertFooter => 'Envoie votre position et les détails du trajet à votre contact de confiance et à l\'équipe sécurité iyodriver.';
+  String get sendAlertFooter =>
+      'Envoie votre position et les détails du trajet à votre contact de confiance et à l\'équipe sécurité iyodriver.';
 
   @override
   String get alertSentTitle => 'Votre alerte a été envoyée';
@@ -596,7 +605,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get otherFavourites => 'Autres favoris';
 
   @override
-  String get savedFooter => 'Touchez une adresse pour la modifier. Vos adresses ne sont visibles que par vous.';
+  String get savedFooter =>
+      'Touchez une adresse pour la modifier. Vos adresses ne sont visibles que par vous.';
 
   @override
   String get addPlace => 'Ajouter une adresse';
@@ -611,10 +621,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get shareJourney => 'Partagez votre trajet';
 
   @override
-  String get shareJourneyBody1 => 'Envoyez un lien de suivi à vos contacts pendant n\'importe quelle course.';
+  String get shareJourneyBody1 =>
+      'Envoyez un lien de suivi à vos contacts pendant n\'importe quelle course.';
 
   @override
-  String get shareJourneyBody2 => 'Vos contacts voient l\'itinéraire, le chauffeur et l\'heure d\'arrivée quand vous partagez.';
+  String get shareJourneyBody2 =>
+      'Vos contacts voient l\'itinéraire, le chauffeur et l\'heure d\'arrivée quand vous partagez.';
 
   @override
   String yourContacts(String count, String max) {
@@ -639,7 +651,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get inControl => 'C\'est vous qui décidez';
 
   @override
-  String get inControlBody => 'Le partage ne commence que lorsque vous envoyez un lien. Vous pouvez l\'arrêter ou retirer un contact à tout moment.';
+  String get inControlBody =>
+      'Le partage ne commence que lorsque vous envoyez un lien. Vous pouvez l\'arrêter ou retirer un contact à tout moment.';
 
   @override
   String tcFooter(String number) {
@@ -720,7 +733,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get otpInvalid => 'Ce code n\'est pas correct. Vérifiez le SMS et réessayez.';
 
   @override
-  String get wrongApp => 'Ce numéro est inscrit comme chauffeur. Utilisez l\'application iyodriver Driver.';
+  String get wrongApp =>
+      'Ce numéro est inscrit comme chauffeur. Utilisez l\'application iyodriver Driver.';
 
   @override
   String get signOut => 'Se déconnecter';
@@ -735,7 +749,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get locationDeniedTitle => 'Localisation désactivée';
 
   @override
-  String get locationDeniedBody => 'Autorisez la localisation pour que les chauffeurs vous trouvent, ou saisissez votre adresse.';
+  String get locationDeniedBody =>
+      'Autorisez la localisation pour que les chauffeurs vous trouvent, ou saisissez votre adresse.';
 
   @override
   String get openSettings => 'Ouvrir les réglages';
@@ -887,4 +902,490 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get menuScreens => 'Tous les écrans (dev)';
+
+  @override
+  String get noActiveTrip => 'Aucune course en cours';
+
+  @override
+  String get emergencyCallTitle => 'Appeler les secours';
+
+  @override
+  String get emergencyPolice => 'Police';
+
+  @override
+  String get emergencyFire => 'Sapeurs-pompiers';
+
+  @override
+  String get emergencyAmbulance => 'Ambulance';
+
+  @override
+  String get shareNeedsTrip => 'Disponible pendant une course.';
+
+  @override
+  String get shareTripSubject => 'Ma course iyodriver';
+
+  @override
+  String shareTripText(String time, String link) {
+    return 'Suivez ma course iyodriver en direct (lien valable jusqu’à $time) : $link';
+  }
+
+  @override
+  String get shareFailed => 'Impossible de créer le lien de partage. Réessayez.';
+
+  @override
+  String get contactsToNotify => 'Contacts de confiance à prévenir';
+
+  @override
+  String get noContactsYet => 'Aucun contact de confiance pour l’instant.';
+
+  @override
+  String get addContactLink => 'Ajouter un contact de confiance';
+
+  @override
+  String get locationUnknown => 'Position actuelle indisponible';
+
+  @override
+  String alertFailed(String number) {
+    return 'L’alerte n’a pas pu être envoyée. Vérifiez votre connexion ou appelez le $number.';
+  }
+
+  @override
+  String contactsNotifiedCount(String count) {
+    return '$count contacts de confiance prévenus';
+  }
+
+  @override
+  String get noContactNotified => 'Aucun contact de confiance prévenu';
+
+  @override
+  String get noContactNotifiedBody =>
+      'Ajoutez des contacts de confiance pour qu’on les prévienne la prochaine fois.';
+
+  @override
+  String get alertsOn => 'Alertes activées';
+
+  @override
+  String get alertsOff => 'Alertes désactivées';
+
+  @override
+  String textOnAlert(String name) {
+    return 'Prévenir $name si je lance une alerte';
+  }
+
+  @override
+  String get removeContact => 'Retirer';
+
+  @override
+  String removeContactTitle(String name) {
+    return 'Retirer $name ?';
+  }
+
+  @override
+  String get removeContactBody =>
+      'Cette personne ne sera plus prévenue lorsque vous lancez une alerte.';
+
+  @override
+  String get contactName => 'Nom complet';
+
+  @override
+  String get contactPhone => 'Numéro de mobile';
+
+  @override
+  String get contactRelationship => 'Lien (facultatif)';
+
+  @override
+  String get contactRelationshipHint => 'Sœur, ami, collègue…';
+
+  @override
+  String get saveContact => 'Enregistrer le contact';
+
+  @override
+  String contactLimit(String max) {
+    return 'Vous pouvez ajouter jusqu’à $max contacts de confiance.';
+  }
+
+  @override
+  String get contactDuplicate => 'Ce numéro fait déjà partie de vos contacts de confiance.';
+
+  @override
+  String get contactsEmptyTitle => 'Ajoutez une personne de confiance';
+
+  @override
+  String get contactsEmptyBody =>
+      'Elle reçoit un SMS avec votre course en direct si vous lancez une alerte.';
+
+  @override
+  String get flowRent => 'Passager · Location';
+
+  @override
+  String get rentHomeTitle => 'Louer une voiture';
+
+  @override
+  String get rentHomeBody => 'Location à la journée, livrée à votre adresse ou à l’aéroport.';
+
+  @override
+  String get browseCars => 'Voir les voitures';
+
+  @override
+  String get myRentals => 'Mes locations';
+
+  @override
+  String get rentTitle => 'Louer une voiture';
+
+  @override
+  String get rentSubtitle => 'Choisissez une voiture, puis vos dates et le lieu de remise.';
+
+  @override
+  String get cityDouala => 'Douala';
+
+  @override
+  String get cityYaounde => 'Yaoundé';
+
+  @override
+  String get noCarsTitle => 'Aucune voiture disponible';
+
+  @override
+  String get noCarsBody => 'Essayez l’autre ville ou revenez plus tard.';
+
+  @override
+  String get airportPickupBadge => 'Retrait aéroport';
+
+  @override
+  String get placeholderPricing =>
+      'Les prix affichés sont provisoires en attendant les tarifs de la flotte.';
+
+  @override
+  String get transmissionAutomatic => 'Automatique';
+
+  @override
+  String get transmissionManual => 'Manuelle';
+
+  @override
+  String get fuelPetrol => 'Essence';
+
+  @override
+  String get fuelDiesel => 'Diesel';
+
+  @override
+  String get fuelHybrid => 'Hybride';
+
+  @override
+  String get fuelElectric => 'Électrique';
+
+  @override
+  String seatsCount(String count) {
+    return '$count places';
+  }
+
+  @override
+  String get carSpecs => 'Caractéristiques';
+
+  @override
+  String get specDailyRate => 'Tarif journalier';
+
+  @override
+  String get specDeposit => 'Caution (bloquée à la remise)';
+
+  @override
+  String get specKmPerDay => 'Kilométrage inclus';
+
+  @override
+  String kmPerDayValue(String km) {
+    return '$km km / jour';
+  }
+
+  @override
+  String get specExtraKm => 'Kilomètre supplémentaire';
+
+  @override
+  String perKm(String price) {
+    return '$price / km';
+  }
+
+  @override
+  String get specPlate => 'Immatriculation';
+
+  @override
+  String get chooseDates => 'Choisir les dates';
+
+  @override
+  String get datesTitle => 'Dates et retrait';
+
+  @override
+  String get datesSubtitle => 'La location est facturée par jour entamé (24 h).';
+
+  @override
+  String get startLabel => 'Début';
+
+  @override
+  String get endLabel => 'Retour';
+
+  @override
+  String get pickDate => 'Choisir une date';
+
+  @override
+  String daysCount(String days) {
+    return '$days jours';
+  }
+
+  @override
+  String get oneDay => '1 jour';
+
+  @override
+  String get pickupAddress => 'Adresse';
+
+  @override
+  String get pickupAirport => 'Aéroport';
+
+  @override
+  String get deliveryAddress => 'Adresse de livraison';
+
+  @override
+  String get deliveryAddressHint => 'Rue, quartier, repère';
+
+  @override
+  String get airportLabel => 'Aéroport';
+
+  @override
+  String get terminalLabel => 'Terminal';
+
+  @override
+  String get flightNumber => 'Numéro de vol';
+
+  @override
+  String get flightNumberHint => 'ex. AF900';
+
+  @override
+  String get flightInvalid => 'Saisissez un numéro de vol comme AF900.';
+
+  @override
+  String get flightArrival => 'Heure d’arrivée';
+
+  @override
+  String airportFeeNote(String fee) {
+    return 'Livraison à l’aéroport : $fee. Le chauffeur vous attend avec une pancarte aux arrivées.';
+  }
+
+  @override
+  String get airportUnavailable => 'Cette voiture ne peut pas être livrée à l’aéroport.';
+
+  @override
+  String get periodInvalid => 'Le retour doit suivre le début, et le début être dans le futur.';
+
+  @override
+  String get reviewAndPay => 'Vérifier et payer';
+
+  @override
+  String get reviewTitle => 'Vérifiez votre location';
+
+  @override
+  String get reviewSubtitle =>
+      'Vous payez la location maintenant. La caution est bloquée à la remise du véhicule.';
+
+  @override
+  String rentalDates(String start, String end) {
+    return '$start → $end';
+  }
+
+  @override
+  String rentalAmountLine(String days) {
+    return 'Location · $days';
+  }
+
+  @override
+  String get airportFeeLine => 'Livraison aéroport';
+
+  @override
+  String get totalNow => 'Total à payer maintenant';
+
+  @override
+  String get depositLater => 'Caution bloquée à la remise';
+
+  @override
+  String kmAllowance(String km) {
+    return 'Kilométrage inclus : $km km';
+  }
+
+  @override
+  String get paymentLabel => 'Paiement';
+
+  @override
+  String get cashAtHandover => 'Le paiement en espèces se fait au chauffeur à la remise.';
+
+  @override
+  String get rentalTerms => 'J’accepte les conditions de location et la caution.';
+
+  @override
+  String payAmount(String amount) {
+    return 'Payer $amount';
+  }
+
+  @override
+  String get bookCash => 'Réserver · espèces à la remise';
+
+  @override
+  String get carTaken =>
+      'Cette voiture est déjà réservée à ces dates. Choisissez d’autres dates ou une autre voiture.';
+
+  @override
+  String get paymentMethodMissing =>
+      'Ajoutez d’abord ce moyen de paiement dans votre portefeuille.';
+
+  @override
+  String bookingRef(String ref) {
+    return 'Réservation $ref';
+  }
+
+  @override
+  String get rentalPendingTitle => 'Validez le paiement';
+
+  @override
+  String rentalPendingBody(String amount) {
+    return 'Confirmez $amount sur votre téléphone pour réserver la voiture.';
+  }
+
+  @override
+  String get rentalConfirmedTitle => 'Réservation confirmée';
+
+  @override
+  String get rentalConfirmedBody => 'Nous assignons le chauffeur qui vous livrera la voiture.';
+
+  @override
+  String get rentalAssignedTitle => 'Chauffeur assigné';
+
+  @override
+  String rentalAssignedBody(String date) {
+    return 'Votre chauffeur apporte la voiture le $date.';
+  }
+
+  @override
+  String get handoverReadyTitle => 'Vérifiez la voiture';
+
+  @override
+  String get handoverReadyBody =>
+      'Le chauffeur a relevé l’état de la voiture. Vérifiez-le avec lui, puis confirmez.';
+
+  @override
+  String get confirmHandover => 'Confirmer la remise';
+
+  @override
+  String get rentalActiveTitle => 'Bonne route';
+
+  @override
+  String rentalActiveBody(String date) {
+    return 'Rendez la voiture avant le $date.';
+  }
+
+  @override
+  String get returnCar => 'Rendre la voiture';
+
+  @override
+  String get returnRequested => 'Retour demandé. Le chauffeur inspectera la voiture avec vous.';
+
+  @override
+  String get returnReadyTitle => 'Vérifiez le retour';
+
+  @override
+  String get returnReadyBody =>
+      'Vérifiez l’inspection de retour. Votre caution est libérée quand vous confirmez.';
+
+  @override
+  String get confirmReturn => 'Confirmer le retour';
+
+  @override
+  String get rentalCompletedTitle => 'Location terminée';
+
+  @override
+  String get depositReleased => 'Caution libérée en totalité';
+
+  @override
+  String depositPartiallyHeld(String amount) {
+    return '$amount retenus sur la caution';
+  }
+
+  @override
+  String get rentalCancelledTitle => 'Réservation annulée';
+
+  @override
+  String get cancelBooking => 'Annuler la réservation';
+
+  @override
+  String get cancelBookingTitle => 'Annuler cette réservation ?';
+
+  @override
+  String get cancelBookingBody => 'Vous pouvez annuler sans frais jusqu’au début de la location.';
+
+  @override
+  String get keepBooking => 'Garder la réservation';
+
+  @override
+  String get inspectionHandover => 'Inspection à la remise';
+
+  @override
+  String get inspectionReturn => 'Inspection au retour';
+
+  @override
+  String get fuelLevel => 'Carburant';
+
+  @override
+  String fuelEighths(String n) {
+    return '$n/8 du réservoir';
+  }
+
+  @override
+  String get odometer => 'Compteur';
+
+  @override
+  String kmValue(String km) {
+    return '$km km';
+  }
+
+  @override
+  String get photosTaken => 'Photos';
+
+  @override
+  String photosCount(String n) {
+    return '$n côtés sur 5';
+  }
+
+  @override
+  String get damageNotes => 'Dommages constatés';
+
+  @override
+  String get noDamage => 'Aucun dommage constaté';
+
+  @override
+  String get depositHoldProposed => 'Retenu sur la caution';
+
+  @override
+  String get statusPendingPayment => 'Paiement en attente';
+
+  @override
+  String get statusDriverAssigned => 'Chauffeur assigné';
+
+  @override
+  String get statusActive => 'En cours';
+
+  @override
+  String get statusReturnPending => 'Contrôle retour';
+
+  @override
+  String get statusCancelled => 'Annulée';
+
+  @override
+  String get rentalsEmptyTitle => 'Aucune location pour l’instant';
+
+  @override
+  String get rentalsEmptyBody => 'Vos réservations apparaissent ici.';
+
+  @override
+  String get rentalFailed => 'La réservation n’a pas abouti. Réessayez.';
+
+  @override
+  String pickupAt(String place) {
+    return 'Retrait : $place';
+  }
+
+  @override
+  String get rentalReportProblem => 'Signaler un problème';
 }

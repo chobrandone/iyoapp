@@ -8,6 +8,7 @@ import 'package:iyo_ui/iyo_ui.dart';
 import '../locale_controller.dart';
 import '../sample/sample_data.dart';
 import '../widgets/rider_widgets.dart';
+import 'rental_screens.dart';
 
 enum _Filter { all, unread }
 
@@ -131,14 +132,18 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 enum _Activity { all, rides, rentals }
 
 /// Ride and rental activity (Figma 2025:51), Activity tab.
-class ActivityScreen extends StatefulWidget {
-  const ActivityScreen({super.key});
+class ActivityScreen extends ConsumerStatefulWidget {
+  const ActivityScreen({super.key, this.live = false});
+
+  /// Live: the rider's own rentals. Ride history has no backend query yet, so the sample rides
+  /// are only shown in the design preview.
+  final bool live;
 
   @override
-  State<ActivityScreen> createState() => _ActivityScreenState();
+  ConsumerState<ActivityScreen> createState() => _ActivityScreenState();
 }
 
-class _ActivityScreenState extends State<ActivityScreen> {
+class _ActivityScreenState extends ConsumerState<ActivityScreen> {
   var _filter = _Activity.all;
 
   @override
@@ -179,81 +184,118 @@ class _ActivityScreenState extends State<ActivityScreen> {
             IyoSegment(value: _Activity.rentals, label: t.filterRentals),
           ],
         ),
-        if (showRentals) ...[
-          SectionTitle(t.upcomingRental),
-          IyoCard(
-            onPressed: () {},
-            children: [
-              Row(
-                children: [
-                  // TODO(design): use the vehicle's own photo from rental_vehicles.image_paths.
-                  Image.asset(
-                    'assets/images/rental_car.png',
-                    width: 86,
-                    height: 48,
-                    fit: BoxFit.contain,
-                  ),
-                  const SizedBox(width: 18),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const IyoText('Toyota RAV4', variant: IyoTextVariant.cardTitle),
-                        Footnote(
-                          tr(
-                            context,
-                            'Petrol · Automatic · 5 seats',
-                            'Essence · Automatique · 5 places',
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        IyoBadge(t.perDay(formatFcfa(35000))),
-                      ],
+        if (widget.live) ...[
+          if (showRentals) ..._liveRentals(context),
+        ] else ...[
+          if (showRentals) ...[
+            SectionTitle(t.upcomingRental),
+            IyoCard(
+              onPressed: () {},
+              children: [
+                Row(
+                  children: [
+                    // TODO(design): use the vehicle's own photo from rental_vehicles.image_paths.
+                    Image.asset(
+                      'assets/images/rental_car.png',
+                      width: 86,
+                      height: 48,
+                      fit: BoxFit.contain,
                     ),
-                  ),
-                ],
-              ),
-              IyoListRow(
-                title: '17–20/10 · 10:00',
-                titleVariant: IyoTextVariant.listTitle,
-                inlineChevron: true,
-                subtitle: tr(
-                  context,
-                  'Douala airport (DLA) · Booking RN-2048',
-                  'Aéroport de Douala (DLA) · Réservation RN-2048',
+                    const SizedBox(width: 18),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const IyoText('Toyota RAV4', variant: IyoTextVariant.cardTitle),
+                          Footnote(
+                            tr(
+                              context,
+                              'Petrol · Automatic · 5 seats',
+                              'Essence · Automatique · 5 places',
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          IyoBadge(t.perDay(formatFcfa(35000))),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                verticalPadding: 0,
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: IyoBadge(t.statusConfirmed, tone: IyoBadgeTone.success),
-              ),
-            ],
-          ),
+                IyoListRow(
+                  title: '17–20/10 · 10:00',
+                  titleVariant: IyoTextVariant.listTitle,
+                  inlineChevron: true,
+                  subtitle: tr(
+                    context,
+                    'Douala airport (DLA) · Booking RN-2048',
+                    'Aéroport de Douala (DLA) · Réservation RN-2048',
+                  ),
+                  verticalPadding: 0,
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: IyoBadge(t.statusConfirmed, tone: IyoBadgeTone.success),
+                ),
+              ],
+            ),
+          ],
+          if (showRides || showRentals) SectionTitle(t.recentJourneys),
+          if (showRides) ...[
+            journey(
+              Sample.destination,
+              formatFcfa(3600),
+              '14/10 · 09:22 · ${tr(context, 'Ride', 'Course')} RD-1042',
+              completed: true,
+            ),
+            journey(
+              'Bonapriso',
+              formatFcfa(2500),
+              '12/10 · 18:45 · ${tr(context, 'Ride', 'Course')} RD-1031',
+            ),
+          ],
+          if (showRentals)
+            journey(
+              'Toyota Corolla',
+              formatFcfa(75000),
+              tr(context, '3–5/10 · Akwa pickup · Rental', '3–5/10 · Retrait Akwa · Location'),
+            ),
         ],
-        if (showRides || showRentals) SectionTitle(t.recentJourneys),
-        if (showRides) ...[
-          journey(
-            Sample.destination,
-            formatFcfa(3600),
-            '14/10 · 09:22 · ${tr(context, 'Ride', 'Course')} RD-1042',
-            completed: true,
-          ),
-          journey(
-            'Bonapriso',
-            formatFcfa(2500),
-            '12/10 · 18:45 · ${tr(context, 'Ride', 'Course')} RD-1031',
-          ),
-        ],
-        if (showRentals)
-          journey(
-            'Toyota Corolla',
-            formatFcfa(75000),
-            tr(context, '3–5/10 · Akwa pickup · Rental', '3–5/10 · Retrait Akwa · Location'),
-          ),
         Footnote(t.activityFooter),
       ],
     );
+  }
+}
+
+extension on _ActivityScreenState {
+  List<Widget> _liveRentals(BuildContext context) {
+    final t = context.t;
+    final list = ref.watch(myRentalsProvider).value;
+    if (list == null) return const [IyoSkeletonRow()];
+    bool done(RentalBooking b) =>
+        b.status == RentalBookingStatus.completed || b.status == RentalBookingStatus.cancelled;
+    final upcoming = list.where((b) => !done(b)).toList();
+    final past = list.where(done).toList();
+    if (list.isEmpty) {
+      return [
+        IyoEmptyState(
+          icon: LucideIcons.calendarDays,
+          title: t.rentalsEmptyTitle,
+          message: t.rentalsEmptyBody,
+          actionLabel: t.browseCars,
+          onAction: () => context.push('/rent'),
+        ),
+      ];
+    }
+    return [
+      if (upcoming.isNotEmpty) ...[
+        SectionTitle(t.upcomingRental),
+        for (final b in upcoming) RentalSummaryCard(booking: b),
+      ],
+      if (past.isNotEmpty) ...[
+        SectionTitle(t.recentJourneys),
+        for (final b in past) RentalSummaryCard(booking: b),
+      ],
+    ];
   }
 }
 

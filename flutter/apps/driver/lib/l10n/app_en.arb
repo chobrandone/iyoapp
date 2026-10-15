@@ -419,5 +419,268 @@
   "language": "Language",
   "signOut": "Sign out",
   "componentGallery": "Component gallery (dev)",
-  "errorGeneric": "Something went wrong. Please try again."
+  "errorGeneric": "Something went wrong. Please try again.",
+  "safetySheetTitle": "Safety",
+  "shareTrip": "Share trip",
+  "shareTripBody": "Send a live link of this trip to someone you trust.",
+  "shareTripSubject": "My iyodriver trip",
+  "shareTripText": "Follow my iyodriver trip live (link valid until {time}): {link}",
+  "@shareTripText": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "link": {
+        "type": "String"
+      }
+    }
+  },
+  "reportIncident": "Report an incident",
+  "reportIncidentBody": "Tell the iyodriver safety team what happened.",
+  "callPolice": "Call police · {number}",
+  "@callPolice": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "shareFailed": "Could not create a share link. Try again.",
+  "flowIncident": "Driver · 17",
+  "incidentTitle": "Report an incident",
+  "incidentSubtitle": "The safety team reviews every report. Urgent reports are seen first.",
+  "incidentCategory": "What happened?",
+  "incidentAccident": "Road accident",
+  "incidentRiderBehaviour": "Rider behaviour",
+  "incidentVehicleDamage": "Damage to the vehicle",
+  "incidentTheft": "Theft or aggression",
+  "incidentLostItem": "Lost item",
+  "incidentPayment": "Payment problem",
+  "incidentOther": "Something else",
+  "incidentDescription": "Describe what happened",
+  "incidentDescriptionHint": "Where, when, who was involved…",
+  "incidentUrgent": "This is urgent",
+  "incidentUrgentBody": "The safety team calls you back as soon as possible.",
+  "incidentAbout": "About: {what}",
+  "@incidentAbout": {
+    "placeholders": {
+      "what": {
+        "type": "String"
+      }
+    }
+  },
+  "incidentAboutTrip": "your current trip",
+  "incidentAboutRental": "rental {ref}",
+  "@incidentAboutRental": {
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "incidentLocation": "Your location is attached: {where}",
+  "@incidentLocation": {
+    "placeholders": {
+      "where": {
+        "type": "String"
+      }
+    }
+  },
+  "incidentNoLocation": "Location unavailable; describe where you are.",
+  "incidentEmergency": "In danger? Call {number} first.",
+  "@incidentEmergency": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "sendReport": "Send report",
+  "pickCategory": "Choose what happened.",
+  "flowReportSent": "Driver · 18",
+  "reportSentTitle": "Report sent",
+  "reportSentSubtitle": "Thank you. The safety team has your report and trip details.",
+  "reportReference": "Reference {ref} · {time}",
+  "@reportReference": {
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "reportUrgentNote": "Marked urgent: keep your phone on, the team will call you.",
+  "reportNextNote": "You can keep driving. We may contact you for more details.",
+  "backToTrip": "Back to the trip",
+  "backToHome": "Back to home",
+  "segmentRentals": "Rentals",
+  "segmentTrips": "Trips",
+  "noRentalsTitle": "No rental deliveries",
+  "noRentalsBody": "Cars you are asked to deliver or collect appear here.",
+  "rentalFor": "For {name}",
+  "@rentalFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "rentalRef": "Rental {ref}",
+  "@rentalRef": {
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "deliverAt": "Deliver {date}",
+  "@deliverAt": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "collectBy": "Collect {date}",
+  "@collectBy": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "flightArrives": "Flight {flight} · lands {time}",
+  "@flightArrives": {
+    "placeholders": {
+      "flight": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "airportRequirements": "Meet the rider at arrivals with a name sign. Check the flight status before you leave.",
+  "rentalStatusToDeliver": "To deliver",
+  "rentalStatusAwaitingRider": "Awaiting rider",
+  "rentalStatusWithRider": "With rider",
+  "rentalStatusReturnCheck": "Return check",
+  "rentalStatusDone": "Done",
+  "flowRental": "Driver · 16",
+  "deliveryTitle": "Deliver {car}",
+  "@deliveryTitle": {
+    "placeholders": {
+      "car": {
+        "type": "String"
+      }
+    }
+  },
+  "deliverySubtitle": "Hand the car to {name} and record its condition together.",
+  "@deliverySubtitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "collectTitle": "Collect {car}",
+  "@collectTitle": {
+    "placeholders": {
+      "car": {
+        "type": "String"
+      }
+    }
+  },
+  "collectSubtitle": "Inspect the car with {name} before you take it back.",
+  "@collectSubtitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "navigateTo": "Navigate",
+  "startHandover": "Start handover checklist",
+  "startReturn": "Start return inspection",
+  "waitingRiderConfirm": "Waiting for {name} to confirm in the app.",
+  "@waitingRiderConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "rentalWithRider": "The rider has the car until {date}.",
+  "@rentalWithRider": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rentalCompleted": "Rental closed. Thank you.",
+  "depositToHold": "Deposit: {amount}",
+  "@depositToHold": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "handoverTitle": "Handover checklist",
+  "returnTitle": "Return inspection",
+  "checklistSubtitle": "Take the five photos, then record fuel, odometer and any damage.",
+  "photoFront": "Front",
+  "photoBack": "Back",
+  "photoLeft": "Left side",
+  "photoRight": "Right side",
+  "photoInterior": "Interior",
+  "photosRequired": "All five photos are required.",
+  "retakePhoto": "Retake",
+  "fuelLabel": "Fuel level",
+  "fuelValue": "{n}/8",
+  "@fuelValue": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "odometerLabel": "Odometer (km)",
+  "odometerInvalid": "Enter the odometer reading.",
+  "damageLabel": "Damage notes",
+  "damageHint": "Scratches, dents, warning lights… Leave empty if none.",
+  "checkDocuments": "Car papers in the glovebox",
+  "checkSpare": "Spare tyre and jack",
+  "checkClean": "Interior clean",
+  "depositHoldLabel": "Keep from deposit (FCFA)",
+  "depositHoldHelper": "0 releases the full deposit. Up to {amount}.",
+  "@depositHoldHelper": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "depositHoldInvalid": "Enter an amount between 0 and {amount}.",
+  "@depositHoldInvalid": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "submitHandover": "Submit for rider confirmation",
+  "uploadingPhotos": "Uploading photos… {percent}%",
+  "@uploadingPhotos": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "inspectionFailed": "The inspection could not be sent. Check your connection and try again.",
+  "menuReportIncident": "Report an incident"
 }

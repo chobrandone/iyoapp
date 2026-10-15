@@ -602,4 +602,329 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get errorGeneric => 'Une erreur s\'est produite. Veuillez réessayer.';
+
+  @override
+  String get safetySheetTitle => 'Sécurité';
+
+  @override
+  String get shareTrip => 'Partager la course';
+
+  @override
+  String get shareTripBody => 'Envoyez un lien en direct de cette course à un proche.';
+
+  @override
+  String get shareTripSubject => 'Ma course iyodriver';
+
+  @override
+  String shareTripText(String time, String link) {
+    return 'Suivez ma course iyodriver en direct (lien valable jusqu’à $time) : $link';
+  }
+
+  @override
+  String get reportIncident => 'Signaler un incident';
+
+  @override
+  String get reportIncidentBody => 'Expliquez à l’équipe sécurité iyodriver ce qui s’est passé.';
+
+  @override
+  String callPolice(String number) {
+    return 'Appeler la police · $number';
+  }
+
+  @override
+  String get shareFailed => 'Impossible de créer le lien de partage. Réessayez.';
+
+  @override
+  String get flowIncident => 'Chauffeur · 17';
+
+  @override
+  String get incidentTitle => 'Signaler un incident';
+
+  @override
+  String get incidentSubtitle => 'L’équipe sécurité examine chaque signalement. Les urgences sont traitées en priorité.';
+
+  @override
+  String get incidentCategory => 'Que s’est-il passé ?';
+
+  @override
+  String get incidentAccident => 'Accident de la route';
+
+  @override
+  String get incidentRiderBehaviour => 'Comportement du passager';
+
+  @override
+  String get incidentVehicleDamage => 'Dommage au véhicule';
+
+  @override
+  String get incidentTheft => 'Vol ou agression';
+
+  @override
+  String get incidentLostItem => 'Objet perdu';
+
+  @override
+  String get incidentPayment => 'Problème de paiement';
+
+  @override
+  String get incidentOther => 'Autre chose';
+
+  @override
+  String get incidentDescription => 'Décrivez ce qui s’est passé';
+
+  @override
+  String get incidentDescriptionHint => 'Où, quand, qui était impliqué…';
+
+  @override
+  String get incidentUrgent => 'C’est urgent';
+
+  @override
+  String get incidentUrgentBody => 'L’équipe sécurité vous rappelle dès que possible.';
+
+  @override
+  String incidentAbout(String what) {
+    return 'Concerne : $what';
+  }
+
+  @override
+  String get incidentAboutTrip => 'votre course en cours';
+
+  @override
+  String incidentAboutRental(String ref) {
+    return 'la location $ref';
+  }
+
+  @override
+  String incidentLocation(String where) {
+    return 'Votre position est jointe : $where';
+  }
+
+  @override
+  String get incidentNoLocation => 'Position indisponible ; précisez où vous êtes.';
+
+  @override
+  String incidentEmergency(String number) {
+    return 'En danger ? Appelez d’abord le $number.';
+  }
+
+  @override
+  String get sendReport => 'Envoyer le signalement';
+
+  @override
+  String get pickCategory => 'Choisissez ce qui s’est passé.';
+
+  @override
+  String get flowReportSent => 'Chauffeur · 18';
+
+  @override
+  String get reportSentTitle => 'Signalement envoyé';
+
+  @override
+  String get reportSentSubtitle => 'Merci. L’équipe sécurité a reçu votre signalement et les détails de la course.';
+
+  @override
+  String reportReference(String ref, String time) {
+    return 'Référence $ref · $time';
+  }
+
+  @override
+  String get reportUrgentNote => 'Marqué urgent : gardez votre téléphone allumé, l’équipe va vous appeler.';
+
+  @override
+  String get reportNextNote => 'Vous pouvez continuer à conduire. Nous pourrons vous recontacter.';
+
+  @override
+  String get backToTrip => 'Retour à la course';
+
+  @override
+  String get backToHome => 'Retour à l’accueil';
+
+  @override
+  String get segmentRentals => 'Locations';
+
+  @override
+  String get segmentTrips => 'Courses';
+
+  @override
+  String get noRentalsTitle => 'Aucune livraison de location';
+
+  @override
+  String get noRentalsBody => 'Les voitures à livrer ou récupérer apparaissent ici.';
+
+  @override
+  String rentalFor(String name) {
+    return 'Pour $name';
+  }
+
+  @override
+  String rentalRef(String ref) {
+    return 'Location $ref';
+  }
+
+  @override
+  String deliverAt(String date) {
+    return 'Livrer le $date';
+  }
+
+  @override
+  String collectBy(String date) {
+    return 'Récupérer le $date';
+  }
+
+  @override
+  String flightArrives(String flight, String time) {
+    return 'Vol $flight · arrivée $time';
+  }
+
+  @override
+  String get airportRequirements => 'Accueillez le passager aux arrivées avec une pancarte. Vérifiez le statut du vol avant de partir.';
+
+  @override
+  String get rentalStatusToDeliver => 'À livrer';
+
+  @override
+  String get rentalStatusAwaitingRider => 'Attente passager';
+
+  @override
+  String get rentalStatusWithRider => 'Chez le passager';
+
+  @override
+  String get rentalStatusReturnCheck => 'Contrôle retour';
+
+  @override
+  String get rentalStatusDone => 'Terminée';
+
+  @override
+  String get flowRental => 'Chauffeur · 16';
+
+  @override
+  String deliveryTitle(String car) {
+    return 'Livrer $car';
+  }
+
+  @override
+  String deliverySubtitle(String name) {
+    return 'Remettez la voiture à $name et relevez son état ensemble.';
+  }
+
+  @override
+  String collectTitle(String car) {
+    return 'Récupérer $car';
+  }
+
+  @override
+  String collectSubtitle(String name) {
+    return 'Inspectez la voiture avec $name avant de la reprendre.';
+  }
+
+  @override
+  String get navigateTo => 'Itinéraire';
+
+  @override
+  String get startHandover => 'Commencer la remise';
+
+  @override
+  String get startReturn => 'Commencer l’inspection retour';
+
+  @override
+  String waitingRiderConfirm(String name) {
+    return 'En attente de la confirmation de $name dans l’app.';
+  }
+
+  @override
+  String rentalWithRider(String date) {
+    return 'Le passager a la voiture jusqu’au $date.';
+  }
+
+  @override
+  String get rentalCompleted => 'Location clôturée. Merci.';
+
+  @override
+  String depositToHold(String amount) {
+    return 'Caution : $amount';
+  }
+
+  @override
+  String get handoverTitle => 'Liste de remise';
+
+  @override
+  String get returnTitle => 'Inspection retour';
+
+  @override
+  String get checklistSubtitle => 'Prenez les cinq photos, puis relevez carburant, compteur et dommages.';
+
+  @override
+  String get photoFront => 'Avant';
+
+  @override
+  String get photoBack => 'Arrière';
+
+  @override
+  String get photoLeft => 'Côté gauche';
+
+  @override
+  String get photoRight => 'Côté droit';
+
+  @override
+  String get photoInterior => 'Intérieur';
+
+  @override
+  String get photosRequired => 'Les cinq photos sont obligatoires.';
+
+  @override
+  String get retakePhoto => 'Reprendre';
+
+  @override
+  String get fuelLabel => 'Niveau de carburant';
+
+  @override
+  String fuelValue(String n) {
+    return '$n/8';
+  }
+
+  @override
+  String get odometerLabel => 'Compteur (km)';
+
+  @override
+  String get odometerInvalid => 'Saisissez le kilométrage.';
+
+  @override
+  String get damageLabel => 'Dommages constatés';
+
+  @override
+  String get damageHint => 'Rayures, bosses, voyants… Laissez vide s’il n’y en a pas.';
+
+  @override
+  String get checkDocuments => 'Papiers du véhicule dans la boîte à gants';
+
+  @override
+  String get checkSpare => 'Roue de secours et cric';
+
+  @override
+  String get checkClean => 'Intérieur propre';
+
+  @override
+  String get depositHoldLabel => 'Retenir sur la caution (FCFA)';
+
+  @override
+  String depositHoldHelper(String amount) {
+    return '0 libère toute la caution. Jusqu’à $amount.';
+  }
+
+  @override
+  String depositHoldInvalid(String amount) {
+    return 'Saisissez un montant entre 0 et $amount.';
+  }
+
+  @override
+  String get submitHandover => 'Envoyer pour confirmation';
+
+  @override
+  String uploadingPhotos(String percent) {
+    return 'Envoi des photos… $percent %';
+  }
+
+  @override
+  String get inspectionFailed => 'L’inspection n’a pas pu être envoyée. Vérifiez votre connexion et réessayez.';
+
+  @override
+  String get menuReportIncident => 'Signaler un incident';
 }

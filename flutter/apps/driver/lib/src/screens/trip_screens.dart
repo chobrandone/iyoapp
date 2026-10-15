@@ -10,6 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../state/driver_location.dart';
 import '../state/online.dart';
 import '../widgets/driver_widgets.dart';
+import 'safety_screens.dart';
 
 final _riderProvider = FutureProvider.family<Counterpart?, (String, RideStatus)>(
   (ref, key) => ref.watch(backendProvider).riderFor(key.$1),
@@ -345,7 +346,7 @@ class _LiveViewState extends ConsumerState<_LiveView> {
                 icon: LucideIcons.shieldCheck,
                 variant: IyoButtonVariant.soft,
                 size: IyoButtonSize.sm,
-                onPressed: () {}, // TODO(Phase 9): D17 incident report.
+                onPressed: () => showDriverSafetySheet(context, ref, ride.id),
               ),
             ),
           ],

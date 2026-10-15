@@ -1144,6 +1144,564 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Something went wrong. Please try again.'**
   String get errorGeneric;
+
+  /// No description provided for @safetySheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety'**
+  String get safetySheetTitle;
+
+  /// No description provided for @shareTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Share trip'**
+  String get shareTrip;
+
+  /// No description provided for @shareTripBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Send a live link of this trip to someone you trust.'**
+  String get shareTripBody;
+
+  /// No description provided for @shareTripSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'My iyodriver trip'**
+  String get shareTripSubject;
+
+  /// No description provided for @shareTripText.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow my iyodriver trip live (link valid until {time}): {link}'**
+  String shareTripText(String time, String link);
+
+  /// No description provided for @reportIncident.
+  ///
+  /// In en, this message translates to:
+  /// **'Report an incident'**
+  String get reportIncident;
+
+  /// No description provided for @reportIncidentBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell the iyodriver safety team what happened.'**
+  String get reportIncidentBody;
+
+  /// No description provided for @callPolice.
+  ///
+  /// In en, this message translates to:
+  /// **'Call police · {number}'**
+  String callPolice(String number);
+
+  /// No description provided for @shareFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not create a share link. Try again.'**
+  String get shareFailed;
+
+  /// No description provided for @flowIncident.
+  ///
+  /// In en, this message translates to:
+  /// **'Driver · 17'**
+  String get flowIncident;
+
+  /// No description provided for @incidentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Report an incident'**
+  String get incidentTitle;
+
+  /// No description provided for @incidentSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The safety team reviews every report. Urgent reports are seen first.'**
+  String get incidentSubtitle;
+
+  /// No description provided for @incidentCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'What happened?'**
+  String get incidentCategory;
+
+  /// No description provided for @incidentAccident.
+  ///
+  /// In en, this message translates to:
+  /// **'Road accident'**
+  String get incidentAccident;
+
+  /// No description provided for @incidentRiderBehaviour.
+  ///
+  /// In en, this message translates to:
+  /// **'Rider behaviour'**
+  String get incidentRiderBehaviour;
+
+  /// No description provided for @incidentVehicleDamage.
+  ///
+  /// In en, this message translates to:
+  /// **'Damage to the vehicle'**
+  String get incidentVehicleDamage;
+
+  /// No description provided for @incidentTheft.
+  ///
+  /// In en, this message translates to:
+  /// **'Theft or aggression'**
+  String get incidentTheft;
+
+  /// No description provided for @incidentLostItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Lost item'**
+  String get incidentLostItem;
+
+  /// No description provided for @incidentPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment problem'**
+  String get incidentPayment;
+
+  /// No description provided for @incidentOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Something else'**
+  String get incidentOther;
+
+  /// No description provided for @incidentDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe what happened'**
+  String get incidentDescription;
+
+  /// No description provided for @incidentDescriptionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Where, when, who was involved…'**
+  String get incidentDescriptionHint;
+
+  /// No description provided for @incidentUrgent.
+  ///
+  /// In en, this message translates to:
+  /// **'This is urgent'**
+  String get incidentUrgent;
+
+  /// No description provided for @incidentUrgentBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The safety team calls you back as soon as possible.'**
+  String get incidentUrgentBody;
+
+  /// No description provided for @incidentAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'About: {what}'**
+  String incidentAbout(String what);
+
+  /// No description provided for @incidentAboutTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'your current trip'**
+  String get incidentAboutTrip;
+
+  /// No description provided for @incidentAboutRental.
+  ///
+  /// In en, this message translates to:
+  /// **'rental {ref}'**
+  String incidentAboutRental(String ref);
+
+  /// No description provided for @incidentLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Your location is attached: {where}'**
+  String incidentLocation(String where);
+
+  /// No description provided for @incidentNoLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Location unavailable; describe where you are.'**
+  String get incidentNoLocation;
+
+  /// No description provided for @incidentEmergency.
+  ///
+  /// In en, this message translates to:
+  /// **'In danger? Call {number} first.'**
+  String incidentEmergency(String number);
+
+  /// No description provided for @sendReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Send report'**
+  String get sendReport;
+
+  /// No description provided for @pickCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose what happened.'**
+  String get pickCategory;
+
+  /// No description provided for @flowReportSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Driver · 18'**
+  String get flowReportSent;
+
+  /// No description provided for @reportSentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Report sent'**
+  String get reportSentTitle;
+
+  /// No description provided for @reportSentSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you. The safety team has your report and trip details.'**
+  String get reportSentSubtitle;
+
+  /// No description provided for @reportReference.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference {ref} · {time}'**
+  String reportReference(String ref, String time);
+
+  /// No description provided for @reportUrgentNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Marked urgent: keep your phone on, the team will call you.'**
+  String get reportUrgentNote;
+
+  /// No description provided for @reportNextNote.
+  ///
+  /// In en, this message translates to:
+  /// **'You can keep driving. We may contact you for more details.'**
+  String get reportNextNote;
+
+  /// No description provided for @backToTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to the trip'**
+  String get backToTrip;
+
+  /// No description provided for @backToHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to home'**
+  String get backToHome;
+
+  /// No description provided for @segmentRentals.
+  ///
+  /// In en, this message translates to:
+  /// **'Rentals'**
+  String get segmentRentals;
+
+  /// No description provided for @segmentTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'Trips'**
+  String get segmentTrips;
+
+  /// No description provided for @noRentalsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No rental deliveries'**
+  String get noRentalsTitle;
+
+  /// No description provided for @noRentalsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Cars you are asked to deliver or collect appear here.'**
+  String get noRentalsBody;
+
+  /// No description provided for @rentalFor.
+  ///
+  /// In en, this message translates to:
+  /// **'For {name}'**
+  String rentalFor(String name);
+
+  /// No description provided for @rentalRef.
+  ///
+  /// In en, this message translates to:
+  /// **'Rental {ref}'**
+  String rentalRef(String ref);
+
+  /// No description provided for @deliverAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Deliver {date}'**
+  String deliverAt(String date);
+
+  /// No description provided for @collectBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Collect {date}'**
+  String collectBy(String date);
+
+  /// No description provided for @flightArrives.
+  ///
+  /// In en, this message translates to:
+  /// **'Flight {flight} · lands {time}'**
+  String flightArrives(String flight, String time);
+
+  /// No description provided for @airportRequirements.
+  ///
+  /// In en, this message translates to:
+  /// **'Meet the rider at arrivals with a name sign. Check the flight status before you leave.'**
+  String get airportRequirements;
+
+  /// No description provided for @rentalStatusToDeliver.
+  ///
+  /// In en, this message translates to:
+  /// **'To deliver'**
+  String get rentalStatusToDeliver;
+
+  /// No description provided for @rentalStatusAwaitingRider.
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting rider'**
+  String get rentalStatusAwaitingRider;
+
+  /// No description provided for @rentalStatusWithRider.
+  ///
+  /// In en, this message translates to:
+  /// **'With rider'**
+  String get rentalStatusWithRider;
+
+  /// No description provided for @rentalStatusReturnCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Return check'**
+  String get rentalStatusReturnCheck;
+
+  /// No description provided for @rentalStatusDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get rentalStatusDone;
+
+  /// No description provided for @flowRental.
+  ///
+  /// In en, this message translates to:
+  /// **'Driver · 16'**
+  String get flowRental;
+
+  /// No description provided for @deliveryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Deliver {car}'**
+  String deliveryTitle(String car);
+
+  /// No description provided for @deliverySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Hand the car to {name} and record its condition together.'**
+  String deliverySubtitle(String name);
+
+  /// No description provided for @collectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Collect {car}'**
+  String collectTitle(String car);
+
+  /// No description provided for @collectSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Inspect the car with {name} before you take it back.'**
+  String collectSubtitle(String name);
+
+  /// No description provided for @navigateTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Navigate'**
+  String get navigateTo;
+
+  /// No description provided for @startHandover.
+  ///
+  /// In en, this message translates to:
+  /// **'Start handover checklist'**
+  String get startHandover;
+
+  /// No description provided for @startReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'Start return inspection'**
+  String get startReturn;
+
+  /// No description provided for @waitingRiderConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for {name} to confirm in the app.'**
+  String waitingRiderConfirm(String name);
+
+  /// No description provided for @rentalWithRider.
+  ///
+  /// In en, this message translates to:
+  /// **'The rider has the car until {date}.'**
+  String rentalWithRider(String date);
+
+  /// No description provided for @rentalCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Rental closed. Thank you.'**
+  String get rentalCompleted;
+
+  /// No description provided for @depositToHold.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit: {amount}'**
+  String depositToHold(String amount);
+
+  /// No description provided for @handoverTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Handover checklist'**
+  String get handoverTitle;
+
+  /// No description provided for @returnTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Return inspection'**
+  String get returnTitle;
+
+  /// No description provided for @checklistSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Take the five photos, then record fuel, odometer and any damage.'**
+  String get checklistSubtitle;
+
+  /// No description provided for @photoFront.
+  ///
+  /// In en, this message translates to:
+  /// **'Front'**
+  String get photoFront;
+
+  /// No description provided for @photoBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get photoBack;
+
+  /// No description provided for @photoLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Left side'**
+  String get photoLeft;
+
+  /// No description provided for @photoRight.
+  ///
+  /// In en, this message translates to:
+  /// **'Right side'**
+  String get photoRight;
+
+  /// No description provided for @photoInterior.
+  ///
+  /// In en, this message translates to:
+  /// **'Interior'**
+  String get photoInterior;
+
+  /// No description provided for @photosRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'All five photos are required.'**
+  String get photosRequired;
+
+  /// No description provided for @retakePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Retake'**
+  String get retakePhoto;
+
+  /// No description provided for @fuelLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel level'**
+  String get fuelLabel;
+
+  /// No description provided for @fuelValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{n}/8'**
+  String fuelValue(String n);
+
+  /// No description provided for @odometerLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Odometer (km)'**
+  String get odometerLabel;
+
+  /// No description provided for @odometerInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the odometer reading.'**
+  String get odometerInvalid;
+
+  /// No description provided for @damageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Damage notes'**
+  String get damageLabel;
+
+  /// No description provided for @damageHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Scratches, dents, warning lights… Leave empty if none.'**
+  String get damageHint;
+
+  /// No description provided for @checkDocuments.
+  ///
+  /// In en, this message translates to:
+  /// **'Car papers in the glovebox'**
+  String get checkDocuments;
+
+  /// No description provided for @checkSpare.
+  ///
+  /// In en, this message translates to:
+  /// **'Spare tyre and jack'**
+  String get checkSpare;
+
+  /// No description provided for @checkClean.
+  ///
+  /// In en, this message translates to:
+  /// **'Interior clean'**
+  String get checkClean;
+
+  /// No description provided for @depositHoldLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep from deposit (FCFA)'**
+  String get depositHoldLabel;
+
+  /// No description provided for @depositHoldHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'0 releases the full deposit. Up to {amount}.'**
+  String depositHoldHelper(String amount);
+
+  /// No description provided for @depositHoldInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an amount between 0 and {amount}.'**
+  String depositHoldInvalid(String amount);
+
+  /// No description provided for @submitHandover.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit for rider confirmation'**
+  String get submitHandover;
+
+  /// No description provided for @uploadingPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploading photos… {percent}%'**
+  String uploadingPhotos(String percent);
+
+  /// No description provided for @inspectionFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The inspection could not be sent. Check your connection and try again.'**
+  String get inspectionFailed;
+
+  /// No description provided for @menuReportIncident.
+  ///
+  /// In en, this message translates to:
+  /// **'Report an incident'**
+  String get menuReportIncident;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

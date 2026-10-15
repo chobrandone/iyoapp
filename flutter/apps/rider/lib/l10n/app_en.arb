@@ -692,5 +692,322 @@
   "menuTrustedContacts": "Trusted contacts",
   "menuSupport": "Help & support",
   "menuLanguage": "Language",
-  "menuScreens": "All screens (dev)"
+  "menuScreens": "All screens (dev)",
+  "noActiveTrip": "No active trip",
+  "emergencyCallTitle": "Call emergency services",
+  "emergencyPolice": "Police",
+  "emergencyFire": "Fire brigade",
+  "emergencyAmbulance": "Ambulance",
+  "shareNeedsTrip": "Available during a trip.",
+  "shareTripSubject": "My iyodriver trip",
+  "shareTripText": "Follow my iyodriver trip live (link valid until {time}): {link}",
+  "@shareTripText": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "link": {
+        "type": "String"
+      }
+    }
+  },
+  "shareFailed": "Could not create a share link. Try again.",
+  "contactsToNotify": "Trusted contacts to text",
+  "noContactsYet": "No trusted contacts yet.",
+  "addContactLink": "Add a trusted contact",
+  "locationUnknown": "Current location unavailable",
+  "alertFailed": "The alert could not be sent. Check your connection, or call {number}.",
+  "@alertFailed": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "contactsNotifiedCount": "{count} trusted contacts notified",
+  "@contactsNotifiedCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "noContactNotified": "No trusted contact was texted",
+  "noContactNotifiedBody": "Add trusted contacts so we can text them next time.",
+  "alertsOn": "Alerts on",
+  "alertsOff": "Alerts off",
+  "textOnAlert": "Text {name} if I raise an alert",
+  "@textOnAlert": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "removeContact": "Remove",
+  "removeContactTitle": "Remove {name}?",
+  "@removeContactTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "removeContactBody": "They will no longer be texted when you raise an alert.",
+  "contactName": "Full name",
+  "contactPhone": "Mobile number",
+  "contactRelationship": "Relationship (optional)",
+  "contactRelationshipHint": "Sister, friend, colleague…",
+  "saveContact": "Save contact",
+  "contactLimit": "You can add up to {max} trusted contacts.",
+  "@contactLimit": {
+    "placeholders": {
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "contactDuplicate": "This number is already one of your trusted contacts.",
+  "contactsEmptyTitle": "Add someone you trust",
+  "contactsEmptyBody": "They get a text with your live trip if you raise a safety alert.",
+  "flowRent": "Rider · Rent",
+  "rentHomeTitle": "Rent a car",
+  "rentHomeBody": "Daily rentals with delivery to your address or the airport.",
+  "browseCars": "Browse cars",
+  "myRentals": "My rentals",
+  "rentTitle": "Rent a car",
+  "rentSubtitle": "Pick a car, then your dates and where we hand it over.",
+  "cityDouala": "Douala",
+  "cityYaounde": "Yaoundé",
+  "noCarsTitle": "No cars available",
+  "noCarsBody": "Try the other city or check again later.",
+  "airportPickupBadge": "Airport pickup",
+  "placeholderPricing": "Prices shown are placeholders until the fleet rates are confirmed.",
+  "transmissionAutomatic": "Automatic",
+  "transmissionManual": "Manual",
+  "fuelPetrol": "Petrol",
+  "fuelDiesel": "Diesel",
+  "fuelHybrid": "Hybrid",
+  "fuelElectric": "Electric",
+  "seatsCount": "{count} seats",
+  "@seatsCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "carSpecs": "Car details",
+  "specDailyRate": "Daily rate",
+  "specDeposit": "Deposit (held at handover)",
+  "specKmPerDay": "Included distance",
+  "kmPerDayValue": "{km} km / day",
+  "@kmPerDayValue": {
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
+  },
+  "specExtraKm": "Extra distance",
+  "perKm": "{price} / km",
+  "@perKm": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "specPlate": "Plate",
+  "chooseDates": "Choose dates",
+  "datesTitle": "Dates and pickup",
+  "datesSubtitle": "Rentals are charged per started day (24 h).",
+  "startLabel": "Start",
+  "endLabel": "Return",
+  "pickDate": "Pick a date",
+  "daysCount": "{days} days",
+  "@daysCount": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "oneDay": "1 day",
+  "pickupAddress": "Address",
+  "pickupAirport": "Airport",
+  "deliveryAddress": "Delivery address",
+  "deliveryAddressHint": "Street, area, landmark",
+  "airportLabel": "Airport",
+  "terminalLabel": "Terminal",
+  "flightNumber": "Flight number",
+  "flightNumberHint": "e.g. AF900",
+  "flightInvalid": "Enter a flight number like AF900.",
+  "flightArrival": "Arrival time",
+  "airportFeeNote": "Airport delivery: {fee}. The driver waits with a name sign at arrivals.",
+  "@airportFeeNote": {
+    "placeholders": {
+      "fee": {
+        "type": "String"
+      }
+    }
+  },
+  "airportUnavailable": "This car cannot be delivered to the airport.",
+  "periodInvalid": "The return must be after the start, and the start in the future.",
+  "reviewAndPay": "Review and pay",
+  "reviewTitle": "Review your rental",
+  "reviewSubtitle": "You pay the rental now. The deposit is held when the car is handed over.",
+  "rentalDates": "{start} → {end}",
+  "@rentalDates": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "rentalAmountLine": "Rental · {days}",
+  "@rentalAmountLine": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "airportFeeLine": "Airport delivery",
+  "totalNow": "Total to pay now",
+  "depositLater": "Deposit held at handover",
+  "kmAllowance": "Distance included: {km} km",
+  "@kmAllowance": {
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentLabel": "Payment",
+  "cashAtHandover": "Cash is paid to the driver at handover.",
+  "rentalTerms": "I accept the rental terms and the deposit hold.",
+  "payAmount": "Pay {amount}",
+  "@payAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "bookCash": "Book · pay cash at handover",
+  "carTaken": "This car is already booked for those dates. Pick other dates or another car.",
+  "paymentMethodMissing": "Add this payment method in your wallet first.",
+  "bookingRef": "Booking {ref}",
+  "@bookingRef": {
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "rentalPendingTitle": "Approve the payment",
+  "rentalPendingBody": "Confirm {amount} on your phone to secure the car.",
+  "@rentalPendingBody": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "rentalConfirmedTitle": "Booking confirmed",
+  "rentalConfirmedBody": "We are assigning the driver who will deliver your car.",
+  "rentalAssignedTitle": "Driver assigned",
+  "rentalAssignedBody": "Your driver brings the car on {date}.",
+  "@rentalAssignedBody": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "handoverReadyTitle": "Check the car",
+  "handoverReadyBody": "The driver recorded the car’s condition. Check it with them, then confirm.",
+  "confirmHandover": "Confirm handover",
+  "rentalActiveTitle": "Enjoy the drive",
+  "rentalActiveBody": "Return the car by {date}.",
+  "@rentalActiveBody": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "returnCar": "Return the car",
+  "returnRequested": "Return requested. The driver will inspect the car with you.",
+  "returnReadyTitle": "Check the return",
+  "returnReadyBody": "Check the return inspection. Your deposit is released when you confirm.",
+  "confirmReturn": "Confirm return",
+  "rentalCompletedTitle": "Rental complete",
+  "depositReleased": "Deposit released in full",
+  "depositPartiallyHeld": "{amount} kept from the deposit",
+  "@depositPartiallyHeld": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "rentalCancelledTitle": "Booking cancelled",
+  "cancelBooking": "Cancel booking",
+  "cancelBookingTitle": "Cancel this booking?",
+  "cancelBookingBody": "You can cancel free of charge until the rental starts.",
+  "keepBooking": "Keep booking",
+  "inspectionHandover": "Handover inspection",
+  "inspectionReturn": "Return inspection",
+  "fuelLevel": "Fuel",
+  "fuelEighths": "{n}/8 tank",
+  "@fuelEighths": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "odometer": "Odometer",
+  "kmValue": "{km} km",
+  "@kmValue": {
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
+  },
+  "photosTaken": "Photos",
+  "photosCount": "{n} of 5 sides",
+  "@photosCount": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "damageNotes": "Damage notes",
+  "noDamage": "No damage noted",
+  "depositHoldProposed": "Kept from deposit",
+  "statusPendingPayment": "Awaiting payment",
+  "statusDriverAssigned": "Driver assigned",
+  "statusActive": "Active",
+  "statusReturnPending": "Return check",
+  "statusCancelled": "Cancelled",
+  "rentalsEmptyTitle": "No rentals yet",
+  "rentalsEmptyBody": "Your bookings appear here.",
+  "rentalFailed": "The booking could not be made. Try again.",
+  "pickupAt": "Pickup: {place}",
+  "@pickupAt": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "rentalReportProblem": "Report a problem"
 }

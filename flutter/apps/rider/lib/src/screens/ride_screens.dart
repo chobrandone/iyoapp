@@ -11,6 +11,8 @@ import '../sample/sample_data.dart';
 import '../state/booking.dart';
 import '../state/location.dart';
 import '../widgets/rider_widgets.dart';
+import 'rental_screens.dart';
+import 'safety_screens.dart';
 import 'trip_view.dart';
 
 enum _Service { ride, rent }
@@ -93,54 +95,58 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             IyoSegment(value: _Service.rent, label: t.serviceRent, icon: LucideIcons.calendarDays),
           ],
         ),
-        PickupMap(
-          height: 218,
-          pickup: here,
-          onRecenter: () => ref.read(locationProvider.notifier).retry(),
-        ),
-        if (location case LocationUnavailable(:final permanently))
+        if (_service == _Service.rent && !widget.preview)
+          const RentHomePanel()
+        else ...[
+          PickupMap(
+            height: 218,
+            pickup: here,
+            onRecenter: () => ref.read(locationProvider.notifier).retry(),
+          ),
+          if (location case LocationUnavailable(:final permanently))
+            IyoCard(
+              tone: IyoCardTone.accent,
+              title: t.locationDeniedTitle,
+              description: t.locationDeniedBody,
+              children: [
+                if (permanently)
+                  IyoButton(
+                    label: t.openSettings,
+                    variant: IyoButtonVariant.secondary,
+                    size: IyoButtonSize.sm,
+                    onPressed: () => ref.read(locationProvider.notifier).openSettings(),
+                  ),
+              ],
+            ),
+          IyoButton(
+            label: t.whereTo,
+            icon: LucideIcons.search,
+            iconSize: 11,
+            mirrorIcon: true,
+            onPressed: goPlan,
+          ),
           IyoCard(
-            tone: IyoCardTone.accent,
-            title: t.locationDeniedTitle,
-            description: t.locationDeniedBody,
             children: [
-              if (permanently)
-                IyoButton(
-                  label: t.openSettings,
-                  variant: IyoButtonVariant.secondary,
-                  size: IyoButtonSize.sm,
-                  onPressed: () => ref.read(locationProvider.notifier).openSettings(),
-                ),
+              IyoListRow(
+                icon: LucideIcons.house,
+                iconWellTone: IyoIconWellTone.none,
+                title: t.savedHome,
+                subtitle: Sample.homeAddress,
+                showChevron: false,
+                onPressed: () => goPlan(doualaPlaces[3]),
+              ),
+              IyoListRow(
+                icon: LucideIcons.clock3,
+                iconWellTone: IyoIconWellTone.none,
+                title: Sample.recentPlace,
+                subtitle: t.recentDestination(Sample.recentArea),
+                showChevron: false,
+                onPressed: () => goPlan(doualaPlaces[1]),
+              ),
             ],
           ),
-        IyoButton(
-          label: t.whereTo,
-          icon: LucideIcons.search,
-          iconSize: 11,
-          mirrorIcon: true,
-          onPressed: goPlan,
-        ),
-        IyoCard(
-          children: [
-            IyoListRow(
-              icon: LucideIcons.house,
-              iconWellTone: IyoIconWellTone.none,
-              title: t.savedHome,
-              subtitle: Sample.homeAddress,
-              showChevron: false,
-              onPressed: () => goPlan(doualaPlaces[3]),
-            ),
-            IyoListRow(
-              icon: LucideIcons.clock3,
-              iconWellTone: IyoIconWellTone.none,
-              title: Sample.recentPlace,
-              subtitle: t.recentDestination(Sample.recentArea),
-              showChevron: false,
-              onPressed: () => goPlan(doualaPlaces[1]),
-            ),
-          ],
-        ),
-        Footnote(t.nearbyRides(Sample.nearbyFrom, '3')),
+          Footnote(t.nearbyRides(Sample.nearbyFrom, '3')),
+        ],
       ],
     );
   }
@@ -479,14 +485,15 @@ class _DriverCard extends StatelessWidget {
   }
 }
 
-class _TripTiles extends StatelessWidget {
+class _TripTiles extends ConsumerWidget {
   const _TripTiles({this.rideId});
 
   final String? rideId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final t = context.t;
+    final id = rideId;
     return IyoActionTileRow(
       children: [
         IyoActionTile(
@@ -494,12 +501,17 @@ class _TripTiles extends StatelessWidget {
           label: t.tileMessage,
           onPressed: () => context.push(rideId == null ? '/trip/chat' : '/ride/$rideId/chat'),
         ),
-        IyoActionTile(icon: LucideIcons.share2, label: t.tileShareTrip, onPressed: () {}),
+        IyoActionTile(
+          icon: LucideIcons.share2,
+          label: t.tileShareTrip,
+          onPressed: id == null ? () {} : () => shareLiveTrip(context, ref, id),
+        ),
         IyoActionTile(
           icon: LucideIcons.shieldCheck,
           label: t.tileSafety,
           accent: true,
-          onPressed: () => context.push('/safety-alert'),
+          onPressed:
+              () => context.push(id == null ? '/design/safety-alert' : '/safety-alert?ride=$id'),
         ),
       ],
     );

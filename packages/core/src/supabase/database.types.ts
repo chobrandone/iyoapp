@@ -1951,6 +1951,7 @@ export type Database = {
           name: string;
           notify_on_alert: boolean;
           phone: string;
+          relationship: string | null;
           user_id: string;
         };
         Insert: {
@@ -1959,6 +1960,7 @@ export type Database = {
           name: string;
           notify_on_alert?: boolean;
           phone: string;
+          relationship?: string | null;
           user_id: string;
         };
         Update: {
@@ -1967,6 +1969,7 @@ export type Database = {
           name?: string;
           notify_on_alert?: boolean;
           phone?: string;
+          relationship?: string | null;
           user_id?: string;
         };
         Relationships: [
@@ -2063,6 +2066,20 @@ export type Database = {
         };
         Returns: Database['public']['Tables']['rides']['Row'];
       };
+      assign_rental_driver: {
+        Args: {
+          p_booking_id: string;
+          p_driver_id: string;
+        };
+        Returns: Database['public']['Tables']['rental_bookings']['Row'];
+      };
+      cancel_rental_booking: {
+        Args: {
+          p_booking_id: string;
+          p_reason?: string;
+        };
+        Returns: Database['public']['Tables']['rental_bookings']['Row'];
+      };
       cancel_ride_as_rider: {
         Args: {
           p_ride_id: string;
@@ -2078,6 +2095,13 @@ export type Database = {
           p_duration_s: number;
         };
         Returns: Json;
+      };
+      confirm_rental_inspection: {
+        Args: {
+          p_booking_id: string;
+          p_type: Database['public']['Enums']['inspection_type'];
+        };
+        Returns: Database['public']['Tables']['rental_bookings']['Row'];
       };
       consume_rate_limit: {
         Args: {
@@ -2158,6 +2182,12 @@ export type Database = {
           lat: number;
           lng: number;
         }[];
+      };
+      get_rental_rider: {
+        Args: {
+          p_booking_id: string;
+        };
+        Returns: Json;
       };
       get_ride_counterpart: {
         Args: {
@@ -2290,6 +2320,19 @@ export type Database = {
       submit_driver_application: {
         Args: never;
         Returns: Database['public']['Tables']['driver_profiles']['Row'];
+      };
+      submit_rental_inspection: {
+        Args: {
+          p_booking_id: string;
+          p_type: Database['public']['Enums']['inspection_type'];
+          p_fuel_level: number;
+          p_odometer_km: number;
+          p_photo_paths: Json;
+          p_damage_notes?: string;
+          p_checklist?: Json;
+          p_deposit_hold_amount?: number;
+        };
+        Returns: Database['public']['Tables']['rental_inspections']['Row'];
       };
       update_driver_location: {
         Args: {

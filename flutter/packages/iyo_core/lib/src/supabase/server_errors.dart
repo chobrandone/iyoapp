@@ -48,6 +48,13 @@ const List<String> serverErrorCodes = [
   'share_not_found',
   'invalid_request',
   'internal_error',
+  'booking_not_cancellable',
+  'booking_not_assignable',
+  'handover_not_allowed',
+  'return_not_allowed',
+  'photos_missing',
+  'invalid_deposit_hold',
+  'inspection_not_ready',
 ];
 
 /// Extracts a known server error code from a PostgrestException / FunctionException message.

@@ -5,6 +5,7 @@ import '../supabase/db_enums.dart';
 import '../supabase/supabase_setup.dart';
 import 'demo_backend.dart';
 import 'models.dart';
+import 'safety_rental_models.dart';
 import 'repositories.dart';
 import 'supabase_backend.dart';
 
@@ -47,4 +48,36 @@ final driverOnlineProvider = StreamProvider<bool>(
 );
 final rideOfferProvider = StreamProvider<RideOffer?>(
   (ref) => ref.watch(backendProvider).watchOffers(),
+);
+
+// Safety ----------------------------------------------------------------------
+
+final trustedContactsProvider = FutureProvider<List<TrustedContact>>(
+  (ref) => ref.watch(backendProvider).trustedContacts(),
+);
+
+final emergencyNumbersProvider = FutureProvider<List<EmergencyNumber>>(
+  (ref) => ref.watch(backendProvider).emergencyNumbers(),
+);
+
+// Rentals ---------------------------------------------------------------------
+
+final rentalVehiclesProvider = FutureProvider.family<List<RentalVehicle>, String>(
+  (ref, cityCode) => ref.watch(backendProvider).rentalVehicles(cityCode),
+);
+
+final airportsProvider = FutureProvider<List<Airport>>(
+  (ref) => ref.watch(backendProvider).airports(),
+);
+
+final myRentalsProvider = StreamProvider<List<RentalBooking>>(
+  (ref) => ref.watch(backendProvider).watchMyRentals(),
+);
+
+final rentalProvider = StreamProvider.family<RentalBooking, String>(
+  (ref, id) => ref.watch(backendProvider).watchRental(id),
+);
+
+final assignedRentalsProvider = StreamProvider<List<RentalBooking>>(
+  (ref) => ref.watch(backendProvider).watchAssignedRentals(),
 );

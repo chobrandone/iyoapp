@@ -4,6 +4,15 @@ import 'package:iyo_core/iyo_core.dart';
 import '../sample/sample_data.dart';
 import '../widgets/rider_widgets.dart';
 
+/// Short, stable trip reference shown to people (support, shares): IYO-#### from the ride id.
+String tripRefOf(String rideId) {
+  var h = 0;
+  for (final c in rideId.codeUnits) {
+    h = (h * 31 + c) % 10000;
+  }
+  return 'IYO-${h.toString().padLeft(4, '0')}';
+}
+
 /// Everything the trip screens print, from a live ride or from the Figma sample (design preview).
 class TripView {
   const TripView({
@@ -110,7 +119,7 @@ class TripView {
       dropoffDetail: ride.dropoff.address,
       fare: formatFcfa(ride.fareAmount),
       paymentLabel: paymentMethodLabel(context, ride.paymentMethod),
-      tripRef: 'IYO-${ride.id.hashCode.abs() % 10000}',
+      tripRef: tripRefOf(ride.id),
       arriveTime: formatTime(DateTime.now().add(Duration(seconds: eta ?? ride.durationSeconds))),
       tripDate:
           '${formatDateTime(ride.startedAt ?? ride.requestedAt)} · ${formatDistance(ride.distanceMeters)}',

@@ -12,6 +12,8 @@ import 'locale_controller.dart';
 import 'screens/auth_screens.dart';
 import 'screens/home_screens.dart';
 import 'screens/onboarding_screens.dart';
+import 'screens/rental_screens.dart';
+import 'screens/safety_screens.dart';
 import 'screens/trip_screens.dart';
 import 'widgets/driver_widgets.dart';
 
@@ -90,6 +92,35 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
           StatefulShellBranch(
             routes: [GoRoute(path: '/account', builder: (_, _) => const DriverAccountScreen())],
+          ),
+        ],
+      ),
+      GoRoute(
+        path: '/incident',
+        builder:
+            (_, state) => IncidentReportScreen(
+              rideId: state.uri.queryParameters['ride'],
+              rentalBookingId: state.uri.queryParameters['rental'],
+              rentalRef: state.uri.queryParameters['ref'],
+            ),
+        routes: [
+          GoRoute(
+            path: 'sent',
+            builder: (_, state) => ReportSentScreen(args: state.extra as ReportSentArgs?),
+          ),
+        ],
+      ),
+      GoRoute(
+        path: '/rental/:id',
+        builder: (_, state) => RentalDeliveryScreen(bookingId: state.pathParameters['id']!),
+        routes: [
+          GoRoute(
+            path: 'inspect/:type',
+            builder:
+                (_, state) => InspectionScreen(
+                  bookingId: state.pathParameters['id']!,
+                  type: InspectionType.fromValue(state.pathParameters['type']!),
+                ),
           ),
         ],
       ),

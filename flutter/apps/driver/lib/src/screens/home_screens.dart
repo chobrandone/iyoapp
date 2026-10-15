@@ -11,6 +11,7 @@ import '../locale_controller.dart';
 import '../state/driver_location.dart';
 import '../state/online.dart';
 import '../widgets/driver_widgets.dart';
+import 'rental_screens.dart';
 
 final _todayProvider = FutureProvider.autoDispose<DriverDaySummary>((ref) {
   ref.watch(driverOnlineProvider);
@@ -320,11 +321,20 @@ class EarningsScreen extends ConsumerWidget {
 }
 
 /// D22 — Bookings and trip history (Figma 2025:793; frame not attached).
-class BookingsScreen extends ConsumerWidget {
+enum _BookingsTab { rentals, trips }
+
+class BookingsScreen extends ConsumerStatefulWidget {
   const BookingsScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<BookingsScreen> createState() => _BookingsScreenState();
+}
+
+class _BookingsScreenState extends ConsumerState<BookingsScreen> {
+  var _tab = _BookingsTab.rentals;
+
+  @override
+  Widget build(BuildContext context) {
     final t = context.t;
     final trips = ref.watch(_tripsProvider).value ?? const <CompletedTrip>[];
     return IyoScreen(
@@ -332,7 +342,17 @@ class BookingsScreen extends ConsumerWidget {
       header: DriverHeader(flowLabel: t.flowPlain),
       heading: IyoPageHeading(title: t.bookingsTitle, subtitle: t.bookingsSubtitle, compact: true),
       children: [
-        if (trips.isEmpty)
+        IyoSegmentedTabs<_BookingsTab>(
+          value: _tab,
+          onChanged: (v) => setState(() => _tab = v),
+          options: [
+            IyoSegment(value: _BookingsTab.rentals, label: t.segmentRentals),
+            IyoSegment(value: _BookingsTab.trips, label: t.segmentTrips),
+          ],
+        ),
+        if (_tab == _BookingsTab.rentals)
+          const AssignedRentalsList()
+        else if (trips.isEmpty)
           IyoEmptyState(title: t.noTripsTitle, message: t.noTripsBody, icon: LucideIcons.listChecks)
         else
           for (final trip in trips)
@@ -398,6 +418,12 @@ class DriverAccountScreen extends ConsumerWidget {
                   () => ref
                       .read(localeControllerProvider.notifier)
                       .set(Locale(isFrench ? 'en' : 'fr')),
+            ),
+            IyoListRow(
+              icon: LucideIcons.triangleAlert,
+              iconWellTone: IyoIconWellTone.white,
+              title: t.menuReportIncident,
+              onPressed: () => context.push('/incident'),
             ),
             IyoListRow(
               icon: LucideIcons.logOut,

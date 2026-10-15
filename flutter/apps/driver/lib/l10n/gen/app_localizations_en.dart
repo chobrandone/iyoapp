@@ -602,4 +602,329 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorGeneric => 'Something went wrong. Please try again.';
+
+  @override
+  String get safetySheetTitle => 'Safety';
+
+  @override
+  String get shareTrip => 'Share trip';
+
+  @override
+  String get shareTripBody => 'Send a live link of this trip to someone you trust.';
+
+  @override
+  String get shareTripSubject => 'My iyodriver trip';
+
+  @override
+  String shareTripText(String time, String link) {
+    return 'Follow my iyodriver trip live (link valid until $time): $link';
+  }
+
+  @override
+  String get reportIncident => 'Report an incident';
+
+  @override
+  String get reportIncidentBody => 'Tell the iyodriver safety team what happened.';
+
+  @override
+  String callPolice(String number) {
+    return 'Call police · $number';
+  }
+
+  @override
+  String get shareFailed => 'Could not create a share link. Try again.';
+
+  @override
+  String get flowIncident => 'Driver · 17';
+
+  @override
+  String get incidentTitle => 'Report an incident';
+
+  @override
+  String get incidentSubtitle => 'The safety team reviews every report. Urgent reports are seen first.';
+
+  @override
+  String get incidentCategory => 'What happened?';
+
+  @override
+  String get incidentAccident => 'Road accident';
+
+  @override
+  String get incidentRiderBehaviour => 'Rider behaviour';
+
+  @override
+  String get incidentVehicleDamage => 'Damage to the vehicle';
+
+  @override
+  String get incidentTheft => 'Theft or aggression';
+
+  @override
+  String get incidentLostItem => 'Lost item';
+
+  @override
+  String get incidentPayment => 'Payment problem';
+
+  @override
+  String get incidentOther => 'Something else';
+
+  @override
+  String get incidentDescription => 'Describe what happened';
+
+  @override
+  String get incidentDescriptionHint => 'Where, when, who was involved…';
+
+  @override
+  String get incidentUrgent => 'This is urgent';
+
+  @override
+  String get incidentUrgentBody => 'The safety team calls you back as soon as possible.';
+
+  @override
+  String incidentAbout(String what) {
+    return 'About: $what';
+  }
+
+  @override
+  String get incidentAboutTrip => 'your current trip';
+
+  @override
+  String incidentAboutRental(String ref) {
+    return 'rental $ref';
+  }
+
+  @override
+  String incidentLocation(String where) {
+    return 'Your location is attached: $where';
+  }
+
+  @override
+  String get incidentNoLocation => 'Location unavailable; describe where you are.';
+
+  @override
+  String incidentEmergency(String number) {
+    return 'In danger? Call $number first.';
+  }
+
+  @override
+  String get sendReport => 'Send report';
+
+  @override
+  String get pickCategory => 'Choose what happened.';
+
+  @override
+  String get flowReportSent => 'Driver · 18';
+
+  @override
+  String get reportSentTitle => 'Report sent';
+
+  @override
+  String get reportSentSubtitle => 'Thank you. The safety team has your report and trip details.';
+
+  @override
+  String reportReference(String ref, String time) {
+    return 'Reference $ref · $time';
+  }
+
+  @override
+  String get reportUrgentNote => 'Marked urgent: keep your phone on, the team will call you.';
+
+  @override
+  String get reportNextNote => 'You can keep driving. We may contact you for more details.';
+
+  @override
+  String get backToTrip => 'Back to the trip';
+
+  @override
+  String get backToHome => 'Back to home';
+
+  @override
+  String get segmentRentals => 'Rentals';
+
+  @override
+  String get segmentTrips => 'Trips';
+
+  @override
+  String get noRentalsTitle => 'No rental deliveries';
+
+  @override
+  String get noRentalsBody => 'Cars you are asked to deliver or collect appear here.';
+
+  @override
+  String rentalFor(String name) {
+    return 'For $name';
+  }
+
+  @override
+  String rentalRef(String ref) {
+    return 'Rental $ref';
+  }
+
+  @override
+  String deliverAt(String date) {
+    return 'Deliver $date';
+  }
+
+  @override
+  String collectBy(String date) {
+    return 'Collect $date';
+  }
+
+  @override
+  String flightArrives(String flight, String time) {
+    return 'Flight $flight · lands $time';
+  }
+
+  @override
+  String get airportRequirements => 'Meet the rider at arrivals with a name sign. Check the flight status before you leave.';
+
+  @override
+  String get rentalStatusToDeliver => 'To deliver';
+
+  @override
+  String get rentalStatusAwaitingRider => 'Awaiting rider';
+
+  @override
+  String get rentalStatusWithRider => 'With rider';
+
+  @override
+  String get rentalStatusReturnCheck => 'Return check';
+
+  @override
+  String get rentalStatusDone => 'Done';
+
+  @override
+  String get flowRental => 'Driver · 16';
+
+  @override
+  String deliveryTitle(String car) {
+    return 'Deliver $car';
+  }
+
+  @override
+  String deliverySubtitle(String name) {
+    return 'Hand the car to $name and record its condition together.';
+  }
+
+  @override
+  String collectTitle(String car) {
+    return 'Collect $car';
+  }
+
+  @override
+  String collectSubtitle(String name) {
+    return 'Inspect the car with $name before you take it back.';
+  }
+
+  @override
+  String get navigateTo => 'Navigate';
+
+  @override
+  String get startHandover => 'Start handover checklist';
+
+  @override
+  String get startReturn => 'Start return inspection';
+
+  @override
+  String waitingRiderConfirm(String name) {
+    return 'Waiting for $name to confirm in the app.';
+  }
+
+  @override
+  String rentalWithRider(String date) {
+    return 'The rider has the car until $date.';
+  }
+
+  @override
+  String get rentalCompleted => 'Rental closed. Thank you.';
+
+  @override
+  String depositToHold(String amount) {
+    return 'Deposit: $amount';
+  }
+
+  @override
+  String get handoverTitle => 'Handover checklist';
+
+  @override
+  String get returnTitle => 'Return inspection';
+
+  @override
+  String get checklistSubtitle => 'Take the five photos, then record fuel, odometer and any damage.';
+
+  @override
+  String get photoFront => 'Front';
+
+  @override
+  String get photoBack => 'Back';
+
+  @override
+  String get photoLeft => 'Left side';
+
+  @override
+  String get photoRight => 'Right side';
+
+  @override
+  String get photoInterior => 'Interior';
+
+  @override
+  String get photosRequired => 'All five photos are required.';
+
+  @override
+  String get retakePhoto => 'Retake';
+
+  @override
+  String get fuelLabel => 'Fuel level';
+
+  @override
+  String fuelValue(String n) {
+    return '$n/8';
+  }
+
+  @override
+  String get odometerLabel => 'Odometer (km)';
+
+  @override
+  String get odometerInvalid => 'Enter the odometer reading.';
+
+  @override
+  String get damageLabel => 'Damage notes';
+
+  @override
+  String get damageHint => 'Scratches, dents, warning lights… Leave empty if none.';
+
+  @override
+  String get checkDocuments => 'Car papers in the glovebox';
+
+  @override
+  String get checkSpare => 'Spare tyre and jack';
+
+  @override
+  String get checkClean => 'Interior clean';
+
+  @override
+  String get depositHoldLabel => 'Keep from deposit (FCFA)';
+
+  @override
+  String depositHoldHelper(String amount) {
+    return '0 releases the full deposit. Up to $amount.';
+  }
+
+  @override
+  String depositHoldInvalid(String amount) {
+    return 'Enter an amount between 0 and $amount.';
+  }
+
+  @override
+  String get submitHandover => 'Submit for rider confirmation';
+
+  @override
+  String uploadingPhotos(String percent) {
+    return 'Uploading photos… $percent%';
+  }
+
+  @override
+  String get inspectionFailed => 'The inspection could not be sent. Check your connection and try again.';
+
+  @override
+  String get menuReportIncident => 'Report an incident';
 }

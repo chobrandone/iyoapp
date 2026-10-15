@@ -23,6 +23,7 @@ dependencies:
   intl: any
   geolocator: ^14.0.2
   url_launcher: ^6.3.2
+  share_plus: ^12.0.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

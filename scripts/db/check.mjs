@@ -22,6 +22,10 @@ const { db } = await createDb();
 async function as(userId, sql, params = []) {
   return db.transaction(async (tx) => {
     if (userId === 'service') {
+      // Edge Functions call with the service key: JWT role claim = service_role.
+      await tx.query(`select set_config('request.jwt.claims', $1, true)`, [
+        JSON.stringify({ role: 'service_role' }),
+      ]);
       await tx.exec(`set local role service_role`);
     } else if (userId === 'anon') {
       await tx.exec(`set local role anon`);
@@ -468,6 +472,126 @@ await test('overlapping rental bookings are refused', async () => {
     /vehicle_unavailable_for_dates/,
   );
   await book(U.christian, '6 days', '8 days'); // back-to-back is fine
+});
+
+await test('rental lifecycle: pay → assign → handover → active → return → deposit', async () => {
+  const [v] = await as(
+    U.aicha,
+    `select id, deposit_amount from public.rental_vehicles where plate = 'LT 211 RB'`,
+  );
+  const [b] = await as(
+    U.aicha,
+    `select * from public.create_rental_booking($1, now() + interval '2 days', now() + interval '4 days', 'address', 'mtn_momo',
+       p_payment_method_id => 'f0000000-0000-4000-8000-000000000001', p_pickup_address => 'Akwa, Douala')`,
+    [v.id],
+  );
+  assert.equal(b.status, 'pending_payment');
+  const [p] = await as(
+    U.aicha,
+    `select amount, status, purpose from public.payments where rental_booking_id = $1`,
+    [b.id],
+  );
+  assert.deepEqual(p, { amount: b.total_amount, status: 'pending', purpose: 'rental' });
+
+  // Payment confirmed by the webhook (service role), then the dashboard assigns a driver.
+  await as('service', `update public.rental_bookings set status = 'confirmed' where id = $1`, [
+    b.id,
+  ]);
+  await rejects(
+    U.jeanPaul,
+    `select public.assign_rental_driver($1, $2)`,
+    [b.id, U.jeanPaul],
+    /wrong_role/,
+  );
+  await as('service', `select public.assign_rental_driver($1, $2)`, [b.id, U.jeanPaul]);
+  assert.equal(
+    (await as(U.jeanPaul, `select id from public.rental_bookings where id = $1`, [b.id])).length,
+    1,
+  );
+  assert.equal(
+    (await as(U.brice, `select id from public.rental_bookings where id = $1`, [b.id])).length,
+    0,
+  );
+  const [who] = await as(U.jeanPaul, `select public.get_rental_rider($1) as r`, [b.id]);
+  assert.ok(who.r.name.length > 0);
+  await rejects(U.brice, `select public.get_rental_rider($1)`, [b.id], /booking_not_found/);
+
+  const photos = JSON.stringify({
+    front: 'f.jpg',
+    back: 'b.jpg',
+    left: 'l.jpg',
+    right: 'r.jpg',
+    interior: 'i.jpg',
+  });
+  await rejects(
+    U.jeanPaul,
+    `select public.submit_rental_inspection($1, 'handover', 8::smallint, 41200, '{"front":"f.jpg"}'::jsonb)`,
+    [b.id],
+    /photos_missing/,
+  );
+  await as(
+    U.jeanPaul,
+    `select public.submit_rental_inspection($1, 'handover', 8::smallint, 41200, $2::jsonb)`,
+    [b.id, photos],
+  );
+  await rejects(
+    U.jeanPaul,
+    `select public.confirm_rental_inspection($1, 'handover')`,
+    [b.id],
+    /wrong_role/,
+  );
+  const [active] = await as(
+    U.aicha,
+    `select * from public.confirm_rental_inspection($1, 'handover')`,
+    [b.id],
+  );
+  assert.equal(active.status, 'active');
+  assert.equal(active.deposit_status, 'held');
+
+  await rejects(
+    U.jeanPaul,
+    `select public.submit_rental_inspection($1, 'return', 4::smallint, 41650, $2::jsonb, 'Scratch rear bumper', '{}'::jsonb, $3)`,
+    [b.id, photos, v.deposit_amount + 1],
+    /invalid_deposit_hold/,
+  );
+  await as(
+    U.jeanPaul,
+    `select public.submit_rental_inspection($1, 'return', 4::smallint, 41650, $2::jsonb, 'Scratch rear bumper', '{}'::jsonb, 20000)`,
+    [b.id, photos],
+  );
+  const [done] = await as(U.aicha, `select * from public.confirm_rental_inspection($1, 'return')`, [
+    b.id,
+  ]);
+  assert.equal(done.status, 'completed');
+  assert.equal(done.deposit_status, 'partially_held');
+  assert.equal(done.deposit_held_amount, 20000);
+});
+
+await test('cash rentals are confirmed at once; riders cancel before the start only', async () => {
+  const [v] = await as(U.aicha, `select id from public.rental_vehicles where plate = 'LT 212 RC'`);
+  const [b] = await as(
+    U.christian,
+    `select * from public.create_rental_booking($1, now() + interval '5 days', now() + interval '6 days', 'address', 'cash',
+       p_pickup_address => 'Bonapriso, Douala')`,
+    [v.id],
+  );
+  const [row] = await as(U.christian, `select status from public.rental_bookings where id = $1`, [
+    b.id,
+  ]);
+  assert.equal(row.status, 'confirmed');
+  await rejects(U.aicha, `select public.cancel_rental_booking($1)`, [b.id], /booking_not_found/);
+  const [c] = await as(
+    U.christian,
+    `select * from public.cancel_rental_booking($1, 'plans changed')`,
+    [b.id],
+  );
+  assert.equal(c.status, 'cancelled');
+  await rejects(
+    U.christian,
+    `select public.cancel_rental_booking($1)`,
+    [b.id],
+    /booking_not_cancellable/,
+  );
 });
 
 await test('trusted contacts are capped at 5', async () => {
