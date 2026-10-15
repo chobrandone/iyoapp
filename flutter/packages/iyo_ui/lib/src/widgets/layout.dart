@@ -136,15 +136,23 @@ class IyoAppHeader extends StatelessWidget {
                     ],
                   ],
                 ),
-            const Spacer(),
-            trailing ??
-                (flowLabel == null
-                    ? const SizedBox.shrink()
-                    : IyoText(
-                      flowLabel!,
-                      variant: IyoTextVariant.label,
-                      color: IyoPalette.textSecondary,
-                    )),
+            const SizedBox(width: IyoSpacing.md),
+            // The flow label gives way (ellipsis) on narrow phones and long French labels.
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child:
+                    trailing ??
+                    (flowLabel == null
+                        ? const SizedBox.shrink()
+                        : IyoText(
+                          flowLabel!,
+                          variant: IyoTextVariant.label,
+                          color: IyoPalette.textSecondary,
+                          maxLines: 1,
+                        )),
+              ),
+            ),
           ],
         ),
       ),

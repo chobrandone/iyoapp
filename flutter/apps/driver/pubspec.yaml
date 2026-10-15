@@ -23,9 +23,12 @@ dependencies:
     path: ../../packages/iyo_ui
   url_launcher: ^6.3.2
 
+  intl: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/

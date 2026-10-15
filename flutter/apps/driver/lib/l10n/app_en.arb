@@ -29,5 +29,395 @@
     }
   },
   "placeholderPrimary": "Get started",
-  "placeholderSecondary": "Switch to Français"
+  "placeholderSecondary": "Switch to Français",
+  "badge": "Driver",
+  "flow": "Driver · {step}",
+  "@flow": {
+    "placeholders": {
+      "step": {
+        "type": "String"
+      }
+    }
+  },
+  "flowPlain": "Driver",
+  "tabHome": "Home",
+  "tabEarnings": "Earnings",
+  "tabBookings": "Bookings",
+  "tabAccount": "Account",
+  "safety": "Safety",
+  "welcomeHeroTitle": "Drive.\nEarn.",
+  "welcomeBadge": "Rides + rental handovers",
+  "welcomeHeadline": "Drive with iyodriver.\nEarn on your schedule.",
+  "welcomeBody": "Accept rides and rental handovers in Douala and Yaoundé, and get paid to your mobile money.",
+  "getStarted": "Get started",
+  "alreadyDriver": "Already a driver?",
+  "logIn": "Log in",
+  "signUpTitle": "Create your driver account",
+  "signUpSubtitle": "We'll check your documents before your first ride.",
+  "fieldFullName": "Full name (as on your ID)",
+  "fieldMobile": "Mobile number",
+  "agreeTerms": "I agree to the Driver Terms and Privacy Policy.",
+  "createAndVerify": "Create account & verify",
+  "loginTitle": "Welcome back",
+  "loginSubtitle": "Log in with your mobile number. We'll text you a code.",
+  "sendCode": "Send code",
+  "newDriver": "New driver?",
+  "createAccount": "Create an account",
+  "verifyTitle": "Check your messages",
+  "verifySubtitle": "Enter the code sent to {phone}.",
+  "@verifySubtitle": {
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "demoCodeHint": "Demo mode · use code {code}",
+  "@demoCodeHint": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "resendIn": "Didn't get a code? Resend in {time}",
+  "@resendIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "resendNow": "Didn't get a code? Resend",
+  "wrongNumber": "Wrong number? Change it",
+  "verifyContinue": "Verify & continue",
+  "otpInvalid": "That code is not right. Check the SMS and try again.",
+  "wrongApp": "This number is registered as a rider. Use the iyodriver app to book rides.",
+  "identityTitle": "Identity and vehicle",
+  "identitySubtitle": "Tell us who you are and what you drive.",
+  "stepOf": "Step {current} of {total}",
+  "@stepOf": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldCity": "City",
+  "fieldLicence": "Driving licence number",
+  "fieldNationalId": "National ID card number (CNI)",
+  "vehicleSection": "Your vehicle",
+  "fieldMake": "Make",
+  "fieldModel": "Model",
+  "fieldYear": "Year",
+  "fieldColor": "Colour",
+  "fieldPlate": "Number plate",
+  "plateHelper": "Format: LT 123 AB",
+  "plateInvalid": "Enter a plate like LT 123 AB.",
+  "yearInvalid": "Enter a year between 1990 and next year.",
+  "fieldCategory": "Ride category",
+  "categoryStandard": "Standard · 4 seats",
+  "categoryComfort": "Comfort · 4 seats",
+  "categoryXl": "XL · 6 seats",
+  "continueToDocuments": "Continue to documents",
+  "documentsTitle": "Documents",
+  "documentsSubtitle": "Take a clear photo of each document. We review them within 24 hours.",
+  "docNationalIdFront": "National ID · front",
+  "docNationalIdBack": "National ID · back",
+  "docDrivingLicence": "Driving licence",
+  "docVehicleRegistration": "Vehicle registration (carte grise)",
+  "docInsurance": "Insurance certificate",
+  "docRoadworthiness": "Roadworthiness (visite technique)",
+  "docProfilePhoto": "Profile photo",
+  "docMissing": "Not uploaded",
+  "docUploading": "Uploading… {percent}%",
+  "@docUploading": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "docPending": "Uploaded · waiting for review",
+  "docApproved": "Approved",
+  "docRejected": "Rejected · {reason}",
+  "@docRejected": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "takePhoto": "Take a photo",
+  "chooseFromGallery": "Choose from gallery",
+  "submitForReview": "Submit for review",
+  "documentsMissingError": "Upload every document before submitting.",
+  "reviewTitle": "Under review",
+  "reviewSubtitle": "We're checking your documents. You'll get a notification when it's done.",
+  "reviewDemo": "Demo mode: approval is simulated in a few seconds.",
+  "actionNeededTitle": "Action needed",
+  "actionNeededSubtitle": "One or more documents need to be uploaded again.",
+  "fixDocuments": "Update documents",
+  "approvedTitle": "You're approved",
+  "approvedSubtitle": "Welcome to iyodriver. You can go online and accept rides.",
+  "startDriving": "Start driving",
+  "offlineTitle": "You're offline",
+  "offlineSubtitle": "Go online to start receiving ride requests.",
+  "onlineTitle": "You're online",
+  "onlineSubtitle": "Looking for rides near you.",
+  "goOnline": "Go online",
+  "goOffline": "Go offline",
+  "acceptingRequests": "Accepting ride requests",
+  "busyAreaTitle": "You're in a busy area",
+  "busyAreaBody": "Akwa & Bonanjo · Stay nearby for your next ride. Keep your phone mounted safely.",
+  "today": "Today",
+  "tripsCount": "{count, plural, =1{1 trip} other{{count} trips}}",
+  "@tripsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "onlineFor": "{time} online",
+  "@onlineFor": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "rating": "Rating",
+  "lastTrips": "Last 100 trips",
+  "locationNeeded": "Location is needed to go online",
+  "locationNeededBody": "Allow location \"all the time\" so riders can find you while you are online.",
+  "openSettings": "Open settings",
+  "onlineNotificationTitle": "You're online",
+  "onlineNotificationBody": "iyodriver is sharing your location with nearby riders.",
+  "newRequest": "New ride request",
+  "pickupIn": "Pickup · {minutes} min · {distance}",
+  "@pickupIn": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      },
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "tripLength": "Trip · {distance} · about {minutes} min",
+  "@tripLength": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "youEarn": "You earn {amount}",
+  "@youEarn": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "accept": "Accept",
+  "decline": "Decline",
+  "secondsLeft": "{seconds} s to accept",
+  "@secondsLeft": {
+    "placeholders": {
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "toPickupTitle": "Pick up {name}",
+  "@toPickupTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "toPickupSubtitle": "{place} · {minutes} min away",
+  "@toPickupSubtitle": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "navigate": "Navigate",
+  "imHere": "I've arrived",
+  "cancelRide": "Cancel ride",
+  "cancelTitle": "Cancel this ride?",
+  "cancelBody": "Frequent cancellations lower your acceptance rate.",
+  "cancelReasonNoShow": "Rider did not show up",
+  "cancelReasonUnsafe": "I feel unsafe",
+  "cancelReasonVehicle": "Vehicle problem",
+  "cancelReasonOther": "Other reason",
+  "keepRide": "Keep the ride",
+  "arrivedTitle": "Waiting for {name}",
+  "@arrivedTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "waitTime": "Wait time · {time}",
+  "@waitTime": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "pinLabel": "Ask {name} for their 4-digit pickup PIN",
+  "@pinLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pinWrong": "Wrong PIN · {count} attempts left",
+  "@pinWrong": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "pinLocked": "PIN locked after too many attempts. Support has been alerted.",
+  "pinDemoHint": "Demo mode · the rider PIN is {pin}",
+  "@pinDemoHint": {
+    "placeholders": {
+      "pin": {
+        "type": "String"
+      }
+    }
+  },
+  "startRide": "Start ride",
+  "liveTitle": "Drive to {place}",
+  "@liveTitle": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "liveSubtitle": "{minutes} min · {distance} left",
+  "@liveSubtitle": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      },
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "completeRide": "Complete ride",
+  "completeTitle": "Ride complete",
+  "completeSubtitle": "{place} · {payment}",
+  "@completeSubtitle": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      },
+      "payment": {
+        "type": "String"
+      }
+    }
+  },
+  "earnings": "Your earnings",
+  "fare": "Fare",
+  "commission": "iyodriver commission",
+  "collectCash": "Collect {amount} in cash from {name}",
+  "@collectCash": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "rateRider": "How was {name}?",
+  "@rateRider": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "done": "Done",
+  "riderCancelled": "The rider cancelled",
+  "riderCancelledBody": "You will not be charged for this ride.",
+  "backHome": "Back to home",
+  "chatWith": "Chat with {name}",
+  "@chatWith": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "chatPrivacy": "Your phone number stays private.",
+  "writeMessage": "Write a message…",
+  "send": "Send",
+  "callRider": "Call {name}",
+  "@callRider": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "messageRider": "Message {name}",
+  "@messageRider": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentCash": "Cash",
+  "paymentMtn": "MTN MoMo",
+  "paymentOrange": "Orange Money",
+  "paymentCard": "Card",
+  "riderRating": "★ {rating} · Verified rider",
+  "@riderRating": {
+    "placeholders": {
+      "rating": {
+        "type": "String"
+      }
+    }
+  },
+  "earningsTitle": "Earnings",
+  "earningsSubtitle": "Paid to your mobile money every week.",
+  "recentTrips": "Recent trips",
+  "noTripsTitle": "No trips yet",
+  "noTripsBody": "Go online to receive your first ride request.",
+  "bookingsTitle": "Bookings",
+  "bookingsSubtitle": "Your trips and rental handovers.",
+  "accountTitle": "Account",
+  "accountSubtitle": "Profile, vehicle and payouts.",
+  "vehicle": "Vehicle",
+  "language": "Language",
+  "signOut": "Sign out",
+  "componentGallery": "Component gallery (dev)",
+  "errorGeneric": "Something went wrong. Please try again."
 }

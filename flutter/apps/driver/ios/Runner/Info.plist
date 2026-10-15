@@ -2,6 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>iyodriver Driver shares your location with riders while you are online or on a trip, including in the background. Tracking stops when you go offline.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>iyodriver Driver uses the camera to photograph your documents and vehicle handovers.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>iyodriver Driver lets you choose document photos from your library.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>iyodriver Driver shares your location with riders while you are online or on a trip.</string>
 	<key>CFBundleDevelopmentRegion</key>

@@ -323,7 +323,7 @@ class SupabaseBackend implements IyoBackend {
           final p = await _db.from('ride_pins').select('pin').eq('ride_id', rideId).maybeSingle();
           pin = p?['pin'] as String?;
         }
-        rideSub = _db.from('rides').stream(primaryKey: ['id']).eq('id', rideId).listen((rows) {
+        void onRows(List<Map<String, dynamic>> rows) {
           if (rows.isEmpty) return;
           lastRow = rows.first;
           final status = lastRow!['status'] as String;
@@ -350,7 +350,13 @@ class SupabaseBackend implements IyoBackend {
                 });
           }
           push();
-        }, onError: out.addError,);
+        }
+
+        rideSub = _db
+            .from('rides')
+            .stream(primaryKey: ['id'])
+            .eq('id', rideId)
+            .listen(onRows, onError: out.addError);
       },
       onCancel: () async {
         matchPing?.cancel();
