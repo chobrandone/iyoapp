@@ -21,6 +21,8 @@ dependencies:
     path: ../../packages/iyo_ui
 
   intl: any
+  geolocator: ^14.0.2
+  url_launcher: ^6.3.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

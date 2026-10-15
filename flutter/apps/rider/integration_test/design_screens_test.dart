@@ -5,6 +5,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:rider/src/app.dart';
 
@@ -16,18 +17,21 @@ void main() {
     // Compare at 1.0x text like the Figma frames; the device's own font size is left untouched.
     tester.platformDispatcher.textScaleFactorTestValue = 1.0;
     addTearDown(tester.platformDispatcher.clearAllTestValues);
-    await tester.pumpWidget(const ProviderScope(child: RiderApp()));
+    await tester.pumpWidget(ProviderScope(overrides: riderOverrides, child: const RiderApp()));
     await tester.pumpAndSettle();
     await binding.convertFlutterSurfaceToImage();
     for (final (path, _) in designScreens) {
-      router.go(path);
+      routerOf(tester).go(path);
       await tester.pumpAndSettle(const Duration(milliseconds: 100));
       // The surface image lags a frame behind; give the new route time to reach the screen.
       await Future<void>.delayed(const Duration(milliseconds: 400));
       await tester.pumpAndSettle();
       await binding.takeScreenshot(path.substring(1).replaceAll('/', '_'));
     }
-    router.go('/welcome');
+    routerOf(tester).go('/welcome');
     await tester.pumpAndSettle();
   });
 }
+
+GoRouter routerOf(WidgetTester tester) =>
+    ProviderScope.containerOf(tester.element(find.byType(RiderApp))).read(routerProvider);

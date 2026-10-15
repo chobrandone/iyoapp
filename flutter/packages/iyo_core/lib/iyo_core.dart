@@ -2,6 +2,11 @@
 library;
 
 export 'l10n/gen/common_localizations.dart';
+export 'src/data/demo_backend.dart';
+export 'src/data/models.dart';
+export 'src/data/providers.dart';
+export 'src/data/repositories.dart';
+export 'src/data/supabase_backend.dart' show SupabaseBackend, decodePolyline;
 export 'src/format/currency.dart';
 export 'src/format/datetime.dart';
 export 'src/format/phone.dart';

@@ -82,18 +82,16 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
-    delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-  ];
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[
-    Locale('en'),
-    Locale('fr')
-  ];
+  static const List<Locale> supportedLocales = <Locale>[Locale('en'), Locale('fr')];
 
   /// No description provided for @placeholderFlowLabel.
   ///
@@ -1313,6 +1311,270 @@ abstract class AppLocalizations {
   /// **'This chat is not an emergency service. If you are in immediate danger, call {number}.'**
   String supportFooter(String number);
 
+  /// No description provided for @demoCodeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Demo mode · use code {code}'**
+  String demoCodeHint(String code);
+
+  /// No description provided for @otpInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'That code is not right. Check the SMS and try again.'**
+  String get otpInvalid;
+
+  /// No description provided for @wrongApp.
+  ///
+  /// In en, this message translates to:
+  /// **'This number is registered as a driver. Use the iyodriver Driver app.'**
+  String get wrongApp;
+
+  /// No description provided for @signOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get signOut;
+
+  /// No description provided for @currentLocationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Current location'**
+  String get currentLocationLabel;
+
+  /// No description provided for @locatingYou.
+  ///
+  /// In en, this message translates to:
+  /// **'Finding your location…'**
+  String get locatingYou;
+
+  /// No description provided for @locationDeniedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Location is off'**
+  String get locationDeniedTitle;
+
+  /// No description provided for @locationDeniedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow location so drivers can find you, or type your pickup address.'**
+  String get locationDeniedBody;
+
+  /// No description provided for @openSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open settings'**
+  String get openSettings;
+
+  /// No description provided for @searchPlaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Search a place in Douala or Yaoundé'**
+  String get searchPlaces;
+
+  /// No description provided for @noPlacesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No places found'**
+  String get noPlacesFound;
+
+  /// No description provided for @chooseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a ride'**
+  String get chooseTitle;
+
+  /// No description provided for @chooseSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{distance} · about {minutes} min to {place}'**
+  String chooseSubtitle(String distance, String minutes, String place);
+
+  /// No description provided for @seats.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} seats'**
+  String seats(String count);
+
+  /// No description provided for @etaAway.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min away'**
+  String etaAway(String minutes);
+
+  /// No description provided for @noEta.
+  ///
+  /// In en, this message translates to:
+  /// **'Limited availability'**
+  String get noEta;
+
+  /// No description provided for @upfrontPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Upfront price · placeholder rates'**
+  String get upfrontPrice;
+
+  /// No description provided for @paymentMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment method'**
+  String get paymentMethod;
+
+  /// No description provided for @bookCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Book {category} · {fare}'**
+  String bookCategory(String category, String fare);
+
+  /// No description provided for @quoteExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Prices have changed. Here are fresh ones.'**
+  String get quoteExpired;
+
+  /// No description provided for @matchingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Finding your driver'**
+  String get matchingTitle;
+
+  /// No description provided for @matchingSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Asking drivers near {place}'**
+  String matchingSubtitle(String place);
+
+  /// No description provided for @matchingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This usually takes less than a minute. Your price is fixed at {fare}.'**
+  String matchingBody(String fare);
+
+  /// No description provided for @cancelRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel request'**
+  String get cancelRequest;
+
+  /// No description provided for @driverArrivedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} has arrived'**
+  String driverArrivedTitle(String name);
+
+  /// No description provided for @driverArrivedSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Meet at {place} and share your PIN'**
+  String driverArrivedSubtitle(String place);
+
+  /// No description provided for @cancelRide.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel ride'**
+  String get cancelRide;
+
+  /// No description provided for @cancelTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this ride?'**
+  String get cancelTitle;
+
+  /// No description provided for @cancelBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us why. No fee applies while the driver is on the way.'**
+  String get cancelBody;
+
+  /// No description provided for @cancelReasonWait.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting too long'**
+  String get cancelReasonWait;
+
+  /// No description provided for @cancelReasonPlans.
+  ///
+  /// In en, this message translates to:
+  /// **'My plans changed'**
+  String get cancelReasonPlans;
+
+  /// No description provided for @cancelReasonPickup.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong pickup point'**
+  String get cancelReasonPickup;
+
+  /// No description provided for @cancelReasonOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other reason'**
+  String get cancelReasonOther;
+
+  /// No description provided for @keepRide.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep my ride'**
+  String get keepRide;
+
+  /// No description provided for @confirmCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel ride'**
+  String get confirmCancel;
+
+  /// No description provided for @rideCancelledTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ride cancelled'**
+  String get rideCancelledTitle;
+
+  /// No description provided for @rideCancelledByDriver.
+  ///
+  /// In en, this message translates to:
+  /// **'Your driver cancelled. You have not been charged.'**
+  String get rideCancelledByDriver;
+
+  /// No description provided for @rideCancelledByYou.
+  ///
+  /// In en, this message translates to:
+  /// **'You cancelled this ride.'**
+  String get rideCancelledByYou;
+
+  /// No description provided for @backHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to home'**
+  String get backHome;
+
+  /// No description provided for @errorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get errorTitle;
+
+  /// No description provided for @paymentCash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get paymentCash;
+
+  /// No description provided for @paymentMtn.
+  ///
+  /// In en, this message translates to:
+  /// **'MTN MoMo'**
+  String get paymentMtn;
+
+  /// No description provided for @paymentOrange.
+  ///
+  /// In en, this message translates to:
+  /// **'Orange Money'**
+  String get paymentOrange;
+
+  /// No description provided for @paymentCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Card'**
+  String get paymentCard;
+
   /// No description provided for @accountTitle.
   ///
   /// In en, this message translates to:
@@ -1384,18 +1646,18 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
-
-
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'en': return AppLocalizationsEn();
-    case 'fr': return AppLocalizationsFr();
+    case 'en':
+      return AppLocalizationsEn();
+    case 'fr':
+      return AppLocalizationsFr();
   }
 
   throw FlutterError(
     'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
     'an issue with the localizations generation tool. Please file an issue '
     'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.'
+    'that was used.',
   );
 }

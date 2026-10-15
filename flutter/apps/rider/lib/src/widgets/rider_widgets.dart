@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iyo_core/iyo_core.dart';
 import 'package:iyo_ui/iyo_ui.dart';
 
 import '../../l10n/gen/app_localizations.dart';
@@ -8,47 +9,77 @@ extension RiderL10n on BuildContext {
 }
 
 /// Douala sample coordinates; the UI-only map draws the Figma illustration in their place.
-const _pickup = LatLng(4.0469, 9.6953);
-const _car = LatLng(4.0452, 9.7005);
-const _destination = LatLng(4.0560, 9.7280);
+const _samplePickup = GeoPoint(4.0469, 9.6953);
+const _sampleCar = GeoPoint(4.0452, 9.7005);
+const _sampleDestination = GeoPoint(4.0560, 9.7280);
 
-/// Map with pickup + nearby car (home, no drivers, saved places).
+LatLng _ll(GeoPoint p) => LatLng(p.lat, p.lng);
+
+/// Map with the pickup and, when known, a nearby / assigned car (home, no drivers, saved places).
 class PickupMap extends StatelessWidget {
-  const PickupMap({super.key, this.height = 220});
+  const PickupMap({
+    super.key,
+    this.height = 220,
+    this.pickup,
+    this.car = _sampleCar,
+    this.onRecenter,
+  });
 
   final double height;
+  final GeoPoint? pickup;
+  final GeoPoint? car;
+  final VoidCallback? onRecenter;
 
   @override
-  Widget build(BuildContext context) => IyoMapCard(
-    center: _pickup,
-    height: height,
-    onRecenter: () {},
-    recenterLabel: context.t.recenterMap,
-    markers: const [
-      IyoMapMarker(id: 'pickup', kind: IyoMarkerKind.pickup, position: _pickup),
-      IyoMapMarker(id: 'car', kind: IyoMarkerKind.car, position: _car),
-    ],
-  );
+  Widget build(BuildContext context) {
+    final at = pickup ?? _samplePickup;
+    return IyoMapCard(
+      center: _ll(at),
+      height: height,
+      onRecenter: onRecenter ?? () {},
+      recenterLabel: context.t.recenterMap,
+      markers: [
+        IyoMapMarker(id: 'pickup', kind: IyoMarkerKind.pickup, position: _ll(at)),
+        if (car != null) IyoMapMarker(id: 'car', kind: IyoMarkerKind.car, position: _ll(car!)),
+      ],
+    );
+  }
 }
 
 /// Map with the route from pickup to destination and the car on it (trip screens).
 class RouteMap extends StatelessWidget {
-  const RouteMap({super.key, this.height = 256});
+  const RouteMap({
+    super.key,
+    this.height = 256,
+    this.pickup = _samplePickup,
+    this.destination = _sampleDestination,
+    this.car = _sampleCar,
+    this.carHeading = 0,
+    this.points = const [],
+  });
 
   final double height;
+  final GeoPoint pickup;
+  final GeoPoint destination;
+  final GeoPoint? car;
+  final double carHeading;
+
+  /// Decoded route; a straight pickup → destination line is used when empty.
+  final List<GeoPoint> points;
 
   @override
   Widget build(BuildContext context) => IyoMapCard(
-    center: _pickup,
+    center: _ll(pickup),
     height: height,
     fitToContent: true,
     onRecenter: () {},
     recenterLabel: context.t.recenterMap,
-    route: const [_pickup, _car, _destination],
-    markers: const [
-      IyoMapMarker(id: 'pickup', kind: IyoMarkerKind.pickup, position: _pickup),
-      IyoMapMarker(id: 'destination', kind: IyoMarkerKind.destination, position: _destination),
-      IyoMapMarker(id: 'car', kind: IyoMarkerKind.car, position: _car),
+    route: points.length >= 2 ? points.map(_ll).toList() : [_ll(pickup), _ll(destination)],
+    markers: [
+      IyoMapMarker(id: 'pickup', kind: IyoMarkerKind.pickup, position: _ll(pickup)),
+      IyoMapMarker(id: 'destination', kind: IyoMarkerKind.destination, position: _ll(destination)),
+      if (car != null)
+        IyoMapMarker(id: 'car', kind: IyoMarkerKind.car, position: _ll(car!), heading: carHeading),
     ],
   );
 }

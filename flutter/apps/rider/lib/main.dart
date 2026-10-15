@@ -8,5 +8,5 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // UI-only builds run without a Supabase project; data features need config/<env>.json.
   await initSupabase(IyoApp.rider);
-  runApp(const ProviderScope(child: RiderApp()));
+  runApp(ProviderScope(overrides: riderOverrides, child: const RiderApp()));
 }

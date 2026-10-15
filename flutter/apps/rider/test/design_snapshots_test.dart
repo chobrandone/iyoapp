@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rider/src/app.dart';
 
 Future<void> _loadFont(String family, List<String> files) async {
@@ -54,9 +55,9 @@ void main() {
     tester.platformDispatcher.localesTestValue = [const Locale('en', 'US')];
     addTearDown(tester.platformDispatcher.clearLocalesTestValue);
 
-    await tester.pumpWidget(const ProviderScope(child: RiderApp()));
+    await tester.pumpWidget(ProviderScope(overrides: riderOverrides, child: const RiderApp()));
     for (final (path, _) in designScreens) {
-      router.go(path);
+      routerOf(tester).go(path);
       await tester.pumpAndSettle();
       // Let Image.asset decode.
       await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 50)));
@@ -66,3 +67,6 @@ void main() {
     }
   });
 }
+
+GoRouter routerOf(WidgetTester tester) =>
+    ProviderScope.containerOf(tester.element(find.byType(RiderApp))).read(routerProvider);

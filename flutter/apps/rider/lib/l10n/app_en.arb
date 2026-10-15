@@ -568,6 +568,122 @@
       }
     }
   },
+  "demoCodeHint": "Demo mode · use code {code}",
+  "@demoCodeHint": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "otpInvalid": "That code is not right. Check the SMS and try again.",
+  "wrongApp": "This number is registered as a driver. Use the iyodriver Driver app.",
+  "signOut": "Sign out",
+  "currentLocationLabel": "Current location",
+  "locatingYou": "Finding your location…",
+  "locationDeniedTitle": "Location is off",
+  "locationDeniedBody": "Allow location so drivers can find you, or type your pickup address.",
+  "openSettings": "Open settings",
+  "searchPlaces": "Search a place in Douala or Yaoundé",
+  "noPlacesFound": "No places found",
+  "chooseTitle": "Choose a ride",
+  "chooseSubtitle": "{distance} · about {minutes} min to {place}",
+  "@chooseSubtitle": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "String"
+      },
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "seats": "{count} seats",
+  "@seats": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "etaAway": "{minutes} min away",
+  "@etaAway": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "noEta": "Limited availability",
+  "upfrontPrice": "Upfront price · placeholder rates",
+  "paymentMethod": "Payment method",
+  "bookCategory": "Book {category} · {fare}",
+  "@bookCategory": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "fare": {
+        "type": "String"
+      }
+    }
+  },
+  "quoteExpired": "Prices have changed. Here are fresh ones.",
+  "matchingTitle": "Finding your driver",
+  "matchingSubtitle": "Asking drivers near {place}",
+  "@matchingSubtitle": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "matchingBody": "This usually takes less than a minute. Your price is fixed at {fare}.",
+  "@matchingBody": {
+    "placeholders": {
+      "fare": {
+        "type": "String"
+      }
+    }
+  },
+  "cancelRequest": "Cancel request",
+  "driverArrivedTitle": "{name} has arrived",
+  "@driverArrivedTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "driverArrivedSubtitle": "Meet at {place} and share your PIN",
+  "@driverArrivedSubtitle": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "cancelRide": "Cancel ride",
+  "cancelTitle": "Cancel this ride?",
+  "cancelBody": "Tell us why. No fee applies while the driver is on the way.",
+  "cancelReasonWait": "Waiting too long",
+  "cancelReasonPlans": "My plans changed",
+  "cancelReasonPickup": "Wrong pickup point",
+  "cancelReasonOther": "Other reason",
+  "keepRide": "Keep my ride",
+  "confirmCancel": "Cancel ride",
+  "rideCancelledTitle": "Ride cancelled",
+  "rideCancelledByDriver": "Your driver cancelled. You have not been charged.",
+  "rideCancelledByYou": "You cancelled this ride.",
+  "backHome": "Back to home",
+  "errorTitle": "Something went wrong",
+  "paymentCash": "Cash",
+  "paymentMtn": "MTN MoMo",
+  "paymentOrange": "Orange Money",
+  "paymentCard": "Card",
   "accountTitle": "Account",
   "accountSubtitle": "Your profile, payments and safety settings.",
   "menuNotifications": "Notifications",
