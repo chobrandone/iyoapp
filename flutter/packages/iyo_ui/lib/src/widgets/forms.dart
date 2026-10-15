@@ -427,6 +427,7 @@ class IyoToggle extends StatelessWidget {
     this.description,
     this.enabled = true,
     this.semanticLabel,
+    this.labelVariant = IyoTextVariant.rowTitle,
   });
 
   final bool value;
@@ -437,6 +438,7 @@ class IyoToggle extends StatelessWidget {
   final String? description;
   final bool enabled;
   final String? semanticLabel;
+  final IyoTextVariant labelVariant;
 
   @override
   Widget build(BuildContext context) {
@@ -472,6 +474,8 @@ class IyoToggle extends StatelessWidget {
         disabled: !enabled,
         isButton: false,
         pressedOpacity: 1,
+        // A labelled toggle is a full-width row; the frames draw it at the track's height.
+        minHitSize: label == null ? IyoSizes.minTouchTarget : 0,
         child:
             label == null
                 ? track
@@ -481,7 +485,7 @@ class IyoToggle extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          IyoText(label!, variant: IyoTextVariant.rowTitle),
+                          IyoText(label!, variant: labelVariant),
                           if (description != null)
                             IyoText(
                               description!,
@@ -514,6 +518,7 @@ class _CodeInput extends StatefulWidget {
     this.error,
     this.autofocus = false,
     this.obscure = false,
+    this.highlighted = false,
     this.oneTimeCode = false,
   });
 
@@ -527,6 +532,9 @@ class _CodeInput extends StatefulWidget {
   final String? error;
   final bool autofocus;
   final bool obscure;
+
+  /// Draw the focused (yellow) border without focus, e.g. a filled PIN in a design preview.
+  final bool highlighted;
   final bool oneTimeCode;
 
   @override
@@ -565,7 +573,7 @@ class _CodeInputState extends State<_CodeInput> {
 
   @override
   Widget build(BuildContext context) {
-    final focused = _focus.hasFocus;
+    final focused = _focus.hasFocus || widget.highlighted;
     final hasError = widget.error != null;
     final value = widget.value;
     final active = value.length < widget.length ? value.length : widget.length - 1;
@@ -704,6 +712,7 @@ class IyoPinInput extends StatelessWidget {
     this.helper,
     this.error,
     this.obscure = false,
+    this.highlighted = false,
   });
 
   final String value;
@@ -713,6 +722,7 @@ class IyoPinInput extends StatelessWidget {
   final String? helper;
   final String? error;
   final bool obscure;
+  final bool highlighted;
 
   @override
   Widget build(BuildContext context) => _CodeInput(
@@ -725,6 +735,7 @@ class IyoPinInput extends StatelessWidget {
     helper: helper,
     error: error,
     obscure: obscure,
+    highlighted: highlighted,
   );
 }
 
@@ -783,7 +794,10 @@ class IyoSegmentedTabs<T> extends StatelessWidget {
                       borderRadius: BorderRadius.circular(IyoRadii.md),
                     ),
                     child: Row(
-                      mainAxisAlignment: large ? MainAxisAlignment.start : MainAxisAlignment.center,
+                      mainAxisAlignment:
+                          large && option.icon != null
+                              ? MainAxisAlignment.start
+                              : MainAxisAlignment.center,
                       children: [
                         if (option.icon != null) ...[
                           IyoIcon(option.icon!, color: active ? iyo.onAccent : IyoPalette.ink),

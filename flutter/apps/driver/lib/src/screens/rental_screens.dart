@@ -10,7 +10,10 @@ import 'package:iyo_core/iyo_core.dart';
 import 'package:iyo_ui/iyo_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../sample/sample_data.dart';
 import '../widgets/driver_widgets.dart';
+import 'bookings_screens.dart';
+import 'home_screens.dart';
 import 'onboarding_screens.dart';
 
 // D15–D16: rental deliveries assigned to this driver, with the handover / return checklist.
@@ -44,103 +47,113 @@ IyoBadge driverRentalBadge(BuildContext context, RentalBooking b) {
   };
 }
 
-/// D15 — Assigned rentals (Bookings tab, "Rentals" segment).
-class AssignedRentalsList extends ConsumerWidget {
-  const AssignedRentalsList({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final t = context.t;
-    final rentals = ref.watch(assignedRentalsProvider);
-    final list = rentals.value;
-    if (list == null) return const IyoSkeletonRow();
-    if (list.isEmpty) {
-      return IyoEmptyState(
-        title: t.noRentalsTitle,
-        message: t.noRentalsBody,
-        icon: LucideIcons.keyRound,
-      );
-    }
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      spacing: 16,
-      children: [for (final b in list) _RentalCard(booking: b)],
-    );
-  }
+//// "Sat, 17 Oct" (Douala time).
+String _weekdayDay(BuildContext context, DateTime d) {
+  final x = d.toUtc().add(const Duration(hours: 1));
+  final fr = Localizations.localeOf(context).languageCode == 'fr';
+  const en = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const frDays = ['lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.', 'dim.'];
+  return '${(fr ? frDays : en)[x.weekday - 1]}, ${formatDayMonth(context, d)}';
 }
 
-class _RentalCard extends StatelessWidget {
-  const _RentalCard({required this.booking});
+/// What DR01 / DR02 print, from a live booking or the Figma sample.
+class _RentalView {
+  const _RentalView({
+    required this.ref,
+    required this.car,
+    required this.plate,
+    required this.fuel,
+    required this.start,
+    required this.end,
+    required this.days,
+    required this.place,
+    required this.shortPlace,
+    required this.riderName,
+    required this.riderFirst,
+    required this.deposit,
+    required this.paymentMethod,
+    this.riderPhone,
+    this.flight,
+    this.flightRoute,
+    this.landing,
+    this.terminal,
+    this.photo,
+  });
 
-  final RentalBooking booking;
+  factory _RentalView.of(BuildContext context, RentalBooking b) => _RentalView(
+    ref: b.reference,
+    car: b.vehicle.name,
+    plate: b.vehicle.plate,
+    fuel: fuelLabel(context, b.vehicle.fuelType),
+    start: b.startsAt,
+    end: b.endsAt,
+    days: b.days,
+    place:
+        b.airportCode != null
+            ? [b.pickupAddress ?? '', if (b.terminal != null) b.terminal!].join(', ')
+            : b.pickupAddress ?? '',
+    shortPlace: b.airportCode != null ? 'Douala (${b.airportCode})' : b.pickupAddress ?? '',
+    riderName: b.riderName ?? '–',
+    riderFirst: _firstName(b),
+    riderPhone: b.riderPhone,
+    deposit: b.depositAmount,
+    paymentMethod: b.paymentMethod,
+    flight: b.flightNumber,
+    landing: b.flightArrivalAt,
+    terminal: b.terminal,
+  );
 
-  @override
-  Widget build(BuildContext context) {
-    final t = context.t;
-    final b = booking;
-    final collecting =
-        b.status == RentalBookingStatus.active || b.status == RentalBookingStatus.returnPending;
-    return IyoCard(
-      onPressed: () => context.push('/rental/${b.id}'),
-      children: [
-        IyoListRow(
-          title: '${b.vehicle.name} · ${b.vehicle.plate}',
-          titleVariant: IyoTextVariant.listTitle,
-          inlineChevron: true,
-          subtitle: [
-            t.rentalFor(b.riderName ?? '–'),
-            collecting
-                ? t.collectBy(formatDateTime(b.endsAt))
-                : t.deliverAt(formatDateTime(b.startsAt)),
-          ].join(' · '),
-          verticalPadding: 0,
-        ),
-        IyoListRow(
-          icon: b.airportCode != null ? LucideIcons.planeLanding : LucideIcons.mapPin,
-          iconWellTone: IyoIconWellTone.none,
-          title:
-              b.airportCode != null
-                  ? '${b.pickupAddress} (${b.airportCode})'
-                  : b.pickupAddress ?? '',
-          subtitle:
-              b.flightNumber != null
-                  ? t.flightArrives(
-                    b.flightNumber!,
-                    b.flightArrivalAt == null ? '–' : formatTime(b.flightArrivalAt!),
-                  )
-                  : null,
-          showChevron: false,
-          verticalPadding: 0,
-        ),
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: [
-            driverRentalBadge(context, b),
-            IyoBadge(t.rentalRef(b.reference), tone: IyoBadgeTone.neutral),
-          ],
-        ),
-      ],
-    );
-  }
+  static final sample = _RentalView(
+    ref: 'IYO-R1730',
+    car: DriverSample.rentalCar,
+    plate: DriverSample.rentalPlate,
+    fuel: 'Petrol',
+    start: DriverSample.rentalStart,
+    end: DriverSample.rentalEnd,
+    days: DriverSample.rentalDays,
+    place: 'Douala International Airport, Arrivals',
+    shortPlace: 'Douala (DLA)',
+    riderName: DriverSample.riderName,
+    riderFirst: DriverSample.riderFirstName,
+    deposit: DriverSample.rentalDeposit,
+    paymentMethod: PaymentMethodType.mtnMomo,
+    flight: DriverSample.rentalFlight,
+    flightRoute: DriverSample.rentalFlightRoute,
+    landing: DriverSample.flightLanding,
+    terminal: 'Arrivals',
+    photo: DriverSample.riderPhoto,
+  );
+
+  final String ref, car, plate, fuel, place, shortPlace, riderName, riderFirst;
+  final DateTime start, end;
+  final int days, deposit;
+  final PaymentMethodType paymentMethod;
+  final String? riderPhone, flight, flightRoute, terminal;
+  final DateTime? landing;
+  final ImageProvider? photo;
+
+  bool get airport => flight != null;
 }
 
-/// D16 — One delivery: rider, place, airport requirements, then the checklist.
+/// DRIVER RENTAL · 01 — Rental booking and airport requirements (Figma 2005:51637). Also the
+/// collection screen once the rider has the car (return inspection).
 class RentalDeliveryScreen extends ConsumerWidget {
-  const RentalDeliveryScreen({super.key, required this.bookingId});
+  const RentalDeliveryScreen({super.key, this.bookingId});
 
-  final String bookingId;
+  /// Null: Figma sample content.
+  final String? bookingId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final t = context.t;
-    final async = ref.watch(rentalProvider(bookingId));
-    final b = async.value;
-    if (b == null) {
+    final preview = bookingId == null;
+    final async = preview ? null : ref.watch(rentalProvider(bookingId!));
+    final b = async?.value;
+    if (!preview && b == null) {
       return IyoScreen(
-        header: DriverHeader(flowLabel: t.flowRental),
+        header: DriverHeader(flowLabel: t.flowDriverRental('01')),
         children: [
-          if (async.hasError)
+          if (async!.hasError)
             IyoErrorState(
               title: t.errorGeneric,
               retryLabel: t.backToHome,
@@ -151,104 +164,307 @@ class RentalDeliveryScreen extends ConsumerWidget {
         ],
       );
     }
-    final name = _firstName(b);
+    final v = preview ? _RentalView.sample : _RentalView.of(context, b!);
+    final status = b?.status ?? RentalBookingStatus.driverAssigned;
     final collecting =
-        b.status == RentalBookingStatus.active || b.status == RentalBookingStatus.returnPending;
-    final waitingRider =
-        (b.status == RentalBookingStatus.driverAssigned && b.handover != null) ||
-        b.status == RentalBookingStatus.returnPending;
-    final place =
-        b.airportCode != null ? '${b.pickupAddress} (${b.airportCode})' : b.pickupAddress ?? '';
-
-    final String status = switch (b.status) {
-      _ when waitingRider => t.waitingRiderConfirm(name),
-      RentalBookingStatus.active => t.rentalWithRider(formatDateTime(b.endsAt)),
-      RentalBookingStatus.completed || RentalBookingStatus.cancelled => t.rentalCompleted,
-      _ => t.deliverAt(formatDateTime(b.startsAt)),
-    };
+        status == RentalBookingStatus.active || status == RentalBookingStatus.returnPending;
+    final waitingReturn = status == RentalBookingStatus.returnPending;
+    final done = status == RentalBookingStatus.completed || status == RentalBookingStatus.cancelled;
 
     return IyoScreen(
-      header: DriverHeader(flowLabel: t.flowRental),
+      header: DriverHeader(flowLabel: t.flowDriverRental('01')),
       heading: IyoPageHeading(
-        title: collecting ? t.collectTitle(b.vehicle.name) : t.deliveryTitle(b.vehicle.name),
-        subtitle: collecting ? t.collectSubtitle(name) : t.deliverySubtitle(name),
-        onBack: context.pop,
+        title:
+            collecting
+                ? t.rentalReturnTitle
+                : v.airport
+                ? t.airportRentalPickup
+                : t.addressRentalPickup,
+        subtitle: t.confirmedBooking(v.ref),
+        onBack: preview ? null : context.pop,
       ),
       footer: [
-        if (b.status == RentalBookingStatus.driverAssigned && b.handover == null)
+        if (!done)
           IyoButton(
-            label: t.startHandover,
-            onPressed: () => context.push('/rental/${b.id}/inspect/handover'),
+            label: t.navigateToPlace(v.shortPlace),
+            onPressed: preview ? () {} : () => _navigateTo(v.place),
           ),
-        if (b.status == RentalBookingStatus.active)
+        if (!preview && !collecting && !done)
+          IyoButton(
+            label: t.openHandover,
+            variant: IyoButtonVariant.secondary,
+            onPressed: () => context.push('/rental/${b!.id}/handover'),
+          ),
+        if (!preview && status == RentalBookingStatus.active)
           IyoButton(
             label: t.startReturn,
-            onPressed: () => context.push('/rental/${b.id}/inspect/return'),
+            variant: IyoButtonVariant.secondary,
+            onPressed: () => context.push('/rental/${b!.id}/inspect/return'),
           ),
-        IyoButton(
-          label: t.reportIncident,
-          variant: IyoButtonVariant.ghost,
-          onPressed:
-              () => context.push(
-                '/incident?rental=${b.id}&ref=${Uri.encodeQueryComponent(b.reference)}',
+        if (!preview)
+          IyoButton(
+            label: t.reportIncident,
+            variant: IyoButtonVariant.ghost,
+            onPressed:
+                () => context.push(
+                  '/incident?rental=${b!.id}&ref=${Uri.encodeQueryComponent(b.reference)}',
+                ),
+          ),
+      ],
+      children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child:
+              done
+                  ? driverRentalBadge(context, b!)
+                  : collecting
+                  ? IyoBadge(t.withRiderUntil(formatRentalWhen(v.end)), tone: IyoBadgeTone.success)
+                  : IyoBadge(t.upcomingWhen(formatRentalWhen(v.start))),
+        ),
+        IyoCard(
+          children: [
+            IyoText(t.carWithFuel(v.car, v.fuel), variant: IyoTextVariant.subheading),
+            IyoText(
+              t.rentalPeriodDays(
+                formatPeriodRange(context, v.start, v.end),
+                daysLabel(context, v.days),
               ),
+              variant: IyoTextVariant.caption,
+              color: IyoPalette.textSecondary,
+            ),
+            IyoListRow(
+              icon: LucideIcons.calendarDays,
+              iconWellTone: IyoIconWellTone.none,
+              title: t.pickupOn(_weekdayDay(context, v.start)),
+              subtitle: t.timeAtPlace(formatTime(v.start), v.place),
+              showChevron: false,
+            ),
+            IyoListRow(
+              icon: LucideIcons.calendarCheck,
+              iconWellTone: IyoIconWellTone.none,
+              title: t.returnOn(_weekdayDay(context, v.end)),
+              subtitle: t.timeAtPlace(formatTime(v.end), v.place),
+              showChevron: false,
+            ),
+          ],
+        ),
+        IyoPersonInfoCard(
+          name: v.riderName,
+          photo: v.photo,
+          meta: t.verifiedRider(DriverSample.riderRating),
+          detail: t.askHandoverPin,
+          onCall: preview ? () {} : (v.riderPhone == null ? null : () => _dial(v.riderPhone)),
+          callLabel: t.callRider(v.riderFirst),
+        ),
+        if (waitingReturn)
+          IyoCard(
+            tone: IyoCardTone.accent,
+            children: [IyoText(t.waitingRiderConfirm(v.riderFirst), color: IyoPalette.charcoal)],
+          )
+        else if (v.airport && !collecting)
+          IyoCard(
+            tone: IyoCardTone.accent,
+            children: [
+              IyoText(t.airportRequirementsTitle, variant: IyoTextVariant.subheading),
+              IyoText(
+                [
+                  t.flightLine(v.flight!, v.flightRoute ?? v.shortPlace),
+                  if (v.landing != null)
+                    t.landingLine(formatRentalWhen(v.landing!), v.terminal ?? ''),
+                  t.meetLine(formatTime(v.start), v.riderFirst),
+                ].join('\n'),
+                color: IyoPalette.charcoal,
+              ),
+            ],
+          ),
+        Footnote(
+          v.airport ? t.prepareCarNote('45', v.riderFirst) : t.prepareCarNoteAddress(v.riderFirst),
+        ),
+      ],
+    );
+  }
+}
+
+/// DRIVER RENTAL · 02 — Handover checklist (Figma 2005:51686): identity check, deposit, the
+/// photo inspection, then the rider's handover PIN starts the rental.
+class RentalHandoverScreen extends ConsumerStatefulWidget {
+  const RentalHandoverScreen({super.key, this.bookingId});
+
+  /// Null: Figma sample content.
+  final String? bookingId;
+
+  @override
+  ConsumerState<RentalHandoverScreen> createState() => _RentalHandoverScreenState();
+}
+
+class _RentalHandoverScreenState extends ConsumerState<RentalHandoverScreen> {
+  late bool _identityChecked = widget.bookingId == null;
+  late String _pin = widget.bookingId == null ? '6318' : '';
+  String? _error;
+  bool _busy = false;
+  bool _locked = false;
+
+  Future<void> _confirm(RentalBooking b) async {
+    final t = context.t;
+    setState(() {
+      _busy = true;
+      _error = null;
+    });
+    try {
+      final r = await ref.read(backendProvider).confirmHandoverPin(b.id, _pin);
+      if (!mounted) return;
+      if (r.ok) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(t.handoverDone)));
+        context.go('/rental/${b.id}');
+      } else if (r.locked) {
+        setState(() {
+          _locked = true;
+          _error = t.handoverPinLocked;
+        });
+      } else {
+        setState(() {
+          _pin = '';
+          _error = t.handoverPinWrong('${r.attemptsLeft}');
+        });
+      }
+    } on BackendException {
+      if (mounted) setState(() => _error = t.errorGeneric);
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.t;
+    final preview = widget.bookingId == null;
+    final b = preview ? null : ref.watch(rentalProvider(widget.bookingId!)).value;
+    if (!preview && b == null) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+    final v = preview ? _RentalView.sample : _RentalView.of(context, b!);
+    final inspection = b?.handover;
+    final photosDone = preview || inspection != null;
+    final allChecked = _identityChecked && photosDone;
+
+    Widget check({
+      required IconData icon,
+      required String title,
+      required String subtitle,
+      required bool done,
+      VoidCallback? onPressed,
+    }) => IyoListRow(
+      icon: icon,
+      iconWellTone: IyoIconWellTone.none,
+      title: title,
+      subtitle: subtitle,
+      trailing:
+          done
+              ? const IyoText('✓', variant: IyoTextVariant.bodyStrong)
+              : const IyoIcon(LucideIcons.chevronRight, size: 16),
+      showChevron: false,
+      onPressed: onPressed,
+    );
+
+    final fuel =
+        preview
+            ? t.fullTank
+            : inspection == null
+            ? ''
+            : inspection.fuelLevel == 8
+            ? t.fullTank
+            : t.tankEighths('${inspection.fuelLevel}');
+    final km =
+        preview
+            ? '41 200'
+            : inspection == null
+            ? ''
+            : formatFcfa(inspection.odometerKm).replaceAll(RegExp(r'\s*FCFA$'), '');
+
+    return IyoScreen(
+      header: DriverHeader(flowLabel: t.flowDriverRental('02')),
+      heading: IyoPageHeading(
+        title: t.smoothHandover,
+        subtitle: t.handoverSubtitle(v.riderName, v.shortPlace, formatDayMonth(context, v.start)),
+        onBack: preview ? null : context.pop,
+      ),
+      footer: [
+        IyoButton(
+          label: t.confirmHandoverStart,
+          loading: _busy,
+          disabled: !preview && (!allChecked || _pin.length != 4 || _locked),
+          onPressed: preview ? () {} : () => _confirm(b!),
         ),
       ],
       children: [
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: [
-            driverRentalBadge(context, b),
-            IyoBadge(t.rentalRef(b.reference), tone: IyoBadgeTone.neutral),
-          ],
-        ),
-        IyoCard(
-          tone: waitingRider ? IyoCardTone.accent : IyoCardTone.surface,
-          children: [IyoText(status, color: IyoPalette.charcoal)],
-        ),
-        IyoPersonInfoCard(
-          name: b.riderName ?? '–',
-          meta: formatPhone(b.riderPhone ?? ''),
-          detail: '${b.vehicle.name} · ${b.vehicle.plate}',
-          onCall: b.riderPhone == null ? null : () => _dial(b.riderPhone),
-          callLabel: t.callRider(name),
-        ),
+        Align(alignment: Alignment.centerLeft, child: IyoBadge(t.carPlateBadge(v.car, v.plate))),
         IyoCard(
           children: [
-            IyoListRow(
-              icon: b.airportCode != null ? LucideIcons.planeLanding : LucideIcons.mapPin,
-              iconWellTone: IyoIconWellTone.none,
-              title: place,
-              titleVariant: IyoTextVariant.listTitle,
+            check(
+              icon: LucideIcons.circleCheck,
+              title: t.checkIdentity,
+              subtitle: _identityChecked ? t.checkIdentityBody : t.checkIdentityTap,
+              done: _identityChecked,
+              onPressed:
+                  preview ? null : () => setState(() => _identityChecked = !_identityChecked),
+            ),
+            check(
+              icon: LucideIcons.circleCheck,
+              title: t.checkDeposit,
+              subtitle: t.checkDepositBody(
+                formatFcfa(v.deposit),
+                paymentLabel(context, v.paymentMethod),
+              ),
+              done: true,
+            ),
+            check(
+              icon: LucideIcons.camera,
+              title: t.checkPhotos,
               subtitle:
-                  b.flightNumber != null
-                      ? [
-                        t.flightArrives(
-                          b.flightNumber!,
-                          b.flightArrivalAt == null ? '–' : formatDateTime(b.flightArrivalAt!),
-                        ),
-                        if (b.terminal != null) b.terminal!,
-                      ].join(' · ')
-                      : t.deliverAt(formatDateTime(b.startsAt)),
-              showChevron: false,
-              verticalPadding: 0,
+                  photosDone
+                      ? t.checkPhotosDone(
+                        preview ? '5' : '${inspection!.photoPaths.length}',
+                        (inspection?.damageNotes ?? '').trim().isEmpty
+                            ? t.noNewDamage
+                            : t.damageNoted,
+                      )
+                      : t.checkPhotosTodo,
+              done: photosDone,
+              onPressed:
+                  preview || photosDone
+                      ? null
+                      : () => context.push('/rental/${b!.id}/inspect/handover'),
             ),
-            IyoButton(
-              label: t.navigateTo,
-              icon: LucideIcons.navigation,
-              variant: IyoButtonVariant.secondary,
-              size: IyoButtonSize.sm,
-              onPressed: () => _navigateTo(place),
+            check(
+              icon: LucideIcons.fuel,
+              title: t.checkFuel,
+              subtitle: photosDone ? t.checkFuelDone(fuel, km) : t.checkFuelTodo,
+              done: photosDone,
             ),
           ],
         ),
-        if (b.airportCode != null)
-          IyoCard(
-            tone: IyoCardTone.accent,
-            children: [IyoText(t.airportRequirements, color: IyoPalette.charcoal)],
+        IyoPinInput(
+          label: t.customerHandoverPin,
+          value: _pin,
+          highlighted: preview,
+          onChanged:
+              (v) => setState(() {
+                _pin = v;
+                _error = null;
+              }),
+          error: _error,
+          helper:
+              preview
+                  ? t.handoverPinVerified
+                  : (ref.watch(backendProvider).isDemo ? t.pinDemoHint(demoHandoverPin) : null),
+        ),
+        Footnote(
+          t.handoverReturnNote(
+            '${_weekdayDay(context, v.end)} · ${formatTime(v.end)}',
+            v.shortPlace,
+            v.riderFirst,
           ),
-        IyoText(t.depositToHold(formatFcfa(b.depositAmount)), variant: IyoTextVariant.caption),
+        ),
       ],
     );
   }

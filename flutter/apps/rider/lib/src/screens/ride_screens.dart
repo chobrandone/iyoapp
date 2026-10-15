@@ -10,6 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../sample/sample_data.dart';
 import '../state/booking.dart';
 import '../state/location.dart';
+import '../state/rental.dart';
 import '../widgets/rider_widgets.dart';
 import 'rental_screens.dart';
 import 'safety_screens.dart';
@@ -32,17 +33,26 @@ Place currentLocationPlace(BuildContext context, GeoPoint at) => Place(
 
 /// RIDER · 01 — Home tab (Figma 2005:50127).
 class HomeScreen extends ConsumerStatefulWidget {
-  const HomeScreen({super.key, this.preview = false});
+  const HomeScreen({super.key, this.preview = false, this.rent = false});
 
   /// Design preview: Figma sample content, no location request.
   final bool preview;
+
+  /// Open on "Rent a car" (RENTAL · 01, Figma 2005:50641).
+  final bool rent;
 
   @override
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  var _service = _Service.ride;
+  late var _service = widget.rent ? _Service.rent : _Service.ride;
+
+  @override
+  void didUpdateWidget(HomeScreen old) {
+    super.didUpdateWidget(old);
+    if (widget.rent != old.rent) _service = widget.rent ? _Service.rent : _Service.ride;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +88,38 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       context.push('/plan');
     }
 
+    final rent = _service == _Service.rent;
+    final switcher = IyoSegmentedTabs<_Service>(
+      large: true,
+      value: _service,
+      onChanged: (v) => setState(() => _service = v),
+      // The rental frame shows text-only options.
+      options: [
+        IyoSegment(
+          value: _Service.ride,
+          label: t.serviceRide,
+          icon: rent ? null : LucideIcons.carFront,
+        ),
+        IyoSegment(
+          value: _Service.rent,
+          label: rent ? t.rentACar : t.serviceRent,
+          icon: rent ? null : LucideIcons.calendarDays,
+        ),
+      ],
+    );
+    if (rent) {
+      final city = ref.watch(rentalDraftProvider).cityCode == 'yaounde' ? 'Yaoundé' : 'Douala';
+      return IyoScreenDefaults(
+        blockGap: 14,
+        child: IyoScreen(
+          inTabs: true,
+          header: IyoAppHeader(flowLabel: t.flowRental('01')),
+          heading: IyoPageHeading(title: t.carForPlans, subtitle: t.carForPlansSub(city)),
+          children: [switcher, RentBrowseContent(preview: widget.preview)],
+        ),
+      );
+    }
+
     return IyoScreen(
       inTabs: true,
       header: IyoAppHeader(flowLabel: t.flowRider('01')),
@@ -86,18 +128,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         subtitle: subtitle,
       ),
       children: [
-        IyoSegmentedTabs<_Service>(
-          large: true,
-          value: _service,
-          onChanged: (v) => setState(() => _service = v),
-          options: [
-            IyoSegment(value: _Service.ride, label: t.serviceRide, icon: LucideIcons.carFront),
-            IyoSegment(value: _Service.rent, label: t.serviceRent, icon: LucideIcons.calendarDays),
-          ],
-        ),
-        if (_service == _Service.rent && !widget.preview)
-          const RentHomePanel()
-        else ...[
+        switcher,
+        ...[
           PickupMap(
             height: 218,
             pickup: here,

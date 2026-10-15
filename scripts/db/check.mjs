@@ -594,6 +594,70 @@ await test('cash rentals are confirmed at once; riders cancel before the start o
   );
 });
 
+await test('rental handover PIN: rider reads it, driver confirms with it; protection is priced', async () => {
+  const [v] = await as(
+    U.aicha,
+    `select id, daily_rate from public.rental_vehicles where plate = 'LT 213 RD'`,
+  );
+  const [b] = await as(
+    U.aicha,
+    `select * from public.create_rental_booking($1, now() + interval '8 days', now() + interval '10 days', 'address', 'cash',
+       p_pickup_address => 'Akwa, Douala', p_protection => true)`,
+    [v.id],
+  );
+  assert.equal(b.protection_amount, 2 * 3000);
+  assert.equal(b.total_amount, 2 * v.daily_rate + 6000);
+
+  const [pin] = await as(
+    U.aicha,
+    `select pin from public.rental_handover_pins where booking_id = $1`,
+    [b.id],
+  );
+  assert.match(pin.pin, /^[0-9]{4}$/);
+  await as('service', `select public.assign_rental_driver($1, $2)`, [b.id, U.jeanPaul]);
+  assert.equal(
+    (
+      await as(U.jeanPaul, `select pin from public.rental_handover_pins where booking_id = $1`, [
+        b.id,
+      ])
+    ).length,
+    0,
+  );
+  const [drv] = await as(U.aicha, `select public.get_rental_driver($1) as d`, [b.id]);
+  assert.equal(drv.d.id, U.jeanPaul);
+
+  // The checklist (inspection) comes first, then the PIN.
+  await rejects(
+    U.jeanPaul,
+    `select public.confirm_rental_handover_pin($1, $2)`,
+    [b.id, pin.pin],
+    /inspection_not_ready/,
+  );
+  const photos = JSON.stringify({ front: 'f', back: 'b', left: 'l', right: 'r', interior: 'i' });
+  await as(
+    U.jeanPaul,
+    `select public.submit_rental_inspection($1, 'handover', 8::smallint, 52000, $2::jsonb)`,
+    [b.id, photos],
+  );
+  const wrong = pin.pin === '0000' ? '1111' : '0000';
+  const [bad] = await as(U.jeanPaul, `select public.confirm_rental_handover_pin($1, $2) as r`, [
+    b.id,
+    wrong,
+  ]);
+  assert.equal(bad.r.ok, false);
+  const [good] = await as(U.jeanPaul, `select public.confirm_rental_handover_pin($1, $2) as r`, [
+    b.id,
+    pin.pin,
+  ]);
+  assert.equal(good.r.ok, true);
+  const [after] = await as(
+    U.aicha,
+    `select status, deposit_status from public.rental_bookings where id = $1`,
+    [b.id],
+  );
+  assert.deepEqual(after, { status: 'active', deposit_status: 'held' });
+});
+
 await test('trusted contacts are capped at 5', async () => {
   for (let i = 0; i < 4; i += 1) {
     await as(

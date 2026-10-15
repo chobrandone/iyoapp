@@ -81,19 +81,22 @@ void main() {
     if (e != null) fail('after tapping "$text": $e');
   }
 
-  testWidgets('airport rental: handover checklist, rider confirms, car with rider', (tester) async {
+  testWidgets('airport rental: checklist photos, rider PIN, rental starts', (tester) async {
     final router = await pumpApproved(tester);
     router.go('/bookings');
     await tester.pumpAndSettle();
-    expect(find.text('Toyota RAV4 · LT 210 RA'), findsOneWidget);
-    expect(find.text('TO DELIVER'), findsOneWidget);
-    await tapText(tester, 'Toyota RAV4 · LT 210 RA');
+    expect(find.text('Toyota Corolla'), findsOneWidget);
+    expect(find.text('AIRPORT PICKUP · CONFIRMED'), findsOneWidget);
+    await tapText(tester, 'View handover requirements');
 
-    expect(find.text('Deliver Toyota RAV4'), findsOneWidget);
-    expect(find.textContaining('name sign'), findsOneWidget);
-    await tapText(tester, 'Start handover checklist');
+    expect(find.text('Airport rental pickup'), findsOneWidget);
+    expect(find.text('Airport pickup requirements'), findsOneWidget);
+    await tapText(tester, 'Start the handover');
 
-    // Validation first: photos and odometer are required.
+    expect(find.text('A smooth handover'), findsOneWidget);
+    await tapText(tester, 'Vehicle condition photos');
+
+    // Photo checklist: validation first, then the five sides and the odometer.
     await tapText(tester, 'Submit for rider confirmation');
     expect(find.text('All five photos are required.'), findsOneWidget);
     for (final side in ['Front', 'Back', 'Left side', 'Right side', 'Interior']) {
@@ -107,8 +110,25 @@ void main() {
       '41200',
     );
     await tapText(tester, 'Submit for rider confirmation');
-    await pumpUntil(tester, find.text('AWAITING RIDER'));
-    await pumpUntil(tester, find.text('WITH RIDER'));
+    await pumpUntil(tester, find.text('A smooth handover'));
+    await pumpUntil(tester, find.textContaining('5 photos saved'));
+
+    // Identity check, then the rider's handover PIN.
+    await tapText(tester, 'Identity & licence checked');
+    await tester.enterText(
+      find.descendant(of: find.byType(IyoPinInput), matching: find.byType(EditableText)),
+      '0000',
+    );
+    await tester.pump();
+    await tapText(tester, 'Confirm handover & start rental');
+    await pumpUntil(tester, find.text('Wrong PIN · 4 attempts left'));
+    await tester.enterText(
+      find.descendant(of: find.byType(IyoPinInput), matching: find.byType(EditableText)),
+      demoHandoverPin,
+    );
+    await tester.pump();
+    await tapText(tester, 'Confirm handover & start rental');
+    await pumpUntil(tester, find.textContaining('WITH RIDER · UNTIL'));
     expect(find.text('Start return inspection'), findsOneWidget);
   });
 

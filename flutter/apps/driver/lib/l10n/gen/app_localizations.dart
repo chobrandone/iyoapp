@@ -1702,6 +1702,1386 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Report an incident'**
   String get menuReportIncident;
+
+  /// No description provided for @greetingMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'Good morning, {name}'**
+  String greetingMorning(String name);
+
+  /// No description provided for @greetingAfternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Good afternoon, {name}'**
+  String greetingAfternoon(String name);
+
+  /// No description provided for @greetingEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Good evening, {name}'**
+  String greetingEvening(String name);
+
+  /// No description provided for @homeOfflineSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You’re offline. Ready when you are.'**
+  String get homeOfflineSubtitle;
+
+  /// No description provided for @todaysEarnings.
+  ///
+  /// In en, this message translates to:
+  /// **'Today’s earnings'**
+  String get todaysEarnings;
+
+  /// No description provided for @completedTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed trips'**
+  String get completedTrips;
+
+  /// No description provided for @offlineBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline · No ride requests'**
+  String get offlineBadge;
+
+  /// No description provided for @nextRental.
+  ///
+  /// In en, this message translates to:
+  /// **'Next rental · {when}'**
+  String nextRental(String when);
+
+  /// No description provided for @nextRentalDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'{place} · {car} · {days}'**
+  String nextRentalDetail(String place, String car, String days);
+
+  /// No description provided for @daysCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} days'**
+  String daysCount(String n);
+
+  /// No description provided for @oneDay.
+  ///
+  /// In en, this message translates to:
+  /// **'1 day'**
+  String get oneDay;
+
+  /// No description provided for @homeOnlineTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You’re online'**
+  String get homeOnlineTitle;
+
+  /// No description provided for @homeOnlineSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Looking for riders nearby…'**
+  String get homeOnlineSubtitle;
+
+  /// No description provided for @busyAreaHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'You’re in a busy area'**
+  String get busyAreaHeading;
+
+  /// No description provided for @busyAreaText.
+  ///
+  /// In en, this message translates to:
+  /// **'{area} · Stay nearby for your next ride. Keep your phone mounted safely.'**
+  String busyAreaText(String area);
+
+  /// No description provided for @todayAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Today · {amount}'**
+  String todayAmount(String amount);
+
+  /// No description provided for @tripsOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'{trips} · {online} online'**
+  String tripsOnline(String trips, String online);
+
+  /// No description provided for @tripsN.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} trips'**
+  String tripsN(String n);
+
+  /// No description provided for @oneTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'1 trip'**
+  String get oneTrip;
+
+  /// No description provided for @requestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A new ride nearby'**
+  String get requestTitle;
+
+  /// No description provided for @requestSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{category} · Accept within {seconds} seconds'**
+  String requestSubtitle(String category, String seconds);
+
+  /// No description provided for @estEarningsBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Your est. earnings'**
+  String get estEarningsBadge;
+
+  /// No description provided for @requestMeta.
+  ///
+  /// In en, this message translates to:
+  /// **'{pickup} min to pickup · Trip {trip} min · {distance}'**
+  String requestMeta(String pickup, String trip, String distance);
+
+  /// No description provided for @pickupSuffix.
+  ///
+  /// In en, this message translates to:
+  /// **'{area} · Pickup'**
+  String pickupSuffix(String area);
+
+  /// No description provided for @dropoffSuffix.
+  ///
+  /// In en, this message translates to:
+  /// **'{area} · Drop-off'**
+  String dropoffSuffix(String area);
+
+  /// No description provided for @verifiedRider.
+  ///
+  /// In en, this message translates to:
+  /// **'★ {rating} · Verified rider'**
+  String verifiedRider(String rating);
+
+  /// No description provided for @askForPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask for the pickup PIN at the car'**
+  String get askForPin;
+
+  /// No description provided for @acceptRideSeconds.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept ride · {seconds}s'**
+  String acceptRideSeconds(String seconds);
+
+  /// No description provided for @declineRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Decline request'**
+  String get declineRequest;
+
+  /// No description provided for @headToRider.
+  ///
+  /// In en, this message translates to:
+  /// **'Head to {name}'**
+  String headToRider(String name);
+
+  /// No description provided for @headToSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{place} · {minutes} min · {distance}'**
+  String headToSubtitle(String place, String minutes, String distance);
+
+  /// No description provided for @navContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue for {distance}'**
+  String navContinue(String distance);
+
+  /// No description provided for @navTowards.
+  ///
+  /// In en, this message translates to:
+  /// **'Towards {place}'**
+  String navTowards(String place);
+
+  /// No description provided for @navArriving.
+  ///
+  /// In en, this message translates to:
+  /// **'Arriving at {place}'**
+  String navArriving(String place);
+
+  /// No description provided for @tileMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get tileMessage;
+
+  /// No description provided for @tileShareTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Share trip'**
+  String get tileShareTrip;
+
+  /// No description provided for @tileSafety.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety'**
+  String get tileSafety;
+
+  /// No description provided for @pickupNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup note: “{note}”'**
+  String pickupNote(String note);
+
+  /// No description provided for @stopSafely.
+  ///
+  /// In en, this message translates to:
+  /// **'Please stop safely before contacting your rider.'**
+  String get stopSafely;
+
+  /// No description provided for @arrivedAtPickup.
+  ///
+  /// In en, this message translates to:
+  /// **'I’ve arrived at pickup'**
+  String get arrivedAtPickup;
+
+  /// No description provided for @atPickupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You’re at the pickup'**
+  String get atPickupTitle;
+
+  /// No description provided for @atPickupSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} has been notified you’ve arrived.'**
+  String atPickupSubtitle(String name);
+
+  /// No description provided for @askPinLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask {name} for the 4-digit pickup PIN'**
+  String askPinLabel(String name);
+
+  /// No description provided for @pinVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'✓ PIN verified · You can start the ride.'**
+  String get pinVerified;
+
+  /// No description provided for @confirmRiderNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm the rider’s name before departure. Destination: {place}.'**
+  String confirmRiderNote(String place);
+
+  /// No description provided for @driveTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Drive to {place}'**
+  String driveTo(String place);
+
+  /// No description provided for @driveSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Arrive {time} · {minutes} min · {distance} left'**
+  String driveSubtitle(String time, String minutes, String distance);
+
+  /// No description provided for @tripInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip in progress · {ref}'**
+  String tripInProgress(String ref);
+
+  /// No description provided for @endRide.
+  ///
+  /// In en, this message translates to:
+  /// **'End ride at destination'**
+  String get endRide;
+
+  /// No description provided for @cancelThisRide.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this ride'**
+  String get cancelThisRide;
+
+  /// No description provided for @navTurnRight.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn right in {distance}'**
+  String navTurnRight(String distance);
+
+  /// No description provided for @navInto.
+  ///
+  /// In en, this message translates to:
+  /// **'Into {street}'**
+  String navInto(String street);
+
+  /// No description provided for @navOn.
+  ///
+  /// In en, this message translates to:
+  /// **'On {street}'**
+  String navOn(String street);
+
+  /// No description provided for @mainEntrance.
+  ///
+  /// In en, this message translates to:
+  /// **'{area} · Main entrance'**
+  String mainEntrance(String area);
+
+  /// No description provided for @earnTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your earnings'**
+  String get earnTitle;
+
+  /// No description provided for @earnSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{range} · Net after service fees'**
+  String earnSubtitle(String range);
+
+  /// No description provided for @periodWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
+  String get periodWeek;
+
+  /// No description provided for @periodMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get periodMonth;
+
+  /// No description provided for @periodYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get periodYear;
+
+  /// No description provided for @weekSoFar.
+  ///
+  /// In en, this message translates to:
+  /// **'This week so far'**
+  String get weekSoFar;
+
+  /// No description provided for @monthSoFar.
+  ///
+  /// In en, this message translates to:
+  /// **'This month so far'**
+  String get monthSoFar;
+
+  /// No description provided for @yearSoFar.
+  ///
+  /// In en, this message translates to:
+  /// **'This year so far'**
+  String get yearSoFar;
+
+  /// No description provided for @tripsDriving.
+  ///
+  /// In en, this message translates to:
+  /// **'{trips} · {time} driving'**
+  String tripsDriving(String trips, String time);
+
+  /// No description provided for @nextPayout.
+  ///
+  /// In en, this message translates to:
+  /// **'Next scheduled payout'**
+  String get nextPayout;
+
+  /// No description provided for @nextPayoutDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'{date} · {account}'**
+  String nextPayoutDetail(String date, String account);
+
+  /// No description provided for @payoutHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Payout history'**
+  String get payoutHistory;
+
+  /// No description provided for @paidTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid to {account}'**
+  String paidTo(String account);
+
+  /// No description provided for @payoutPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Being sent to {account}'**
+  String payoutPending(String account);
+
+  /// No description provided for @payoutFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed · {reason}'**
+  String payoutFailed(String reason);
+
+  /// No description provided for @statusPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get statusPaid;
+
+  /// No description provided for @statusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get statusPending;
+
+  /// No description provided for @statusFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get statusFailed;
+
+  /// No description provided for @viewPayoutDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'View payout details'**
+  String get viewPayoutDetails;
+
+  /// No description provided for @noPayoutsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No payouts yet. Earnings are paid weekly, every Monday.'**
+  String get noPayoutsYet;
+
+  /// No description provided for @weekdayLetters.
+  ///
+  /// In en, this message translates to:
+  /// **'M,T,W,T,F,S,S'**
+  String get weekdayLetters;
+
+  /// No description provided for @monthLetters.
+  ///
+  /// In en, this message translates to:
+  /// **'J,F,M,A,M,J,J,A,S,O,N,D'**
+  String get monthLetters;
+
+  /// No description provided for @weekN.
+  ///
+  /// In en, this message translates to:
+  /// **'W{n}'**
+  String weekN(String n);
+
+  /// No description provided for @payoutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payout details'**
+  String get payoutTitle;
+
+  /// No description provided for @payoutSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{ref} · {range}'**
+  String payoutSubtitle(String ref, String range);
+
+  /// No description provided for @sentOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent on {date}'**
+  String sentOn(String date);
+
+  /// No description provided for @requestedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested on {date}'**
+  String requestedOn(String date);
+
+  /// No description provided for @payoutBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Payout breakdown'**
+  String get payoutBreakdown;
+
+  /// No description provided for @rideFaresLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Ride fares · {trips}'**
+  String rideFaresLine(String trips);
+
+  /// No description provided for @rentalHandoverEarnings.
+  ///
+  /// In en, this message translates to:
+  /// **'Rental handover earnings'**
+  String get rentalHandoverEarnings;
+
+  /// No description provided for @tipsLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Tips'**
+  String get tipsLine;
+
+  /// No description provided for @serviceFeesLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Service fees'**
+  String get serviceFeesLine;
+
+  /// No description provided for @netPayout.
+  ///
+  /// In en, this message translates to:
+  /// **'Net payout'**
+  String get netPayout;
+
+  /// No description provided for @mobileMoneyTransfer.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} · Mobile money transfer'**
+  String mobileMoneyTransfer(String name);
+
+  /// No description provided for @transferTimeline.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer timeline'**
+  String get transferTimeline;
+
+  /// No description provided for @tlCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Payout created'**
+  String get tlCreated;
+
+  /// No description provided for @tlCreatedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{time} · Weekly earnings calculated'**
+  String tlCreatedBody(String time);
+
+  /// No description provided for @tlSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer sent'**
+  String get tlSent;
+
+  /// No description provided for @tlSentBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{time} · Reference {ref}'**
+  String tlSentBody(String time, String ref);
+
+  /// No description provided for @tlDelivered.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer delivered'**
+  String get tlDelivered;
+
+  /// No description provided for @tlDeliveredBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{time} · Funds delivered'**
+  String tlDeliveredBody(String time);
+
+  /// No description provided for @tlWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for the operator'**
+  String get tlWaiting;
+
+  /// No description provided for @payoutHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Need help? Quote {ref} when contacting support.'**
+  String payoutHelp(String ref);
+
+  /// No description provided for @downloadStatement.
+  ///
+  /// In en, this message translates to:
+  /// **'Download statement'**
+  String get downloadStatement;
+
+  /// No description provided for @statementTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'iyodriver payout {ref}'**
+  String statementTitle(String ref);
+
+  /// No description provided for @bookingsHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Your bookings'**
+  String get bookingsHeading;
+
+  /// No description provided for @bookingsSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming handovers and completed trips.'**
+  String get bookingsSub;
+
+  /// No description provided for @segUpcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get segUpcoming;
+
+  /// No description provided for @segHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get segHistory;
+
+  /// No description provided for @airportPickupConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Airport pickup · {status}'**
+  String airportPickupConfirmed(String status);
+
+  /// No description provided for @addressPickupStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery · {status}'**
+  String addressPickupStatus(String status);
+
+  /// No description provided for @statusConfirmedShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get statusConfirmedShort;
+
+  /// No description provided for @rentalWhenWhere.
+  ///
+  /// In en, this message translates to:
+  /// **'{when} · {place}'**
+  String rentalWhenWhere(String when, String place);
+
+  /// No description provided for @returnWhenWhere.
+  ///
+  /// In en, this message translates to:
+  /// **'Return: {when} · {place}'**
+  String returnWhenWhere(String when, String place);
+
+  /// No description provided for @viewHandoverRequirements.
+  ///
+  /// In en, this message translates to:
+  /// **'View handover requirements'**
+  String get viewHandoverRequirements;
+
+  /// No description provided for @viewReturnSteps.
+  ///
+  /// In en, this message translates to:
+  /// **'View return inspection'**
+  String get viewReturnSteps;
+
+  /// No description provided for @todaysCompletedRides.
+  ///
+  /// In en, this message translates to:
+  /// **'Today’s completed rides'**
+  String get todaysCompletedRides;
+
+  /// No description provided for @statusCompletedShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get statusCompletedShort;
+
+  /// No description provided for @bookingsFootnote.
+  ///
+  /// In en, this message translates to:
+  /// **'Ride amounts show net earnings after service fees. View all past bookings in History.'**
+  String get bookingsFootnote;
+
+  /// No description provided for @noUpcomingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing booked yet'**
+  String get noUpcomingTitle;
+
+  /// No description provided for @noUpcomingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Rental handovers assigned to you appear here.'**
+  String get noUpcomingBody;
+
+  /// No description provided for @pastRentals.
+  ///
+  /// In en, this message translates to:
+  /// **'Rentals'**
+  String get pastRentals;
+
+  /// No description provided for @pastRides.
+  ///
+  /// In en, this message translates to:
+  /// **'Rides'**
+  String get pastRides;
+
+  /// No description provided for @perDayBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'{price} / day'**
+  String perDayBadge(String price);
+
+  /// No description provided for @carSpecs.
+  ///
+  /// In en, this message translates to:
+  /// **'{fuel} · {gearbox} · {seats} seats'**
+  String carSpecs(String fuel, String gearbox, String seats);
+
+  /// No description provided for @fuelPetrol.
+  ///
+  /// In en, this message translates to:
+  /// **'Petrol'**
+  String get fuelPetrol;
+
+  /// No description provided for @fuelDiesel.
+  ///
+  /// In en, this message translates to:
+  /// **'Diesel'**
+  String get fuelDiesel;
+
+  /// No description provided for @fuelHybrid.
+  ///
+  /// In en, this message translates to:
+  /// **'Hybrid'**
+  String get fuelHybrid;
+
+  /// No description provided for @fuelElectric.
+  ///
+  /// In en, this message translates to:
+  /// **'Electric'**
+  String get fuelElectric;
+
+  /// No description provided for @gearAutomatic.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic'**
+  String get gearAutomatic;
+
+  /// No description provided for @gearManual.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual'**
+  String get gearManual;
+
+  /// No description provided for @accountHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Driver account'**
+  String get accountHeading;
+
+  /// No description provided for @accountSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Your profile and road-ready documents.'**
+  String get accountSub;
+
+  /// No description provided for @driverMeta.
+  ///
+  /// In en, this message translates to:
+  /// **'★ {rating} · {trips} · Driver {ref}'**
+  String driverMeta(String rating, String trips, String ref);
+
+  /// No description provided for @verifiedDriver.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified driver'**
+  String get verifiedDriver;
+
+  /// No description provided for @yourVehicle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your vehicle'**
+  String get yourVehicle;
+
+  /// No description provided for @vehicleSpecs.
+  ///
+  /// In en, this message translates to:
+  /// **'{colour} · {year} · {seats} seats'**
+  String vehicleSpecs(String colour, String year, String seats);
+
+  /// No description provided for @plateServices.
+  ///
+  /// In en, this message translates to:
+  /// **'{plate} · Ride & rental'**
+  String plateServices(String plate);
+
+  /// No description provided for @categoryApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'{category} · Approved'**
+  String categoryApproved(String category);
+
+  /// No description provided for @categoryInReview.
+  ///
+  /// In en, this message translates to:
+  /// **'{category} · In review'**
+  String categoryInReview(String category);
+
+  /// No description provided for @documentsHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Documents'**
+  String get documentsHeading;
+
+  /// No description provided for @docVerifiedExpires.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified · Expires {date}'**
+  String docVerifiedExpires(String date);
+
+  /// No description provided for @docVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified'**
+  String get docVerified;
+
+  /// No description provided for @docRenewBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Renew by {date}'**
+  String docRenewBy(String date);
+
+  /// No description provided for @docInReview.
+  ///
+  /// In en, this message translates to:
+  /// **'In review'**
+  String get docInReview;
+
+  /// No description provided for @docNeedsAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Action needed · {reason}'**
+  String docNeedsAction(String reason);
+
+  /// No description provided for @docNotUploaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Not uploaded yet'**
+  String get docNotUploaded;
+
+  /// No description provided for @payoutDetailsRow.
+  ///
+  /// In en, this message translates to:
+  /// **'Payout details'**
+  String get payoutDetailsRow;
+
+  /// No description provided for @notSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get notSet;
+
+  /// No description provided for @vehicleChangeNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes to vehicle details may require a new review before you can go online.'**
+  String get vehicleChangeNote;
+
+  /// No description provided for @editAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit account details'**
+  String get editAccount;
+
+  /// No description provided for @moreSection.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get moreSection;
+
+  /// No description provided for @flowSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'Driver setup · {step}'**
+  String flowSetup(String step);
+
+  /// No description provided for @setupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Let’s get you road-ready'**
+  String get setupTitle;
+
+  /// No description provided for @setupStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'Step 1 of 2 · Identity & vehicle'**
+  String get setupStep1;
+
+  /// No description provided for @driverAccountBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Driver account'**
+  String get driverAccountBadge;
+
+  /// No description provided for @legalName.
+  ///
+  /// In en, this message translates to:
+  /// **'Legal name'**
+  String get legalName;
+
+  /// No description provided for @dateOfBirth.
+  ///
+  /// In en, this message translates to:
+  /// **'Date of birth'**
+  String get dateOfBirth;
+
+  /// No description provided for @dateOfBirthHint.
+  ///
+  /// In en, this message translates to:
+  /// **'DD/MM/YYYY'**
+  String get dateOfBirthHint;
+
+  /// No description provided for @dobInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your date of birth (you must be 21 or older).'**
+  String get dobInvalid;
+
+  /// No description provided for @vehicleMakeModel.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle make & model'**
+  String get vehicleMakeModel;
+
+  /// No description provided for @vehicleMakeModelHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Toyota Corolla · 2018 · Blanc'**
+  String get vehicleMakeModelHint;
+
+  /// No description provided for @vehicleRegistration.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle registration'**
+  String get vehicleRegistration;
+
+  /// No description provided for @vehicleCheckedHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Your vehicle details will be checked with your documents.'**
+  String get vehicleCheckedHelper;
+
+  /// No description provided for @legalDetailsNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Your legal details are used for verification. Riders will only see your first name and vehicle details.'**
+  String get legalDetailsNote;
+
+  /// No description provided for @saveAndContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Save & continue to documents'**
+  String get saveAndContinue;
+
+  /// No description provided for @vehicleSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your vehicle'**
+  String get vehicleSheetTitle;
+
+  /// No description provided for @moreDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Also needed for verification'**
+  String get moreDetails;
+
+  /// No description provided for @docsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A quick safety check'**
+  String get docsTitle;
+
+  /// No description provided for @setupStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'Step 2 of 2 · Upload your documents'**
+  String get setupStep2;
+
+  /// No description provided for @docsReady.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {total} documents ready'**
+  String docsReady(String n, String total);
+
+  /// No description provided for @groupIdentity.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo ID & selfie'**
+  String get groupIdentity;
+
+  /// No description provided for @groupIdentityDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity photos received'**
+  String get groupIdentityDone;
+
+  /// No description provided for @groupLicence.
+  ///
+  /// In en, this message translates to:
+  /// **'Driving licence'**
+  String get groupLicence;
+
+  /// No description provided for @groupLicenceDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Licence uploaded'**
+  String get groupLicenceDone;
+
+  /// No description provided for @groupVehicle.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle papers'**
+  String get groupVehicle;
+
+  /// No description provided for @groupVehicleDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Carte grise and visite technique uploaded'**
+  String get groupVehicleDone;
+
+  /// No description provided for @groupInsurance.
+  ///
+  /// In en, this message translates to:
+  /// **'Insurance certificate'**
+  String get groupInsurance;
+
+  /// No description provided for @groupInsuranceDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Insurance uploaded'**
+  String get groupInsuranceDone;
+
+  /// No description provided for @groupApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get groupApproved;
+
+  /// No description provided for @groupInReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploaded · in review'**
+  String get groupInReview;
+
+  /// No description provided for @groupMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} to upload'**
+  String groupMissing(String n);
+
+  /// No description provided for @nextDocument.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {doc}'**
+  String nextDocument(String doc);
+
+  /// No description provided for @noFileYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No photo yet'**
+  String get noFileYet;
+
+  /// No description provided for @uploadTips.
+  ///
+  /// In en, this message translates to:
+  /// **'Tips for a successful upload'**
+  String get uploadTips;
+
+  /// No description provided for @uploadTipsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep all four corners visible. Use good lighting and avoid glare. Accepted: JPG, PNG or PDF, up to 10 MB.'**
+  String get uploadTipsBody;
+
+  /// No description provided for @reviewTimeNote.
+  ///
+  /// In en, this message translates to:
+  /// **'After you submit, reviews usually take 1–2 working days. We’ll notify you when you’re approved.'**
+  String get reviewTimeNote;
+
+  /// No description provided for @uploadDoc.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload {doc} photo'**
+  String uploadDoc(String doc);
+
+  /// No description provided for @retakeDoc.
+  ///
+  /// In en, this message translates to:
+  /// **'Retake {doc} photo'**
+  String retakeDoc(String doc);
+
+  /// No description provided for @identityLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified details are locked. Contact support to change them.'**
+  String get identityLocked;
+
+  /// No description provided for @flowDriverRental.
+  ///
+  /// In en, this message translates to:
+  /// **'Driver rental · {step}'**
+  String flowDriverRental(String step);
+
+  /// No description provided for @airportRentalPickup.
+  ///
+  /// In en, this message translates to:
+  /// **'Airport rental pickup'**
+  String get airportRentalPickup;
+
+  /// No description provided for @addressRentalPickup.
+  ///
+  /// In en, this message translates to:
+  /// **'Rental delivery'**
+  String get addressRentalPickup;
+
+  /// No description provided for @rentalReturnTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rental return'**
+  String get rentalReturnTitle;
+
+  /// No description provided for @confirmedBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed booking · {ref}'**
+  String confirmedBooking(String ref);
+
+  /// No description provided for @upcomingWhen.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming · {when}'**
+  String upcomingWhen(String when);
+
+  /// No description provided for @withRiderUntil.
+  ///
+  /// In en, this message translates to:
+  /// **'With rider · until {when}'**
+  String withRiderUntil(String when);
+
+  /// No description provided for @carWithFuel.
+  ///
+  /// In en, this message translates to:
+  /// **'{car} · {fuel}'**
+  String carWithFuel(String car, String fuel);
+
+  /// No description provided for @rentalPeriodDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{range} · {days}'**
+  String rentalPeriodDays(String range, String days);
+
+  /// No description provided for @pickupOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup · {day}'**
+  String pickupOn(String day);
+
+  /// No description provided for @returnOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Return · {day}'**
+  String returnOn(String day);
+
+  /// No description provided for @timeAtPlace.
+  ///
+  /// In en, this message translates to:
+  /// **'{time} · {place}'**
+  String timeAtPlace(String time, String place);
+
+  /// No description provided for @airportRequirementsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Airport pickup requirements'**
+  String get airportRequirementsTitle;
+
+  /// No description provided for @flightLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{flight} · {route}'**
+  String flightLine(String flight, String route);
+
+  /// No description provided for @landingLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Landing: {when} · {terminal}'**
+  String landingLine(String when, String terminal);
+
+  /// No description provided for @meetLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Meet at arrivals, {time}. Hold an iyodriver name sign for {name}.'**
+  String meetLine(String time, String name);
+
+  /// No description provided for @prepareCarNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Prepare a clean car with a full tank. Allow {minutes} min after landing and contact {name} if the flight is delayed.'**
+  String prepareCarNote(String minutes, String name);
+
+  /// No description provided for @prepareCarNoteAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Prepare a clean car with a full tank. Call {name} if you are running late.'**
+  String prepareCarNoteAddress(String name);
+
+  /// No description provided for @navigateToPlace.
+  ///
+  /// In en, this message translates to:
+  /// **'Navigate to {place}'**
+  String navigateToPlace(String place);
+
+  /// No description provided for @openHandover.
+  ///
+  /// In en, this message translates to:
+  /// **'Start the handover'**
+  String get openHandover;
+
+  /// No description provided for @askHandoverPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask for the handover PIN at the car'**
+  String get askHandoverPin;
+
+  /// No description provided for @smoothHandover.
+  ///
+  /// In en, this message translates to:
+  /// **'A smooth handover'**
+  String get smoothHandover;
+
+  /// No description provided for @handoverSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} · {place} · {date}'**
+  String handoverSubtitle(String name, String place, String date);
+
+  /// No description provided for @carPlateBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'{car} · {plate}'**
+  String carPlateBadge(String car, String plate);
+
+  /// No description provided for @checkIdentity.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity & licence checked'**
+  String get checkIdentity;
+
+  /// No description provided for @checkIdentityBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Name matches the booking'**
+  String get checkIdentityBody;
+
+  /// No description provided for @checkIdentityTap.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap once you have seen the ID and licence'**
+  String get checkIdentityTap;
+
+  /// No description provided for @checkDeposit.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit authorised'**
+  String get checkDeposit;
+
+  /// No description provided for @checkDepositBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} hold · {method}'**
+  String checkDepositBody(String amount, String method);
+
+  /// No description provided for @checkPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle condition photos'**
+  String get checkPhotos;
+
+  /// No description provided for @checkPhotosDone.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} photos saved · {damage}'**
+  String checkPhotosDone(String n, String damage);
+
+  /// No description provided for @checkPhotosTodo.
+  ///
+  /// In en, this message translates to:
+  /// **'Take the 5 photos'**
+  String get checkPhotosTodo;
+
+  /// No description provided for @noNewDamage.
+  ///
+  /// In en, this message translates to:
+  /// **'No new damage'**
+  String get noNewDamage;
+
+  /// No description provided for @damageNoted.
+  ///
+  /// In en, this message translates to:
+  /// **'Damage noted'**
+  String get damageNoted;
+
+  /// No description provided for @checkFuel.
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel & mileage recorded'**
+  String get checkFuel;
+
+  /// No description provided for @checkFuelDone.
+  ///
+  /// In en, this message translates to:
+  /// **'{fuel} · {km} km'**
+  String checkFuelDone(String fuel, String km);
+
+  /// No description provided for @checkFuelTodo.
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded with the photos'**
+  String get checkFuelTodo;
+
+  /// No description provided for @fullTank.
+  ///
+  /// In en, this message translates to:
+  /// **'Full tank'**
+  String get fullTank;
+
+  /// No description provided for @tankEighths.
+  ///
+  /// In en, this message translates to:
+  /// **'{n}/8 tank'**
+  String tankEighths(String n);
+
+  /// No description provided for @customerHandoverPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer handover PIN'**
+  String get customerHandoverPin;
+
+  /// No description provided for @handoverPinVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'✓ PIN verified · Rental agreement accepted'**
+  String get handoverPinVerified;
+
+  /// No description provided for @handoverReturnNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Return: {when} · {place}. Give {name} the keys after confirming all checks.'**
+  String handoverReturnNote(String when, String place, String name);
+
+  /// No description provided for @confirmHandoverStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm handover & start rental'**
+  String get confirmHandoverStart;
+
+  /// No description provided for @handoverPinWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong PIN · {n} attempts left'**
+  String handoverPinWrong(String n);
+
+  /// No description provided for @handoverPinLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many wrong PINs. The safety team has been told; call support.'**
+  String get handoverPinLocked;
+
+  /// No description provided for @handoverDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Handover complete. The rental has started.'**
+  String get handoverDone;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

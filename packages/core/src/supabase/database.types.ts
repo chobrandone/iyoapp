@@ -1022,6 +1022,7 @@ export type Database = {
           pickup_lng: number | null;
           pickup_location: unknown | null;
           pickup_type: Database['public']['Enums']['rental_pickup_type'];
+          protection_amount: number;
           reference: string;
           rental_amount: number;
           return_address: string | null;
@@ -1059,6 +1060,7 @@ export type Database = {
           pickup_lng?: never;
           pickup_location?: unknown | null;
           pickup_type: Database['public']['Enums']['rental_pickup_type'];
+          protection_amount?: number;
           reference?: string;
           rental_amount: number;
           return_address?: string | null;
@@ -1096,6 +1098,7 @@ export type Database = {
           pickup_lng?: never;
           pickup_location?: unknown | null;
           pickup_type?: Database['public']['Enums']['rental_pickup_type'];
+          protection_amount?: number;
           reference?: string;
           rental_amount?: number;
           return_address?: string | null;
@@ -1141,6 +1144,38 @@ export type Database = {
             columns: ['vehicle_id'];
             isOneToOne: false;
             referencedRelation: 'rental_vehicles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      rental_handover_pins: {
+        Row: {
+          booking_id: string;
+          failed_attempts: number;
+          locked_at: string | null;
+          pin: string;
+          verified_at: string | null;
+        };
+        Insert: {
+          booking_id: string;
+          failed_attempts?: number;
+          locked_at?: string | null;
+          pin: string;
+          verified_at?: string | null;
+        };
+        Update: {
+          booking_id?: string;
+          failed_attempts?: number;
+          locked_at?: string | null;
+          pin?: string;
+          verified_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'rental_handover_pins_booking_id_fkey';
+            columns: ['booking_id'];
+            isOneToOne: true;
+            referencedRelation: 'rental_bookings';
             referencedColumns: ['id'];
           },
         ];
@@ -2096,6 +2131,13 @@ export type Database = {
         };
         Returns: Json;
       };
+      confirm_rental_handover_pin: {
+        Args: {
+          p_booking_id: string;
+          p_pin: string;
+        };
+        Returns: Json;
+      };
       confirm_rental_inspection: {
         Args: {
           p_booking_id: string;
@@ -2128,6 +2170,7 @@ export type Database = {
           p_flight_number?: string;
           p_flight_arrival_at?: string;
           p_return_address?: string;
+          p_protection?: boolean;
         };
         Returns: Database['public']['Tables']['rental_bookings']['Row'];
       };
@@ -2182,6 +2225,12 @@ export type Database = {
           lat: number;
           lng: number;
         }[];
+      };
+      get_rental_driver: {
+        Args: {
+          p_booking_id: string;
+        };
+        Returns: Json;
       };
       get_rental_rider: {
         Args: {

@@ -9,6 +9,7 @@ import 'dart:math' as math;
 import '../format/currency.dart';
 import '../rides/ride_status.dart';
 import '../supabase/db_enums.dart';
+import 'earnings_models.dart';
 import 'models.dart';
 import 'safety_rental_models.dart';
 import 'repositories.dart';
@@ -46,6 +47,9 @@ class DemoTiming {
 }
 
 const demoOtpCode = '123456';
+
+/// Demo rentals: the rider's handover PIN the driver types at the car.
+const demoHandoverPin = '6318';
 const demoPin = '4826';
 
 /// Douala places used for search and simulated trips.
@@ -743,6 +747,8 @@ class DemoBackend implements IyoBackend {
     required String licenceNumber,
     required String nationalIdNumber,
     required VehicleInfo vehicle,
+    String? legalName,
+    DateTime? dateOfBirth,
   }) async {
     if (!const [
       VerificationStatus.pending,
@@ -756,8 +762,14 @@ class DemoBackend implements IyoBackend {
         licenceNumber: licenceNumber,
         nationalIdNumber: nationalIdNumber,
         vehicle: vehicle,
+        dateOfBirth: dateOfBirth,
       ),
     );
+    final p = _profile;
+    if (legalName != null && legalName.trim().isNotEmpty && p != null) {
+      _profile = p.copyWith(fullName: legalName.trim());
+      _profileCtrl.add(_profile);
+    }
   }
 
   @override
@@ -954,6 +966,11 @@ class DemoBackend implements IyoBackend {
           fareAmount: ride.fareAmount,
           earnings: ride.driverEarnings,
           completedAt: DateTime.now(),
+          pickupName: ride.pickup.name,
+          riderFirstName: _riderOf[ride.id]?.firstName,
+          startedAt: ride.startedAt,
+          durationSeconds:
+              ride.startedAt == null ? 0 : DateTime.now().difference(ride.startedAt!).inSeconds,
         ),
       );
     }
@@ -992,6 +1009,79 @@ class DemoBackend implements IyoBackend {
 
   @override
   Future<List<CompletedTrip>> recentTrips() async => List.unmodifiable(_trips);
+
+  @override
+  Future<List<CompletedTrip>> tripsSince(DateTime from) async =>
+      _trips.where((t) => !t.completedAt.isBefore(from)).toList();
+
+  final List<Payout> _payouts = [];
+
+  @override
+  Future<List<Payout>> payouts() async => List.unmodifiable(_payouts);
+
+  /// Debug helper (approveDemoDriver): five weeks of past trips and weekly payouts, so the
+  /// earnings and payout screens have something to show. Nothing today, so "today" stays live.
+  void _seedDriverHistory() {
+    if (_trips.isNotEmpty) return;
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    const routes = [
+      ('Akwa', 'Bonapriso', 'Aïcha', 2500),
+      ('Bonamoussadi', 'Gare de Bessengué', 'Christian', 3600),
+      ('Deido', 'Akwa', 'Mireille', 1800),
+      ('Bali', 'Aéroport de Douala', 'Samuel', 4500),
+      ('Bonapriso', 'Makepe', 'Brice', 3100),
+    ];
+    for (var day = 35; day >= 1; day--) {
+      final date = today.subtract(Duration(days: day));
+      final count = (date.weekday >= 6 ? 3 : 5) + (day % 3);
+      for (var i = 0; i < count; i++) {
+        final r = routes[(day + i) % routes.length];
+        final start = date.add(Duration(hours: 7 + i * 2, minutes: (day * 7 + i * 13) % 50));
+        final minutes = 12 + (day + i) % 14;
+        final fare = r.$4 + ((day * 50 + i * 100) % 600);
+        final tip = (day + i) % 6 == 0 ? 500 : 0;
+        _trips.add(
+          CompletedTrip(
+            rideId: 'demo-history-$day-$i',
+            pickupName: r.$1,
+            dropoffName: r.$2,
+            riderFirstName: r.$3,
+            fareAmount: fare,
+            earnings: (fare * 0.8).round() + tip,
+            tip: tip,
+            startedAt: start,
+            completedAt: start.add(Duration(minutes: minutes)),
+            durationSeconds: minutes * 60,
+          ),
+        );
+      }
+    }
+    _trips.sort((a, b) => b.completedAt.compareTo(a.completedAt));
+    // Weekly payouts every Monday for the previous Monday–Sunday.
+    final thisMonday = today.subtract(Duration(days: today.weekday - 1));
+    for (var w = 1; w <= 4; w++) {
+      final start = thisMonday.subtract(Duration(days: 7 * w));
+      final end = start.add(const Duration(days: 7));
+      final amount = _trips
+          .where((t) => !t.completedAt.isBefore(start) && t.completedAt.isBefore(end))
+          .fold(0, (s, t) => s + t.earnings);
+      _payouts.add(
+        Payout(
+          id: 'demo-payout-$w',
+          amount: amount,
+          method: PaymentMethodType.mtnMomo,
+          phone: _profile?.phone ?? '+237682334455',
+          status: PayoutStatus.paid,
+          requestedAt: end.add(const Duration(hours: 8)),
+          periodStart: start,
+          periodEnd: end.subtract(const Duration(days: 1)),
+          paidAt: end.add(const Duration(hours: 10, minutes: 15)),
+          providerReference: 'MOMO-${start.month}${start.day}${w}0',
+        ),
+      );
+    }
+  }
 
   // ---------------------------------------------------------------------------
   // Safety
@@ -1141,6 +1231,8 @@ class DemoBackend implements IyoBackend {
       airportFee: r.airportFee,
       depositAmount: r.vehicle.depositAmount,
       totalAmount: r.total,
+      protectionAmount: r.protectionAmount,
+      handoverPin: demoHandoverPin,
       kmAllowance: r.kmAllowance,
       paymentMethod: r.paymentMethod,
       pickupAddress: r.pickupType == RentalPickupType.airport ? r.airport?.name : r.pickupAddress,
@@ -1159,12 +1251,24 @@ class DemoBackend implements IyoBackend {
         final c = _rentals[booking.id];
         if (c == null || c.status != RentalBookingStatus.confirmed) return;
         _saveRental(
-          c.copyWith(status: RentalBookingStatus.driverAssigned, assignedDriverId: _demoDriver.id),
+          c.copyWith(
+            status: RentalBookingStatus.driverAssigned,
+            assignedDriverId: _demoDriver.id,
+            driver: _demoDriver,
+          ),
         );
         _after(timing.matching, () {
           final d = _rentals[booking.id];
           if (d == null || d.status != RentalBookingStatus.driverAssigned) return;
           _saveRental(d.copyWith(handover: _demoInspection(InspectionType.handover, 8, 41200)));
+          // Simulated: the rider tells the driver the handover PIN at the car.
+          _after(timing.matching, () {
+            final e = _rentals[booking.id];
+            if (e == null || e.status != RentalBookingStatus.driverAssigned) return;
+            _saveRental(
+              e.copyWith(status: RentalBookingStatus.active, depositStatus: DepositStatus.held),
+            );
+          });
         });
       });
     });
@@ -1255,10 +1359,37 @@ class DemoBackend implements IyoBackend {
     });
   }
 
+  @override
+  Future<int> rentalProtectionDaily() async => 3000;
+
+  int _handoverPinAttempts = 0;
+
+  @override
+  Future<PinCheck> confirmHandoverPin(String bookingId, String pin) async {
+    final b = _rental(bookingId);
+    if (b.status != RentalBookingStatus.driverAssigned) {
+      throw const BackendException('handover_not_allowed');
+    }
+    if (b.handover == null) throw const BackendException('inspection_not_ready');
+    if (_handoverPinAttempts >= 5) return const PinCheck(ok: false, locked: true, attemptsLeft: 0);
+    if (pin == demoHandoverPin) {
+      _saveRental(
+        b.copyWith(status: RentalBookingStatus.active, depositStatus: DepositStatus.held),
+      );
+      return PinCheck(ok: true, locked: false, attemptsLeft: 5 - _handoverPinAttempts);
+    }
+    _handoverPinAttempts++;
+    return PinCheck(
+      ok: false,
+      locked: _handoverPinAttempts >= 5,
+      attemptsLeft: 5 - _handoverPinAttempts,
+    );
+  }
+
   /// Driver: one airport delivery to practise the handover on, once approved.
   void _seedDriverRental() {
     if (_rentals.values.any((b) => b.riderName != null)) return;
-    final car = demoRentalFleet[1];
+    final car = demoRentalFleet.first;
     final start = DateTime.now().add(const Duration(days: 1, hours: 2));
     _saveRental(
       RentalBooking(
@@ -1332,16 +1463,8 @@ class DemoBackend implements IyoBackend {
       inspectorConfirmedAt: DateTime.now(),
     );
     if (type == InspectionType.handover) {
+      // The rider confirms with the handover PIN at the car (confirmHandoverPin) or in their app.
       _saveRental(b.copyWith(handover: inspection));
-      // Simulated: the rider confirms the handover on their phone.
-      _after(timing.matching, () {
-        final c = _rentals[bookingId];
-        if (c?.status == RentalBookingStatus.driverAssigned) {
-          _saveRental(
-            c!.copyWith(status: RentalBookingStatus.active, depositStatus: DepositStatus.held),
-          );
-        }
-      });
     } else {
       _saveRental(
         b.copyWith(status: RentalBookingStatus.returnPending, returnInspection: inspection),
@@ -1364,8 +1487,9 @@ class DemoBackend implements IyoBackend {
     }
   }
 
-  /// Debug helper: make a new demo driver approved straight away.
+  /// Debug helper: make a new demo driver approved straight away, with some trip history.
   void approveDemoDriver() {
+    _seedDriverHistory();
     _setAccount(
       DriverAccount(
         status: VerificationStatus.approved,

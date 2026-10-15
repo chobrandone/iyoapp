@@ -8,6 +8,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../supabase/db_enums.dart';
 import '../supabase/server_errors.dart';
+import 'earnings_models.dart';
 import 'models.dart';
 import 'safety_rental_models.dart';
 import 'repositories.dart';
@@ -473,6 +474,7 @@ class SupabaseBackend implements IyoBackend {
       status: VerificationStatus.fromValue(d['verification_status'] as String),
       cityCode: d['city_code'] as String?,
       licenceNumber: d['licence_number'] as String?,
+      dateOfBirth: _date(d['date_of_birth']),
       nationalIdNumber: d['national_id_number'] as String?,
       payoutMethod:
           d['payout_method'] == null
@@ -498,6 +500,7 @@ class SupabaseBackend implements IyoBackend {
             type: DocumentType.fromValue(r['type'] as String),
             status: ReviewStatus.fromValue(r['status'] as String),
             rejectionReason: r['rejection_reason'] as String?,
+            expiresOn: _date(r['expires_on']),
           ),
       },
     );
@@ -516,6 +519,8 @@ class SupabaseBackend implements IyoBackend {
     required String licenceNumber,
     required String nationalIdNumber,
     required VehicleInfo vehicle,
+    String? legalName,
+    DateTime? dateOfBirth,
   }) => _call(() async {
     await _db
         .from('driver_profiles')
@@ -523,8 +528,16 @@ class SupabaseBackend implements IyoBackend {
           'city_code': cityCode,
           'licence_number': licenceNumber,
           'national_id_number': nationalIdNumber,
+          if (dateOfBirth != null)
+            'date_of_birth':
+                '${dateOfBirth.year.toString().padLeft(4, '0')}-'
+                '${dateOfBirth.month.toString().padLeft(2, '0')}-'
+                '${dateOfBirth.day.toString().padLeft(2, '0')}',
         })
         .eq('user_id', _uid);
+    if (legalName != null && legalName.trim().isNotEmpty) {
+      await _db.from('profiles').update({'full_name': legalName.trim()}).eq('id', _uid);
+    }
     final values = {
       'category_code': vehicle.categoryCode,
       'make': vehicle.make,
@@ -686,23 +699,76 @@ class SupabaseBackend implements IyoBackend {
     );
   });
 
+  static const _tripSelect =
+      'id, pickup_address, dropoff_address, fare_amount, driver_earnings, started_at, completed_at, '
+      'ratings(tip_amount, rater_role)';
+
+  CompletedTrip _tripFrom(Map<String, dynamic> r) {
+    final started = _date(r['started_at']);
+    final completed = DateTime.parse(r['completed_at'] as String);
+    final tip = [
+      for (final x in (r['ratings'] as List? ?? const []).cast<Map<String, dynamic>>())
+        if (x['rater_role'] == 'rider') x['tip_amount'] as int? ?? 0,
+    ].fold(0, (a, b) => a + b);
+    return CompletedTrip(
+      rideId: r['id'] as String,
+      pickupName: (r['pickup_address'] as String?)?.split(',').first,
+      dropoffName: (r['dropoff_address'] as String).split(',').first,
+      fareAmount: r['fare_amount'] as int,
+      earnings: r['driver_earnings'] as int,
+      tip: tip,
+      startedAt: started,
+      completedAt: completed,
+      durationSeconds: started == null ? 0 : completed.difference(started).inSeconds,
+    );
+  }
+
   @override
   Future<List<CompletedTrip>> recentTrips() => _call(() async {
     final rows = await _db
         .from('rides')
-        .select('id, dropoff_address, fare_amount, driver_earnings, completed_at')
+        .select(_tripSelect)
         .eq('driver_id', _uid)
         .eq('status', 'completed')
         .order('completed_at', ascending: false)
         .limit(30);
+    return rows.map(_tripFrom).toList();
+  });
+
+  @override
+  Future<List<CompletedTrip>> tripsSince(DateTime from) => _call(() async {
+    final rows = await _db
+        .from('rides')
+        .select(_tripSelect)
+        .eq('driver_id', _uid)
+        .eq('status', 'completed')
+        .gte('completed_at', from.toUtc().toIso8601String())
+        .order('completed_at', ascending: false);
+    return rows.map(_tripFrom).toList();
+  });
+
+  @override
+  Future<List<Payout>> payouts() => _call(() async {
+    final rows = await _db
+        .from('driver_payouts')
+        .select()
+        .eq('driver_id', _uid)
+        .order('requested_at', ascending: false)
+        .limit(26);
     return [
       for (final r in rows)
-        CompletedTrip(
-          rideId: r['id'] as String,
-          dropoffName: (r['dropoff_address'] as String).split(',').first,
-          fareAmount: r['fare_amount'] as int,
-          earnings: r['driver_earnings'] as int,
-          completedAt: DateTime.parse(r['completed_at'] as String),
+        Payout(
+          id: r['id'] as String,
+          amount: r['amount'] as int,
+          method: PaymentMethodType.fromValue(r['method'] as String),
+          phone: r['phone'] as String,
+          status: PayoutStatus.fromValue(r['status'] as String),
+          requestedAt: DateTime.parse(r['requested_at'] as String),
+          periodStart: _date(r['period_start']),
+          periodEnd: _date(r['period_end']),
+          paidAt: _date(r['paid_at']),
+          providerReference: r['provider_reference'] as String?,
+          failureReason: r['failure_reason'] as String?,
         ),
     ];
   });
@@ -754,9 +820,8 @@ class SupabaseBackend implements IyoBackend {
       _call(() => _db.from('trusted_contacts').delete().eq('id', id));
 
   @override
-  Future<void> setNotifyOnAlert(String id, {required bool notify}) => _call(
-    () => _db.from('trusted_contacts').update({'notify_on_alert': notify}).eq('id', id),
-  );
+  Future<void> setNotifyOnAlert(String id, {required bool notify}) =>
+      _call(() => _db.from('trusted_contacts').update({'notify_on_alert': notify}).eq('id', id));
 
   @override
   Future<List<EmergencyNumber>> emergencyNumbers() async {
@@ -845,7 +910,9 @@ class SupabaseBackend implements IyoBackend {
   // Rentals (prices and availability are computed by create_rental_booking)
   // ---------------------------------------------------------------------------
 
-  static const _bookingSelect = '*, vehicle:rental_vehicles(*), inspections:rental_inspections(*)';
+  static const _bookingSelect =
+      '*, vehicle:rental_vehicles(*), inspections:rental_inspections(*), '
+      'pin:rental_handover_pins(pin)';
 
   RentalVehicle _vehicleFrom(Map<String, dynamic> r) => RentalVehicle(
     id: r['id'] as String,
@@ -882,7 +949,13 @@ class SupabaseBackend implements IyoBackend {
 
   static DateTime? _date(Object? v) => v == null ? null : DateTime.parse(v as String);
 
-  RentalBooking _bookingFrom(Map<String, dynamic> r, {Map<String, dynamic>? rider}) {
+  RentalBooking _bookingFrom(
+    Map<String, dynamic> r, {
+    Map<String, dynamic>? rider,
+    Counterpart? driver,
+  }) {
+    // One-to-one embed: an object (rider), or null / empty when RLS hides it (driver).
+    final pinRow = r['pin'] is List ? ((r['pin'] as List).firstOrNull) : r['pin'];
     final inspections = [
       for (final i in (r['inspections'] as List? ?? const []).cast<Map<String, dynamic>>())
         _inspectionFrom(i),
@@ -922,6 +995,9 @@ class SupabaseBackend implements IyoBackend {
       riderPhone: rider?['phone'] as String?,
       handover: find(InspectionType.handover),
       returnInspection: find(InspectionType.return_),
+      protectionAmount: r['protection_amount'] as int? ?? 0,
+      handoverPin: pinRow is Map ? pinRow['pin'] as String? : null,
+      driver: driver,
     );
   }
 
@@ -994,7 +1070,22 @@ class SupabaseBackend implements IyoBackend {
 
   Future<RentalBooking> _loadBooking(String id, {bool withRider = false}) async {
     final row = await _db.from('rental_bookings').select(_bookingSelect).eq('id', id).single();
-    return _bookingFrom(row, rider: withRider ? await _rentalRider(id) : null);
+    Counterpart? driver;
+    if (role == AppRole.rider && row['assigned_driver_id'] != null) {
+      final d = await _db.rpc<dynamic>('get_rental_driver', params: {'p_booking_id': id});
+      if (d is Map) {
+        final name = (d['name'] as String?) ?? '';
+        driver = Counterpart(
+          id: d['id'] as String,
+          firstName: name.split(' ').first,
+          fullName: name,
+          phone: d['phone'] as String?,
+          rating: (d['rating'] as num?)?.toDouble(),
+          ratingCount: d['rating_count'] as int? ?? 0,
+        );
+      }
+    }
+    return _bookingFrom(row, rider: withRider ? await _rentalRider(id) : null, driver: driver);
   }
 
   Future<Map<String, dynamic>> _rentalRider(String bookingId) async => Map<String, dynamic>.from(
@@ -1014,6 +1105,7 @@ class SupabaseBackend implements IyoBackend {
         'p_pickup_type': r.pickupType.value,
         'p_payment_method': r.paymentMethod.value,
         'p_payment_method_id': methodId,
+        'p_protection': r.protection,
         if (!airport) 'p_pickup_address': r.pickupAddress,
         if (airport) 'p_airport_code': r.airport?.code,
         if (airport) 'p_terminal': r.terminal,
@@ -1073,6 +1165,37 @@ class SupabaseBackend implements IyoBackend {
     // Nothing to write: the assigned driver meets the rider and submits the return inspection.
     final b = await _loadBooking(bookingId);
     if (b.status != RentalBookingStatus.active) throw const BackendException('return_not_allowed');
+  });
+
+  @override
+  Future<int> rentalProtectionDaily() async {
+    try {
+      final row =
+          await _db
+              .from('app_config')
+              .select('value')
+              .eq('key', 'rental_protection_daily')
+              .maybeSingle();
+      return (row?['value'] as num?)?.toInt() ?? 0;
+    } on Object {
+      return 0;
+    }
+  }
+
+  @override
+  Future<PinCheck> confirmHandoverPin(String bookingId, String pin) => _call(() async {
+    final r = Map<String, dynamic>.from(
+      await _db.rpc<dynamic>(
+            'confirm_rental_handover_pin',
+            params: {'p_booking_id': bookingId, 'p_pin': pin},
+          )
+          as Map,
+    );
+    return PinCheck(
+      ok: r['ok'] as bool,
+      locked: r['locked'] as bool,
+      attemptsLeft: r['attempts_left'] as int,
+    );
   });
 
   @override

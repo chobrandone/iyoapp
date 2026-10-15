@@ -10,6 +10,8 @@ import 'package:url_launcher/url_launcher.dart';
 import '../state/driver_location.dart';
 import '../state/online.dart';
 import '../widgets/driver_widgets.dart';
+import '../sample/sample_data.dart';
+import 'home_screens.dart';
 import 'safety_screens.dart';
 
 final _riderProvider = FutureProvider.family<Counterpart?, (String, RideStatus)>(
@@ -73,34 +75,68 @@ void _leaveTrip(BuildContext context, WidgetRef ref) {
   context.go('/home');
 }
 
+/// Rider card on the trip screens (Figma "Trip companion"): photo, rating, PIN reminder, call.
 class _RiderCard extends StatelessWidget {
-  const _RiderCard({required this.ride, required this.rider});
+  const _RiderCard({required this.rider, this.preview = false});
 
-  final Ride ride;
   final Counterpart? rider;
+  final bool preview;
 
   @override
   Widget build(BuildContext context) {
     final t = context.t;
-    final name = rider?.displayName ?? '…';
+    final r = preview ? DriverSample.rider : rider;
     return IyoPersonInfoCard(
-      name: name,
-      meta: t.riderRating(rider?.rating?.toStringAsFixed(1) ?? '–'),
-      detail: '${formatFcfa(ride.fareAmount)} · ${paymentLabel(context, ride.paymentMethod)}',
-      onMessage: () => context.push('/trip/${ride.id}/chat'),
-      messageLabel: t.messageRider(rider?.firstName ?? ''),
-      onCall: rider?.phone == null ? null : () => _dial(rider!.phone),
-      callLabel: t.callRider(rider?.firstName ?? ''),
+      name: r?.displayName ?? '…',
+      photo: preview ? DriverSample.riderPhoto : null,
+      meta: t.verifiedRider(r?.rating?.toStringAsFixed(1) ?? '–'),
+      detail: t.askForPin,
+      onCall: preview ? () {} : (r?.phone == null ? null : () => _dial(r!.phone)),
+      callLabel: t.callRider(r?.firstName ?? ''),
     );
   }
 }
 
-/// D11 — Navigate to pickup (Figma 2005:51403).
+/// Message · Share trip · Safety for a live ride (no-ops in previews).
+class _RideTools extends ConsumerWidget {
+  const _RideTools({required this.ride, this.preview = false, this.onCancel});
+
+  final Ride ride;
+  final bool preview;
+  final VoidCallback? onCancel;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (preview) return const TripTools();
+    return TripTools(
+      onMessage: () => context.push('/trip/${ride.id}/chat'),
+      onShare: () => shareRide(context, ref, ride.id),
+      onSafety: () => showDriverSafetySheet(context, ref, ride.id, onCancel: onCancel),
+    );
+  }
+}
+
+/// Next step towards [target]: the in-app card; turn-by-turn itself opens in Google Maps.
+InstructionCard _instruction(BuildContext context, GeoPoint me, Place target) {
+  final t = context.t;
+  final left = demoRoute(me, target.location!).distanceMeters;
+  if (left < 80) {
+    return InstructionCard(icon: LucideIcons.mapPin, title: t.navArriving(target.name));
+  }
+  return InstructionCard(
+    icon: LucideIcons.arrowUp,
+    title: t.navContinue(formatDistance(left)),
+    subtitle: t.navTowards(target.name),
+  );
+}
+
+/// DRIVER · 04 — Navigate to pickup (Figma 2005:51403).
 class _ToPickupView extends ConsumerStatefulWidget {
-  const _ToPickupView({required this.ride, required this.rider});
+  const _ToPickupView({required this.ride, required this.rider, this.preview = false});
 
   final Ride ride;
   final Counterpart? rider;
+  final bool preview;
 
   @override
   ConsumerState<_ToPickupView> createState() => _ToPickupViewState();
@@ -113,7 +149,7 @@ class _ToPickupViewState extends ConsumerState<_ToPickupView> {
   void initState() {
     super.initState();
     // Accepted → on the way as soon as the driver opens the trip.
-    if (widget.ride.status == RideStatus.driverAssigned) {
+    if (!widget.preview && widget.ride.status == RideStatus.driverAssigned) {
       Future.microtask(
         () =>
             ref
@@ -125,6 +161,7 @@ class _ToPickupViewState extends ConsumerState<_ToPickupView> {
   }
 
   Future<void> _arrived() async {
+    if (widget.preview) return;
     setState(() => _busy = true);
     try {
       await ref.read(backendProvider).updateStatus(widget.ride.id, RideStatus.driverArrived);
@@ -137,61 +174,82 @@ class _ToPickupViewState extends ConsumerState<_ToPickupView> {
   Widget build(BuildContext context) {
     final t = context.t;
     final ride = widget.ride;
+    final preview = widget.preview;
     final me = ref.watch(lastPositionProvider);
     final pickup = ride.pickup.location!;
-    final eta = (demoRoute(me.point, pickup).durationSeconds / 60).ceil();
+    final route = demoRoute(me.point, pickup);
+    final name = preview ? DriverSample.riderFirstName : widget.rider?.firstName ?? '';
     return IyoScreen(
-      header: DriverHeader(flowLabel: t.flow('11')),
+      header: DriverHeader(flowLabel: t.flow('04')),
       heading: IyoPageHeading(
-        title: t.toPickupTitle(widget.rider?.firstName ?? ''),
-        subtitle: t.toPickupSubtitle(ride.pickup.name, '$eta'),
+        title: t.headToRider(name),
+        subtitle:
+            preview
+                ? t.headToSubtitle(ride.pickup.name, '3', '0.8 km')
+                : t.headToSubtitle(
+                  ride.pickup.name,
+                  '${(route.durationSeconds / 60).ceil()}',
+                  formatDistance(route.distanceMeters),
+                ),
       ),
-      footer: [
-        IyoButton(label: t.imHere, loading: _busy, onPressed: _arrived),
-        IyoButton(
-          label: t.cancelRide,
-          variant: IyoButtonVariant.ghost,
-          onPressed: () => _cancelSheet(context, ref, ride.id),
-        ),
-      ],
+      footer: [IyoButton(label: t.arrivedAtPickup, loading: _busy, onPressed: _arrived)],
       children: [
-        DriverMap(me: me.point, heading: me.heading, pickup: pickup),
-        _RiderCard(ride: ride, rider: widget.rider),
-        IyoButton(
-          label: t.navigate,
-          icon: LucideIcons.navigation,
-          variant: IyoButtonVariant.secondary,
-          size: IyoButtonSize.sm,
-          onPressed: () => _navigateTo(pickup),
+        if (preview)
+          InstructionCard(
+            icon: LucideIcons.cornerUpRight,
+            title: t.navTurnRight('150 m'),
+            subtitle: t.navInto(DriverSample.pickupName),
+          )
+        else
+          _instruction(context, me.point, ride.pickup),
+        GestureDetector(
+          onTap: preview ? null : () => _navigateTo(pickup),
+          child: DriverMap(
+            me: me.point,
+            heading: me.heading,
+            pickup: pickup,
+            destination: ride.dropoff.location,
+            height: 283,
+          ),
         ),
+        _RiderCard(rider: widget.rider, preview: preview),
+        _RideTools(
+          ride: ride,
+          preview: preview,
+          onCancel: () => _cancelSheet(context, ref, ride.id),
+        ),
+        Footnote([if (preview) t.pickupNote(DriverSample.pickupNote), t.stopSafely].join('\n')),
       ],
     );
   }
 }
 
-/// D12 — Arrival and rider PIN (Figma 2005:51465): wait timer, 4-digit PIN, start.
+/// DRIVER · 05 — Arrival and rider PIN (Figma 2005:51465): wait timer, 4-digit PIN, start.
 class _ArrivedView extends ConsumerStatefulWidget {
-  const _ArrivedView({required this.ride, required this.rider});
+  const _ArrivedView({required this.ride, required this.rider, this.preview = false});
 
   final Ride ride;
   final Counterpart? rider;
+  final bool preview;
 
   @override
   ConsumerState<_ArrivedView> createState() => _ArrivedViewState();
 }
 
 class _ArrivedViewState extends ConsumerState<_ArrivedView> {
-  String _pin = '';
+  late String _pin = widget.preview ? DriverSample.pin : '';
   String? _error;
   bool _checking = false;
   bool _locked = false;
-  int _waited = 0;
+  late int _waited = widget.preview ? 84 : 0;
   Timer? _timer;
 
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 1), (_) => setState(() => _waited++));
+    if (!widget.preview) {
+      _timer = Timer.periodic(const Duration(seconds: 1), (_) => setState(() => _waited++));
+    }
   }
 
   @override
@@ -201,6 +259,7 @@ class _ArrivedViewState extends ConsumerState<_ArrivedView> {
   }
 
   Future<void> _start() async {
+    if (widget.preview) return;
     final t = context.t;
     setState(() {
       _checking = true;
@@ -231,11 +290,12 @@ class _ArrivedViewState extends ConsumerState<_ArrivedView> {
   @override
   Widget build(BuildContext context) {
     final t = context.t;
-    final name = widget.rider?.firstName ?? '';
+    final preview = widget.preview;
+    final name = preview ? DriverSample.riderFirstName : widget.rider?.firstName ?? '';
     final me = ref.watch(lastPositionProvider);
     return IyoScreen(
-      header: DriverHeader(flowLabel: t.flow('12')),
-      heading: IyoPageHeading(title: t.arrivedTitle(name), subtitle: widget.ride.pickup.name),
+      header: DriverHeader(flowLabel: t.flow('05')),
+      heading: IyoPageHeading(title: t.atPickupTitle, subtitle: t.atPickupSubtitle(name)),
       footer: [
         IyoButton(
           label: t.startRide,
@@ -243,26 +303,22 @@ class _ArrivedViewState extends ConsumerState<_ArrivedView> {
           loading: _checking,
           onPressed: _start,
         ),
-        IyoButton(
-          label: t.cancelRide,
-          variant: IyoButtonVariant.ghost,
-          onPressed: () => _cancelSheet(context, ref, widget.ride.id),
-        ),
       ],
       children: [
         DriverMap(
           me: me.point,
           heading: me.heading,
           pickup: widget.ride.pickup.location,
-          height: 180,
+          destination: widget.ride.dropoff.location,
+          height: 229,
         ),
         Align(
           alignment: Alignment.centerLeft,
           child: IyoBadge(t.waitTime(formatDuration(_waited))),
         ),
-        _RiderCard(ride: widget.ride, rider: widget.rider),
+        _RiderCard(rider: widget.rider, preview: preview),
         IyoPinInput(
-          label: t.pinLabel(name),
+          label: t.askPinLabel(name),
           value: _pin,
           onChanged:
               (v) => setState(() {
@@ -270,19 +326,30 @@ class _ArrivedViewState extends ConsumerState<_ArrivedView> {
                 _error = null;
               }),
           error: _error,
-          helper: ref.watch(backendProvider).isDemo ? t.pinDemoHint(demoPin) : null,
+          highlighted: preview,
+          helper:
+              preview
+                  ? t.pinVerified
+                  : (ref.watch(backendProvider).isDemo ? t.pinDemoHint(demoPin) : null),
         ),
+        _RideTools(
+          ride: widget.ride,
+          preview: preview,
+          onCancel: () => _cancelSheet(context, ref, widget.ride.id),
+        ),
+        Footnote(t.confirmRiderNote(widget.ride.dropoff.name)),
       ],
     );
   }
 }
 
-/// D13 — Live ride navigation (Figma 2005:51527).
+/// DRIVER · 06 — Live ride navigation (Figma 2005:51527).
 class _LiveView extends ConsumerStatefulWidget {
-  const _LiveView({required this.ride, required this.rider});
+  const _LiveView({required this.ride, required this.rider, this.preview = false});
 
   final Ride ride;
   final Counterpart? rider;
+  final bool preview;
 
   @override
   ConsumerState<_LiveView> createState() => _LiveViewState();
@@ -295,22 +362,29 @@ class _LiveViewState extends ConsumerState<_LiveView> {
   Widget build(BuildContext context) {
     final t = context.t;
     final ride = widget.ride;
+    final preview = widget.preview;
     final me = ref.watch(lastPositionProvider);
     final left = demoRoute(me.point, ride.dropoff.location!);
+    final arrive = DateTime.now().add(Duration(seconds: left.durationSeconds));
     return IyoScreen(
-      header: DriverHeader(flowLabel: t.flow('13')),
+      header: DriverHeader(flowLabel: t.flow('06')),
       heading: IyoPageHeading(
-        title: t.liveTitle(ride.dropoff.name),
-        subtitle: t.liveSubtitle(
-          '${(left.durationSeconds / 60).ceil()}',
-          formatDistance(left.distanceMeters),
-        ),
+        title: t.driveTo(ride.dropoff.name),
+        subtitle:
+            preview
+                ? t.driveSubtitle('09:56', '8', '2.1 km')
+                : t.driveSubtitle(
+                  formatTime(arrive),
+                  '${(left.durationSeconds / 60).ceil()}',
+                  formatDistance(left.distanceMeters),
+                ),
       ),
       footer: [
         IyoButton(
-          label: t.completeRide,
+          label: t.endRide,
           loading: _busy,
           onPressed: () async {
+            if (preview) return;
             setState(() => _busy = true);
             try {
               await ref.read(backendProvider).updateStatus(ride.id, RideStatus.completed);
@@ -321,42 +395,65 @@ class _LiveViewState extends ConsumerState<_LiveView> {
         ),
       ],
       children: [
-        DriverMap(
-          me: me.point,
-          heading: me.heading,
-          destination: ride.dropoff.location,
-          height: 300,
+        if (preview)
+          InstructionCard(
+            icon: LucideIcons.arrowUp,
+            title: t.navContinue('600 m'),
+            subtitle: t.navOn('Boulevard de la Liberté'),
+          )
+        else
+          _instruction(context, me.point, ride.dropoff),
+        GestureDetector(
+          onTap: preview ? null : () => _navigateTo(ride.dropoff.location!),
+          child: DriverMap(
+            me: me.point,
+            heading: me.heading,
+            pickup: ride.pickup.location,
+            destination: ride.dropoff.location,
+            height: 275,
+          ),
         ),
-        _RiderCard(ride: ride, rider: widget.rider),
-        Row(
-          children: [
-            Expanded(
-              child: IyoButton(
-                label: t.navigate,
-                icon: LucideIcons.navigation,
-                variant: IyoButtonVariant.secondary,
-                size: IyoButtonSize.sm,
-                onPressed: () => _navigateTo(ride.dropoff.location!),
-              ),
-            ),
-            const SizedBox(width: IyoSpacing.sm),
-            Expanded(
-              child: IyoButton(
-                label: t.safety,
-                icon: LucideIcons.shieldCheck,
-                variant: IyoButtonVariant.soft,
-                size: IyoButtonSize.sm,
-                onPressed: () => showDriverSafetySheet(context, ref, ride.id),
-              ),
-            ),
-          ],
+        Align(
+          alignment: Alignment.centerLeft,
+          child: IyoBadge(
+            t.tripInProgress(preview ? DriverSample.tripRef : tripRef(ride.id)),
+            tone: IyoBadgeTone.success,
+          ),
+        ),
+        _RideTools(ride: ride, preview: preview),
+        IyoListRow(
+          icon: LucideIcons.mapPin,
+          title: ride.dropoff.name,
+          subtitle: preview ? t.mainEntrance(DriverSample.dropoffArea) : placeArea(ride.dropoff),
+          showChevron: false,
         ),
       ],
     );
   }
 }
 
-/// D14 — Ride complete and earnings (Figma 2005:51588).
+/// Design previews of the live trip views (Figma sample ride and rider).
+class TripPreview extends StatelessWidget {
+  const TripPreview({super.key, required this.status});
+
+  final RideStatus status;
+
+  @override
+  Widget build(BuildContext context) {
+    final ride = DriverSample.ride(status);
+    return switch (status) {
+      RideStatus.driverArrived => _ArrivedView(
+        ride: ride,
+        rider: DriverSample.rider,
+        preview: true,
+      ),
+      RideStatus.inProgress => _LiveView(ride: ride, rider: DriverSample.rider, preview: true),
+      _ => _ToPickupView(ride: ride, rider: DriverSample.rider, preview: true),
+    };
+  }
+}
+
+// D14 — Ride complete and earnings (Figma 2005:51588).
 class _CompleteView extends ConsumerStatefulWidget {
   const _CompleteView({required this.ride, required this.rider});
 

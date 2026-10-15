@@ -2,6 +2,7 @@
 import 'package:flutter/foundation.dart';
 
 import '../supabase/db_enums.dart';
+import 'models.dart';
 
 @immutable
 class TrustedContact {
@@ -146,6 +147,8 @@ class RentalRequest {
     this.terminal,
     this.flightNumber,
     this.flightArrivalAt,
+    this.protection = false,
+    this.protectionDaily = 0,
   });
 
   final RentalVehicle vehicle;
@@ -158,12 +161,15 @@ class RentalRequest {
   final String? terminal;
   final String? flightNumber;
   final DateTime? flightArrivalAt;
+  final bool protection;
+  final int protectionDaily;
 
   /// Whole days, rounded up (same rule as the server).
   int get days => rentalDays(startsAt, endsAt);
   int get rentalAmount => vehicle.dailyRate * days;
   int get airportFee => pickupType == RentalPickupType.airport ? (airport?.pickupFee ?? 0) : 0;
-  int get total => rentalAmount + airportFee;
+  int get protectionAmount => protection ? protectionDaily * days : 0;
+  int get total => rentalAmount + airportFee + protectionAmount;
   int get kmAllowance => vehicle.kmPerDay * days;
 }
 
@@ -256,6 +262,9 @@ class RentalBooking {
     this.riderPhone,
     this.handover,
     this.returnInspection,
+    this.protectionAmount = 0,
+    this.handoverPin,
+    this.driver,
   });
 
   final String id;
@@ -287,6 +296,13 @@ class RentalBooking {
   final String? riderPhone;
   final RentalInspection? handover;
   final RentalInspection? returnInspection;
+  final int protectionAmount;
+
+  /// Rider app only: the 4-digit PIN they tell the driver at the car.
+  final String? handoverPin;
+
+  /// Rider app only: the driver handing the car over, once assigned.
+  final Counterpart? driver;
 
   bool get isCancellable =>
       const {
@@ -303,6 +319,7 @@ class RentalBooking {
     String? assignedDriverId,
     RentalInspection? handover,
     RentalInspection? returnInspection,
+    Counterpart? driver,
   }) => RentalBooking(
     id: id,
     reference: reference,
@@ -331,5 +348,8 @@ class RentalBooking {
     riderPhone: riderPhone,
     handover: handover ?? this.handover,
     returnInspection: returnInspection ?? this.returnInspection,
+    protectionAmount: protectionAmount,
+    handoverPin: handoverPin,
+    driver: driver ?? this.driver,
   );
 }

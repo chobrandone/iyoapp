@@ -6,6 +6,7 @@ export 'src/data/demo_backend.dart';
 export 'src/data/models.dart';
 export 'src/data/providers.dart';
 export 'src/data/repositories.dart';
+export 'src/data/earnings_models.dart';
 export 'src/data/safety_rental_models.dart';
 export 'src/data/supabase_backend.dart' show SupabaseBackend, decodePolyline;
 export 'src/format/currency.dart';

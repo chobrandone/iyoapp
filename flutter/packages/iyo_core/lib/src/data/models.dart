@@ -62,6 +62,17 @@ class UserProfile {
   final int ratingCount;
 
   String get firstName => fullName.trim().split(RegExp(r'\s+')).first;
+
+  UserProfile copyWith({String? fullName, String? email, AppLanguage? language}) => UserProfile(
+    id: id,
+    role: role,
+    fullName: fullName ?? this.fullName,
+    phone: phone,
+    email: email ?? this.email,
+    language: language ?? this.language,
+    rating: rating,
+    ratingCount: ratingCount,
+  );
 }
 
 /// Route between two points (Routes API through compute-route / estimate-fares).
@@ -311,12 +322,14 @@ class DriverDocument {
     required this.status,
     this.localPath,
     this.rejectionReason,
+    this.expiresOn,
   });
 
   final DocumentType type;
   final ReviewStatus status;
   final String? localPath;
   final String? rejectionReason;
+  final DateTime? expiresOn;
 }
 
 @immutable
@@ -331,6 +344,7 @@ class DriverAccount {
     this.vehicle,
     this.documents = const {},
     this.reviewNotes,
+    this.dateOfBirth,
   });
 
   final VerificationStatus status;
@@ -342,6 +356,7 @@ class DriverAccount {
   final VehicleInfo? vehicle;
   final Map<DocumentType, DriverDocument> documents;
   final String? reviewNotes;
+  final DateTime? dateOfBirth;
 
   bool get identityComplete =>
       cityCode != null &&
@@ -358,6 +373,7 @@ class DriverAccount {
     VehicleInfo? vehicle,
     Map<DocumentType, DriverDocument>? documents,
     String? reviewNotes,
+    DateTime? dateOfBirth,
   }) => DriverAccount(
     status: status ?? this.status,
     cityCode: cityCode ?? this.cityCode,
@@ -368,6 +384,7 @@ class DriverAccount {
     vehicle: vehicle ?? this.vehicle,
     documents: documents ?? this.documents,
     reviewNotes: reviewNotes ?? this.reviewNotes,
+    dateOfBirth: dateOfBirth ?? this.dateOfBirth,
   );
 }
 
@@ -393,11 +410,23 @@ class CompletedTrip {
     required this.fareAmount,
     required this.earnings,
     required this.completedAt,
+    this.pickupName,
+    this.riderFirstName,
+    this.startedAt,
+    this.durationSeconds = 0,
+    this.tip = 0,
   });
 
   final String rideId;
   final String dropoffName;
   final int fareAmount;
+
+  /// Net of the service fee.
   final int earnings;
   final DateTime completedAt;
+  final String? pickupName;
+  final String? riderFirstName;
+  final DateTime? startedAt;
+  final int durationSeconds;
+  final int tip;
 }

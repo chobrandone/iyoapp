@@ -15,7 +15,30 @@ String _police(List<EmergencyNumber> numbers) =>
     numbers.firstWhere((n) => n.service == 'police', orElse: () => numbers.first).number;
 
 /// Live trip "Safety": share the trip, report an incident, call the police.
-Future<void> showDriverSafetySheet(BuildContext context, WidgetRef ref, String rideId) {
+/// Creates a share token for the ride and opens the system share sheet.
+Future<void> shareRide(BuildContext context, WidgetRef ref, String rideId) async {
+  final t = context.t;
+  try {
+    final share = await ref.read(backendProvider).shareTrip(rideId);
+    await SharePlus.instance.share(
+      ShareParams(
+        text: t.shareTripText(formatTime(share.expiresAt), share.url),
+        subject: t.shareTripSubject,
+      ),
+    );
+  } on BackendException {
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(t.shareFailed)));
+    }
+  }
+}
+
+Future<void> showDriverSafetySheet(
+  BuildContext context,
+  WidgetRef ref,
+  String rideId, {
+  VoidCallback? onCancel,
+}) {
   final t = context.t;
   final numbers = ref.read(emergencyNumbersProvider).value ?? defaultEmergencyNumbers;
   final police = _police(numbers);
@@ -38,23 +61,9 @@ Future<void> showDriverSafetySheet(BuildContext context, WidgetRef ref, String r
                   icon: LucideIcons.share2,
                   title: t.shareTrip,
                   subtitle: t.shareTripBody,
-                  onPressed: () async {
+                  onPressed: () {
                     Navigator.pop(sheet);
-                    try {
-                      final share = await ref.read(backendProvider).shareTrip(rideId);
-                      await SharePlus.instance.share(
-                        ShareParams(
-                          text: t.shareTripText(formatTime(share.expiresAt), share.url),
-                          subject: t.shareTripSubject,
-                        ),
-                      );
-                    } on BackendException {
-                      if (context.mounted) {
-                        ScaffoldMessenger.of(
-                          context,
-                        ).showSnackBar(SnackBar(content: Text(t.shareFailed)));
-                      }
-                    }
+                    shareRide(context, ref, rideId);
                   },
                 ),
                 IyoListRow(
@@ -66,6 +75,16 @@ Future<void> showDriverSafetySheet(BuildContext context, WidgetRef ref, String r
                     context.push('/incident?ride=$rideId');
                   },
                 ),
+                if (onCancel != null)
+                  IyoListRow(
+                    icon: LucideIcons.circleX,
+                    title: t.cancelThisRide,
+                    destructive: true,
+                    onPressed: () {
+                      Navigator.pop(sheet);
+                      onCancel();
+                    },
+                  ),
                 IyoButton(
                   label: t.callPolice(police),
                   icon: LucideIcons.phoneCall,

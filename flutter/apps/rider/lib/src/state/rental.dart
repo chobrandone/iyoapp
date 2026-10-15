@@ -17,6 +17,8 @@ class RentalDraft {
     this.flightNumber = '',
     this.flightArrivalAt,
     this.paymentMethod = PaymentMethodType.mtnMomo,
+    this.protection = false,
+    this.protectionDaily = 0,
   });
 
   final String cityCode;
@@ -32,6 +34,12 @@ class RentalDraft {
 
   /// Mobile money is the default (spec §4).
   final PaymentMethodType paymentMethod;
+
+  /// Optional protection, priced per day by the server (app_config.rental_protection_daily).
+  final bool protection;
+  final int protectionDaily;
+
+  int? get days => startsAt == null || endsAt == null ? null : rentalDays(startsAt!, endsAt!);
 
   bool get isAirport => pickupType == RentalPickupType.airport;
 
@@ -61,6 +69,8 @@ class RentalDraft {
       terminal: isAirport ? terminal : null,
       flightNumber: isAirport ? flightNumber : null,
       flightArrivalAt: isAirport ? flightArrivalAt : null,
+      protection: protection,
+      protectionDaily: protectionDaily,
     );
   }
 
@@ -76,6 +86,8 @@ class RentalDraft {
     String? flightNumber,
     DateTime? flightArrivalAt,
     PaymentMethodType? paymentMethod,
+    bool? protection,
+    int? protectionDaily,
   }) => RentalDraft(
     cityCode: cityCode ?? this.cityCode,
     vehicle: vehicle ?? this.vehicle,
@@ -88,12 +100,24 @@ class RentalDraft {
     flightNumber: flightNumber ?? this.flightNumber,
     flightArrivalAt: flightArrivalAt ?? this.flightArrivalAt,
     paymentMethod: paymentMethod ?? this.paymentMethod,
+    protection: protection ?? this.protection,
+    protectionDaily: protectionDaily ?? this.protectionDaily,
   );
+}
+
+/// Tomorrow 10:00 → three days later, the frame's default suggestion.
+(DateTime, DateTime) defaultRentalPeriod([DateTime? now]) {
+  final n = now ?? DateTime.now();
+  final start = DateTime(n.year, n.month, n.day + 1, 10);
+  return (start, start.add(const Duration(days: 3)));
 }
 
 class RentalDraftController extends Notifier<RentalDraft> {
   @override
-  RentalDraft build() => const RentalDraft();
+  RentalDraft build() {
+    final (start, end) = defaultRentalPeriod();
+    return RentalDraft(startsAt: start, endsAt: end);
+  }
 
   void update(RentalDraft Function(RentalDraft d) change) => state = change(state);
 

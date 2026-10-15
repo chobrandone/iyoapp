@@ -49,6 +49,12 @@ enum IyoTextVariant {
   /// Balance figures, e.g. wallet ride credit.
   amount,
 
+  /// Request fare estimate, e.g. "2 450 FCFA" on a new ride (30 SemiBold).
+  fare,
+
+  /// Metric card value, e.g. today's earnings (26 SemiBold).
+  metric,
+
   /// Text field value.
   input,
 
@@ -100,6 +106,8 @@ enum IyoTextVariant {
     listTitle => _poppins(_medium, 14, 21),
     amountHero => _poppins(_semibold, 36, 44),
     amount => _poppins(_semibold, 32, 40),
+    fare => _poppins(_semibold, 30, 45),
+    metric => _poppins(_semibold, 26, 39),
     input => _poppins(_regular, 13, 19.5),
     body => _poppins(_regular, 12, 18),
     caption => _poppins(_regular, 11, 16.5),

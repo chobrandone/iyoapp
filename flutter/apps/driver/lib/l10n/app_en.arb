@@ -682,5 +682,993 @@
     }
   },
   "inspectionFailed": "The inspection could not be sent. Check your connection and try again.",
-  "menuReportIncident": "Report an incident"
+  "menuReportIncident": "Report an incident",
+  "greetingMorning": "Good morning, {name}",
+  "@greetingMorning": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "greetingAfternoon": "Good afternoon, {name}",
+  "@greetingAfternoon": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "greetingEvening": "Good evening, {name}",
+  "@greetingEvening": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeOfflineSubtitle": "You’re offline. Ready when you are.",
+  "todaysEarnings": "Today’s earnings",
+  "completedTrips": "Completed trips",
+  "offlineBadge": "Offline · No ride requests",
+  "nextRental": "Next rental · {when}",
+  "@nextRental": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "nextRentalDetail": "{place} · {car} · {days}",
+  "@nextRentalDetail": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      },
+      "car": {
+        "type": "String"
+      },
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "daysCount": "{n} days",
+  "@daysCount": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "oneDay": "1 day",
+  "homeOnlineTitle": "You’re online",
+  "homeOnlineSubtitle": "Looking for riders nearby…",
+  "busyAreaHeading": "You’re in a busy area",
+  "busyAreaText": "{area} · Stay nearby for your next ride. Keep your phone mounted safely.",
+  "@busyAreaText": {
+    "placeholders": {
+      "area": {
+        "type": "String"
+      }
+    }
+  },
+  "todayAmount": "Today · {amount}",
+  "@todayAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "tripsOnline": "{trips} · {online} online",
+  "@tripsOnline": {
+    "placeholders": {
+      "trips": {
+        "type": "String"
+      },
+      "online": {
+        "type": "String"
+      }
+    }
+  },
+  "tripsN": "{n} trips",
+  "@tripsN": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "oneTrip": "1 trip",
+  "requestTitle": "A new ride nearby",
+  "requestSubtitle": "{category} · Accept within {seconds} seconds",
+  "@requestSubtitle": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "estEarningsBadge": "Your est. earnings",
+  "requestMeta": "{pickup} min to pickup · Trip {trip} min · {distance}",
+  "@requestMeta": {
+    "placeholders": {
+      "pickup": {
+        "type": "String"
+      },
+      "trip": {
+        "type": "String"
+      },
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "pickupSuffix": "{area} · Pickup",
+  "@pickupSuffix": {
+    "placeholders": {
+      "area": {
+        "type": "String"
+      }
+    }
+  },
+  "dropoffSuffix": "{area} · Drop-off",
+  "@dropoffSuffix": {
+    "placeholders": {
+      "area": {
+        "type": "String"
+      }
+    }
+  },
+  "verifiedRider": "★ {rating} · Verified rider",
+  "@verifiedRider": {
+    "placeholders": {
+      "rating": {
+        "type": "String"
+      }
+    }
+  },
+  "askForPin": "Ask for the pickup PIN at the car",
+  "acceptRideSeconds": "Accept ride · {seconds}s",
+  "@acceptRideSeconds": {
+    "placeholders": {
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "declineRequest": "Decline request",
+  "headToRider": "Head to {name}",
+  "@headToRider": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "headToSubtitle": "{place} · {minutes} min · {distance}",
+  "@headToSubtitle": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "String"
+      },
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "navContinue": "Continue for {distance}",
+  "@navContinue": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "navTowards": "Towards {place}",
+  "@navTowards": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "navArriving": "Arriving at {place}",
+  "@navArriving": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "tileMessage": "Message",
+  "tileShareTrip": "Share trip",
+  "tileSafety": "Safety",
+  "pickupNote": "Pickup note: “{note}”",
+  "@pickupNote": {
+    "placeholders": {
+      "note": {
+        "type": "String"
+      }
+    }
+  },
+  "stopSafely": "Please stop safely before contacting your rider.",
+  "arrivedAtPickup": "I’ve arrived at pickup",
+  "atPickupTitle": "You’re at the pickup",
+  "atPickupSubtitle": "{name} has been notified you’ve arrived.",
+  "@atPickupSubtitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "askPinLabel": "Ask {name} for the 4-digit pickup PIN",
+  "@askPinLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pinVerified": "✓ PIN verified · You can start the ride.",
+  "confirmRiderNote": "Confirm the rider’s name before departure. Destination: {place}.",
+  "@confirmRiderNote": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "driveTo": "Drive to {place}",
+  "@driveTo": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "driveSubtitle": "Arrive {time} · {minutes} min · {distance} left",
+  "@driveSubtitle": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "String"
+      },
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "tripInProgress": "Trip in progress · {ref}",
+  "@tripInProgress": {
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "endRide": "End ride at destination",
+  "cancelThisRide": "Cancel this ride",
+  "navTurnRight": "Turn right in {distance}",
+  "@navTurnRight": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "navInto": "Into {street}",
+  "@navInto": {
+    "placeholders": {
+      "street": {
+        "type": "String"
+      }
+    }
+  },
+  "navOn": "On {street}",
+  "@navOn": {
+    "placeholders": {
+      "street": {
+        "type": "String"
+      }
+    }
+  },
+  "mainEntrance": "{area} · Main entrance",
+  "@mainEntrance": {
+    "placeholders": {
+      "area": {
+        "type": "String"
+      }
+    }
+  },
+  "earnTitle": "Your earnings",
+  "earnSubtitle": "{range} · Net after service fees",
+  "@earnSubtitle": {
+    "placeholders": {
+      "range": {
+        "type": "String"
+      }
+    }
+  },
+  "periodWeek": "Week",
+  "periodMonth": "Month",
+  "periodYear": "Year",
+  "weekSoFar": "This week so far",
+  "monthSoFar": "This month so far",
+  "yearSoFar": "This year so far",
+  "tripsDriving": "{trips} · {time} driving",
+  "@tripsDriving": {
+    "placeholders": {
+      "trips": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "nextPayout": "Next scheduled payout",
+  "nextPayoutDetail": "{date} · {account}",
+  "@nextPayoutDetail": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "payoutHistory": "Payout history",
+  "paidTo": "Paid to {account}",
+  "@paidTo": {
+    "placeholders": {
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "payoutPending": "Being sent to {account}",
+  "@payoutPending": {
+    "placeholders": {
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "payoutFailed": "Failed · {reason}",
+  "@payoutFailed": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "statusPaid": "Paid",
+  "statusPending": "Pending",
+  "statusFailed": "Failed",
+  "viewPayoutDetails": "View payout details",
+  "noPayoutsYet": "No payouts yet. Earnings are paid weekly, every Monday.",
+  "weekdayLetters": "M,T,W,T,F,S,S",
+  "monthLetters": "J,F,M,A,M,J,J,A,S,O,N,D",
+  "weekN": "W{n}",
+  "@weekN": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "payoutTitle": "Payout details",
+  "payoutSubtitle": "{ref} · {range}",
+  "@payoutSubtitle": {
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      },
+      "range": {
+        "type": "String"
+      }
+    }
+  },
+  "sentOn": "Sent on {date}",
+  "@sentOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "requestedOn": "Requested on {date}",
+  "@requestedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "payoutBreakdown": "Payout breakdown",
+  "rideFaresLine": "Ride fares · {trips}",
+  "@rideFaresLine": {
+    "placeholders": {
+      "trips": {
+        "type": "String"
+      }
+    }
+  },
+  "rentalHandoverEarnings": "Rental handover earnings",
+  "tipsLine": "Tips",
+  "serviceFeesLine": "Service fees",
+  "netPayout": "Net payout",
+  "mobileMoneyTransfer": "{name} · Mobile money transfer",
+  "@mobileMoneyTransfer": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "transferTimeline": "Transfer timeline",
+  "tlCreated": "Payout created",
+  "tlCreatedBody": "{time} · Weekly earnings calculated",
+  "@tlCreatedBody": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "tlSent": "Transfer sent",
+  "tlSentBody": "{time} · Reference {ref}",
+  "@tlSentBody": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "tlDelivered": "Transfer delivered",
+  "tlDeliveredBody": "{time} · Funds delivered",
+  "@tlDeliveredBody": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "tlWaiting": "Waiting for the operator",
+  "payoutHelp": "Need help? Quote {ref} when contacting support.",
+  "@payoutHelp": {
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "downloadStatement": "Download statement",
+  "statementTitle": "iyodriver payout {ref}",
+  "@statementTitle": {
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingsHeading": "Your bookings",
+  "bookingsSub": "Upcoming handovers and completed trips.",
+  "segUpcoming": "Upcoming",
+  "segHistory": "History",
+  "airportPickupConfirmed": "Airport pickup · {status}",
+  "@airportPickupConfirmed": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "addressPickupStatus": "Delivery · {status}",
+  "@addressPickupStatus": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "statusConfirmedShort": "Confirmed",
+  "rentalWhenWhere": "{when} · {place}",
+  "@rentalWhenWhere": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      },
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "returnWhenWhere": "Return: {when} · {place}",
+  "@returnWhenWhere": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      },
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "viewHandoverRequirements": "View handover requirements",
+  "viewReturnSteps": "View return inspection",
+  "todaysCompletedRides": "Today’s completed rides",
+  "statusCompletedShort": "Completed",
+  "bookingsFootnote": "Ride amounts show net earnings after service fees. View all past bookings in History.",
+  "noUpcomingTitle": "Nothing booked yet",
+  "noUpcomingBody": "Rental handovers assigned to you appear here.",
+  "pastRentals": "Rentals",
+  "pastRides": "Rides",
+  "perDayBadge": "{price} / day",
+  "@perDayBadge": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "carSpecs": "{fuel} · {gearbox} · {seats} seats",
+  "@carSpecs": {
+    "placeholders": {
+      "fuel": {
+        "type": "String"
+      },
+      "gearbox": {
+        "type": "String"
+      },
+      "seats": {
+        "type": "String"
+      }
+    }
+  },
+  "fuelPetrol": "Petrol",
+  "fuelDiesel": "Diesel",
+  "fuelHybrid": "Hybrid",
+  "fuelElectric": "Electric",
+  "gearAutomatic": "Automatic",
+  "gearManual": "Manual",
+  "accountHeading": "Driver account",
+  "accountSub": "Your profile and road-ready documents.",
+  "driverMeta": "★ {rating} · {trips} · Driver {ref}",
+  "@driverMeta": {
+    "placeholders": {
+      "rating": {
+        "type": "String"
+      },
+      "trips": {
+        "type": "String"
+      },
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "verifiedDriver": "Verified driver",
+  "yourVehicle": "Your vehicle",
+  "vehicleSpecs": "{colour} · {year} · {seats} seats",
+  "@vehicleSpecs": {
+    "placeholders": {
+      "colour": {
+        "type": "String"
+      },
+      "year": {
+        "type": "String"
+      },
+      "seats": {
+        "type": "String"
+      }
+    }
+  },
+  "plateServices": "{plate} · Ride & rental",
+  "@plateServices": {
+    "placeholders": {
+      "plate": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryApproved": "{category} · Approved",
+  "@categoryApproved": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryInReview": "{category} · In review",
+  "@categoryInReview": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "documentsHeading": "Documents",
+  "docVerifiedExpires": "Verified · Expires {date}",
+  "@docVerifiedExpires": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "docVerified": "Verified",
+  "docRenewBy": "Renew by {date}",
+  "@docRenewBy": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "docInReview": "In review",
+  "docNeedsAction": "Action needed · {reason}",
+  "@docNeedsAction": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "docNotUploaded": "Not uploaded yet",
+  "payoutDetailsRow": "Payout details",
+  "notSet": "Not set",
+  "vehicleChangeNote": "Changes to vehicle details may require a new review before you can go online.",
+  "editAccount": "Edit account details",
+  "moreSection": "More",
+  "flowSetup": "Driver setup · {step}",
+  "@flowSetup": {
+    "placeholders": {
+      "step": {
+        "type": "String"
+      }
+    }
+  },
+  "setupTitle": "Let’s get you road-ready",
+  "setupStep1": "Step 1 of 2 · Identity & vehicle",
+  "driverAccountBadge": "Driver account",
+  "legalName": "Legal name",
+  "dateOfBirth": "Date of birth",
+  "dateOfBirthHint": "DD/MM/YYYY",
+  "dobInvalid": "Enter your date of birth (you must be 21 or older).",
+  "vehicleMakeModel": "Vehicle make & model",
+  "vehicleMakeModelHint": "Toyota Corolla · 2018 · Blanc",
+  "vehicleRegistration": "Vehicle registration",
+  "vehicleCheckedHelper": "Your vehicle details will be checked with your documents.",
+  "legalDetailsNote": "Your legal details are used for verification. Riders will only see your first name and vehicle details.",
+  "saveAndContinue": "Save & continue to documents",
+  "vehicleSheetTitle": "Your vehicle",
+  "moreDetails": "Also needed for verification",
+  "docsTitle": "A quick safety check",
+  "setupStep2": "Step 2 of 2 · Upload your documents",
+  "docsReady": "{n} of {total} documents ready",
+  "@docsReady": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "groupIdentity": "Photo ID & selfie",
+  "groupIdentityDone": "Identity photos received",
+  "groupLicence": "Driving licence",
+  "groupLicenceDone": "Licence uploaded",
+  "groupVehicle": "Vehicle papers",
+  "groupVehicleDone": "Carte grise and visite technique uploaded",
+  "groupInsurance": "Insurance certificate",
+  "groupInsuranceDone": "Insurance uploaded",
+  "groupApproved": "Approved",
+  "groupInReview": "Uploaded · in review",
+  "groupMissing": "{n} to upload",
+  "@groupMissing": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "nextDocument": "Next: {doc}",
+  "@nextDocument": {
+    "placeholders": {
+      "doc": {
+        "type": "String"
+      }
+    }
+  },
+  "noFileYet": "No photo yet",
+  "uploadTips": "Tips for a successful upload",
+  "uploadTipsBody": "Keep all four corners visible. Use good lighting and avoid glare. Accepted: JPG, PNG or PDF, up to 10 MB.",
+  "reviewTimeNote": "After you submit, reviews usually take 1–2 working days. We’ll notify you when you’re approved.",
+  "uploadDoc": "Upload {doc} photo",
+  "@uploadDoc": {
+    "placeholders": {
+      "doc": {
+        "type": "String"
+      }
+    }
+  },
+  "retakeDoc": "Retake {doc} photo",
+  "@retakeDoc": {
+    "placeholders": {
+      "doc": {
+        "type": "String"
+      }
+    }
+  },
+  "identityLocked": "Verified details are locked. Contact support to change them.",
+  "flowDriverRental": "Driver rental · {step}",
+  "@flowDriverRental": {
+    "placeholders": {
+      "step": {
+        "type": "String"
+      }
+    }
+  },
+  "airportRentalPickup": "Airport rental pickup",
+  "addressRentalPickup": "Rental delivery",
+  "rentalReturnTitle": "Rental return",
+  "confirmedBooking": "Confirmed booking · {ref}",
+  "@confirmedBooking": {
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "upcomingWhen": "Upcoming · {when}",
+  "@upcomingWhen": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "withRiderUntil": "With rider · until {when}",
+  "@withRiderUntil": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "carWithFuel": "{car} · {fuel}",
+  "@carWithFuel": {
+    "placeholders": {
+      "car": {
+        "type": "String"
+      },
+      "fuel": {
+        "type": "String"
+      }
+    }
+  },
+  "rentalPeriodDays": "{range} · {days}",
+  "@rentalPeriodDays": {
+    "placeholders": {
+      "range": {
+        "type": "String"
+      },
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "pickupOn": "Pickup · {day}",
+  "@pickupOn": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "returnOn": "Return · {day}",
+  "@returnOn": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "timeAtPlace": "{time} · {place}",
+  "@timeAtPlace": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "airportRequirementsTitle": "Airport pickup requirements",
+  "flightLine": "{flight} · {route}",
+  "@flightLine": {
+    "placeholders": {
+      "flight": {
+        "type": "String"
+      },
+      "route": {
+        "type": "String"
+      }
+    }
+  },
+  "landingLine": "Landing: {when} · {terminal}",
+  "@landingLine": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      },
+      "terminal": {
+        "type": "String"
+      }
+    }
+  },
+  "meetLine": "Meet at arrivals, {time}. Hold an iyodriver name sign for {name}.",
+  "@meetLine": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "prepareCarNote": "Prepare a clean car with a full tank. Allow {minutes} min after landing and contact {name} if the flight is delayed.",
+  "@prepareCarNote": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "prepareCarNoteAddress": "Prepare a clean car with a full tank. Call {name} if you are running late.",
+  "@prepareCarNoteAddress": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "navigateToPlace": "Navigate to {place}",
+  "@navigateToPlace": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "openHandover": "Start the handover",
+  "askHandoverPin": "Ask for the handover PIN at the car",
+  "smoothHandover": "A smooth handover",
+  "handoverSubtitle": "{name} · {place} · {date}",
+  "@handoverSubtitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "place": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "carPlateBadge": "{car} · {plate}",
+  "@carPlateBadge": {
+    "placeholders": {
+      "car": {
+        "type": "String"
+      },
+      "plate": {
+        "type": "String"
+      }
+    }
+  },
+  "checkIdentity": "Identity & licence checked",
+  "checkIdentityBody": "Name matches the booking",
+  "checkIdentityTap": "Tap once you have seen the ID and licence",
+  "checkDeposit": "Deposit authorised",
+  "checkDepositBody": "{amount} hold · {method}",
+  "@checkDepositBody": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "checkPhotos": "Vehicle condition photos",
+  "checkPhotosDone": "{n} photos saved · {damage}",
+  "@checkPhotosDone": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "damage": {
+        "type": "String"
+      }
+    }
+  },
+  "checkPhotosTodo": "Take the 5 photos",
+  "noNewDamage": "No new damage",
+  "damageNoted": "Damage noted",
+  "checkFuel": "Fuel & mileage recorded",
+  "checkFuelDone": "{fuel} · {km} km",
+  "@checkFuelDone": {
+    "placeholders": {
+      "fuel": {
+        "type": "String"
+      },
+      "km": {
+        "type": "String"
+      }
+    }
+  },
+  "checkFuelTodo": "Recorded with the photos",
+  "fullTank": "Full tank",
+  "tankEighths": "{n}/8 tank",
+  "@tankEighths": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "customerHandoverPin": "Customer handover PIN",
+  "handoverPinVerified": "✓ PIN verified · Rental agreement accepted",
+  "handoverReturnNote": "Return: {when} · {place}. Give {name} the keys after confirming all checks.",
+  "@handoverReturnNote": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      },
+      "place": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "confirmHandoverStart": "Confirm handover & start rental",
+  "handoverPinWrong": "Wrong PIN · {n} attempts left",
+  "@handoverPinWrong": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "handoverPinLocked": "Too many wrong PINs. The safety team has been told; call support.",
+  "handoverDone": "Handover complete. The rental has started."
 }

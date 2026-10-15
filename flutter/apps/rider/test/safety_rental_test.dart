@@ -7,7 +7,6 @@ import 'package:go_router/go_router.dart';
 import 'package:iyo_core/iyo_core.dart';
 import 'package:iyo_ui/iyo_ui.dart';
 import 'package:rider/src/app.dart';
-import 'package:rider/src/state/rental.dart';
 
 const _fast = DemoTiming(matching: Duration(seconds: 1));
 
@@ -89,40 +88,42 @@ void main() {
 
   testWidgets('rent a car: book, pay, handover, active, return, deposit released', (tester) async {
     final c = await pumpSignedIn(tester);
-    unawaited(routerOf(c).push('/rent'));
+    routerOf(c).go('/home?service=rent');
     await tester.pumpAndSettle();
-    await tapText(tester, 'Toyota Corolla');
-    expect(find.text('Choose dates'), findsOneWidget);
-    await tapText(tester, 'Choose dates');
+    expect(find.text('A car for your plans'), findsOneWidget);
+    // Default suggestion: tomorrow 10:00, three days.
+    await tapText(tester, 'Corolla · ${formatFcfa(75000)} for 3 days');
+    expect(find.text('Toyota Corolla'), findsOneWidget);
+    await tapText(tester, 'Choose dates · ${formatFcfa(25000)} / day');
 
-    // Dates come from the platform pickers; set them on the draft directly.
-    final start = DateTime.now().add(const Duration(days: 1));
-    c
-        .read(rentalDraftProvider.notifier)
-        .update(
-          (d) => d.copyWith(startsAt: start, endsAt: start.add(const Duration(days: 2, hours: 1))),
-        );
-    await tester.pumpAndSettle();
-    expect(find.text('3 days · Distance included: 600 km'), findsOneWidget);
+    expect(find.text('Make time for your plans'), findsOneWidget);
+    expect(find.text('3 DAYS · ${formatFcfa(75000)} BASE PRICE'), findsOneWidget);
+    await tapText(tester, 'Continue · 3 days');
+
+    expect(find.text('Where should we meet?'), findsOneWidget);
     await tester.enterText(find.byType(EditableText).last, 'Rue Joss, Akwa');
-    await tapText(tester, 'Review and pay');
+    await tapText(tester, 'Save pickup & review');
 
-    expect(find.text(formatFcfa(75000)), findsWidgets);
-    final pay = find.widgetWithText(IyoButton, 'Pay ${formatFcfa(75000)}');
+    expect(find.text('Ready for your getaway?'), findsOneWidget);
+    final pay = find.widgetWithText(IyoButton, 'Confirm & pay ${formatFcfa(75000)}');
     expect(tester.widget<IyoButton>(pay).onPressed, isNull); // terms not accepted yet
-    await tapText(tester, 'I accept the rental terms and the deposit hold.');
+    final terms = find.textContaining('I accept the rental terms');
+    await tester.ensureVisible(terms);
+    await tester.tap(terms);
+    await tester.pumpAndSettle();
     await tester.tap(pay);
     await tester.pump(const Duration(milliseconds: 300));
-    await pumpUntil(tester, find.text('Approve the payment'));
-    await pumpUntil(tester, find.text('Check the car'));
-    expect(find.text('Handover inspection'), findsOneWidget);
-    await tapText(tester, 'Confirm handover');
-    await pumpUntil(tester, find.text('Enjoy the drive'));
-    await tapText(tester, 'Return the car');
-    await pumpUntil(tester, find.text('Check the return'));
-    await tapText(tester, 'Confirm return');
-    await pumpUntil(tester, find.text('Rental complete'));
-    expect(find.text('Deposit released in full'), findsOneWidget);
+    await pumpUntil(tester, find.text('Your car is booked'));
+    await tapText(tester, 'View my rental');
+    expect(find.text('Manage your rental'), findsOneWidget);
+
+    // Payment, driver assignment, handover checklist and PIN at the car (simulated).
+    await pumpUntil(tester, find.text('The keys are yours'));
+    await tapText(tester, 'View return instructions');
+    await tapText(tester, 'I’m returning the car');
+    await pumpUntil(tester, find.text('INSPECTION COMPLETE'));
+    await tapText(tester, 'Confirm return summary');
+    await pumpUntil(tester, find.text('Deposit released in full'));
 
     routerOf(c).go('/activity');
     await tester.pumpAndSettle();

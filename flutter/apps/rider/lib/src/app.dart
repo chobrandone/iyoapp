@@ -25,7 +25,7 @@ final riderOverrides = [appRoleProvider.overrideWithValue(AppRole.rider)];
 /// the snapshot test and the on-device capture.
 const List<(String, String)> designScreens = [
   ('/welcome', 'START · 01 · Welcome'),
-  ('/sign-up', 'ACCOUNT · 05 · Sign up'),
+  ('/design/sign-up', 'ACCOUNT · 05 · Sign up'),
   ('/design/verify', 'ACCOUNT · 06 · Verify'),
   ('/login', 'Log in (no frame attached)'),
   ('/design/home', 'RIDER · 01 · Home'),
@@ -37,6 +37,15 @@ const List<(String, String)> designScreens = [
   ('/trip/no-drivers', 'No drivers nearby'),
   ('/design/safety-alert', 'RIDER · SAFETY · Safety alert'),
   ('/design/safety-sent', 'RIDER · SAFETY SENT · Alert sent'),
+  ('/design/rent', 'RENTAL · 01 · Browse cars'),
+  ('/design/rent-car', 'RENTAL · 02 · Vehicle details'),
+  ('/design/rent-dates', 'RENTAL · 03 · Dates'),
+  ('/design/rent-pickup', 'RENTAL · 04 · Airport pickup'),
+  ('/design/rent-review', 'RENTAL · 05 · Review and pay'),
+  ('/design/rent-booked', 'RENTAL · 06 · Booking confirmed'),
+  ('/design/rent-active', 'RENTAL · 07 · Active rental'),
+  ('/design/rent-manage', 'Rentals · Manage booking'),
+  ('/design/rent-return', 'Rentals · Return inspection'),
   ('/design/activity', 'Your activity'),
   ('/design/notifications', 'Notifications'),
   ('/saved-places', 'Saved places'),
@@ -98,7 +107,13 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state, shell) => _TabsShell(shell: shell),
         branches: [
           StatefulShellBranch(
-            routes: [GoRoute(path: '/home', builder: (_, _) => const HomeScreen())],
+            routes: [
+              GoRoute(
+                path: '/home',
+                builder:
+                    (_, state) => HomeScreen(rent: state.uri.queryParameters['service'] == 'rent'),
+              ),
+            ],
           ),
           StatefulShellBranch(
             routes: [
@@ -135,10 +150,11 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/rent',
-        builder: (_, _) => const RentBrowseScreen(),
+        redirect: (_, state) => state.uri.path == '/rent' ? '/home?service=rent' : null,
         routes: [
           GoRoute(path: 'car', builder: (_, _) => const RentalCarScreen()),
           GoRoute(path: 'dates', builder: (_, _) => const RentalDatesScreen()),
+          GoRoute(path: 'pickup', builder: (_, _) => const RentalPickupScreen()),
           GoRoute(path: 'review', builder: (_, _) => const RentalReviewScreen()),
         ],
       ),
@@ -149,6 +165,12 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: ':id',
             builder: (_, state) => RentalBookingScreen(bookingId: state.pathParameters['id']!),
+            routes: [
+              GoRoute(
+                path: 'booked',
+                builder: (_, state) => RentalBookedScreen(bookingId: state.pathParameters['id']!),
+              ),
+            ],
           ),
         ],
       ),
@@ -172,11 +194,43 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, _) => const TrustedContactsScreen(preview: true),
       ),
       GoRoute(path: '/design/verify', builder: (_, _) => const VerifyScreen()),
+      GoRoute(path: '/design/sign-up', builder: (_, _) => const SignUpScreen(preview: true)),
       GoRoute(
         path: '/design/home',
         builder: (_, _) => const _PreviewTabs(index: 0, child: HomeScreen(preview: true)),
       ),
       GoRoute(path: '/design/plan', builder: (_, _) => const PlanRideScreen(preview: true)),
+      GoRoute(
+        path: '/design/rent',
+        builder:
+            (_, _) => const _PreviewTabs(index: 0, child: HomeScreen(preview: true, rent: true)),
+      ),
+      GoRoute(path: '/design/rent-car', builder: (_, _) => const RentalCarScreen(preview: true)),
+      GoRoute(
+        path: '/design/rent-dates',
+        builder: (_, _) => const RentalDatesScreen(preview: true),
+      ),
+      GoRoute(
+        path: '/design/rent-pickup',
+        builder: (_, _) => const RentalPickupScreen(preview: true),
+      ),
+      GoRoute(
+        path: '/design/rent-review',
+        builder: (_, _) => const RentalReviewScreen(preview: true),
+      ),
+      GoRoute(path: '/design/rent-booked', builder: (_, _) => const RentalBookedScreen()),
+      GoRoute(
+        path: '/design/rent-active',
+        builder: (_, _) => const RentalBookingScreen(preview: RentalPreview.active),
+      ),
+      GoRoute(
+        path: '/design/rent-manage',
+        builder: (_, _) => const RentalBookingScreen(preview: RentalPreview.manage),
+      ),
+      GoRoute(
+        path: '/design/rent-return',
+        builder: (_, _) => const RentalBookingScreen(preview: RentalPreview.returnCheck),
+      ),
       GoRoute(
         path: '/design/activity',
         builder: (_, _) => const _PreviewTabs(index: 1, child: ActivityScreen()),

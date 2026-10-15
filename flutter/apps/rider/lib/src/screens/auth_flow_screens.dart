@@ -95,7 +95,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
 /// ACCOUNT · 05 — Sign up (Figma 2005:50045).
 class SignUpScreen extends ConsumerStatefulWidget {
-  const SignUpScreen({super.key});
+  const SignUpScreen({super.key, this.preview = false});
+
+  /// Figma sample values filled in (design index, snapshots).
+  final bool preview;
 
   @override
   ConsumerState<SignUpScreen> createState() => _SignUpScreenState();
@@ -175,6 +178,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
             IyoTextField(
               label: t.fieldFullName,
               placeholder: Sample.riderFullName,
+              initialValue: widget.preview ? Sample.riderFullName : null,
               error: _nameError,
               onChanged: (v) => _name = v,
               textInputAction: TextInputAction.next,
@@ -184,6 +188,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
             IyoTextField(
               label: t.fieldEmail,
               placeholder: Sample.riderEmail,
+              initialValue: widget.preview ? Sample.riderEmail : null,
               helper: t.fieldEmailHelper,
               onChanged: (v) => _email = v,
               keyboardType: TextInputType.emailAddress,
@@ -194,6 +199,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
             IyoTextField(
               label: t.fieldMobile,
               placeholder: Sample.riderPhoneDisplay,
+              initialValue: widget.preview ? Sample.riderPhoneDisplay : null,
               error: _phoneError,
               onChanged: (v) => _phone = v,
               keyboardType: TextInputType.phone,
@@ -205,6 +211,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
             IyoTextField(
               label: t.fieldPassword,
               obscureText: true,
+              initialValue: widget.preview ? 'iyodriver2026' : null,
               revealLabel: t.showPassword,
               helper: t.passwordRule,
               autofillHints: const [AutofillHints.newPassword],

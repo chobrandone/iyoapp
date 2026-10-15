@@ -1009,5 +1009,680 @@
       }
     }
   },
-  "rentalReportProblem": "Report a problem"
+  "rentalReportProblem": "Report a problem",
+  "flowRental": "Rental · {step}",
+  "@flowRental": {
+    "placeholders": {
+      "step": {
+        "type": "String"
+      }
+    }
+  },
+  "flowRentalPlain": "Rental",
+  "rentACar": "Rent a car",
+  "carForPlans": "A car for your plans",
+  "carForPlansSub": "{city} · Flexible rentals, simple pickup",
+  "@carForPlansSub": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "datesRowTitle": "{range} · {days}",
+  "@datesRowTitle": {
+    "placeholders": {
+      "range": {
+        "type": "String"
+      },
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "datesRowSub": "{time} pickup & return · Change dates",
+  "@datesRowSub": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "airportAvailableLine": "✓ Airport pickup available · {km} km / day",
+  "@airportAvailableLine": {
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
+  },
+  "kmPerDayLine": "{km} km / day included",
+  "@kmPerDayLine": {
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
+  },
+  "viewCarFor": "{model} · {price} for {days}",
+  "@viewCarFor": {
+    "placeholders": {
+      "model": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "myRentalsLink": "My rentals",
+  "taglineSedan": "Comfortable and easy on fuel.",
+  "taglineSuv": "Room for the family and the luggage.",
+  "taglineEconomy": "Small, nimble, made for the city.",
+  "taglinePickup": "Built for the road and the load.",
+  "seatsBadge": "{n} seats",
+  "@seatsBadge": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "perDayPrice": "{price} / day",
+  "@perDayPrice": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "kmIncludedTitle": "{km} km a day included",
+  "@kmIncludedTitle": {
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
+  },
+  "kmIncludedSub": "Extra km {price} / km · Fuel: return full",
+  "@kmIncludedSub": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "coverTitle": "Standard cover included",
+  "coverSub": "Optional protection · {price} / day",
+  "@coverSub": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "coverAdded": "Extra protection added · {price} / day",
+  "@coverAdded": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "airportAvailableTitle": "Airport pickup available",
+  "airportAvailableSub": "{airport} · {fee} pickup fee",
+  "@airportAvailableSub": {
+    "placeholders": {
+      "airport": {
+        "type": "String"
+      },
+      "fee": {
+        "type": "String"
+      }
+    }
+  },
+  "addressOnlyTitle": "Delivered to your address",
+  "addressOnlySub": "Airport pickup is not offered for this car.",
+  "detailsFootnote": "Valid driving licence required. {deposit} refundable deposit hold. Free cancellation until pickup.",
+  "@detailsFootnote": {
+    "placeholders": {
+      "deposit": {
+        "type": "String"
+      }
+    }
+  },
+  "chooseDatesPrice": "Choose dates · {price} / day",
+  "@chooseDatesPrice": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "makeTime": "Make time for your plans",
+  "makeTimeSub": "Choose pickup and return dates.",
+  "pickupFieldLabel": "Pickup · {date}",
+  "@pickupFieldLabel": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "returnFieldLabel": "Return · {date}",
+  "@returnFieldLabel": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "daysBasePrice": "{days} · {price} base price",
+  "@daysBasePrice": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "datesFootnote": "All times are local to Douala and Yaoundé. The return time must be after pickup. Late returns may incur an extra daily charge.",
+  "continueDays": "Continue · {days}",
+  "@continueDays": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "pickReturnDay": "Now pick the return day.",
+  "monthNames": "January,February,March,April,May,June,July,August,September,October,November,December",
+  "weekdayInitials": "M,T,W,T,F,S,S",
+  "whereMeet": "Where should we meet?",
+  "whereMeetSub": "Pickup · {when}",
+  "@whereMeetSub": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "airportPickupToggle": "Airport pickup",
+  "flightKnown": "✓ {airline} · flight {flight}",
+  "@flightKnown": {
+    "placeholders": {
+      "airline": {
+        "type": "String"
+      },
+      "flight": {
+        "type": "String"
+      }
+    }
+  },
+  "flightArrivalLabel": "Flight arrival · {date}",
+  "@flightArrivalLabel": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "localTime": "{time} · local time",
+  "@localTime": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "meetAtArrivals": "Meet at arrivals, {terminal}",
+  "@meetAtArrivals": {
+    "placeholders": {
+      "terminal": {
+        "type": "String"
+      }
+    }
+  },
+  "meetAllow": "We allow {minutes} min after landing for your pickup.",
+  "@meetAllow": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "airportFeeBadge": "Airport pickup fee · {fee}",
+  "@airportFeeBadge": {
+    "placeholders": {
+      "fee": {
+        "type": "String"
+      }
+    }
+  },
+  "savePickupReview": "Save pickup & review",
+  "addressPickupNote": "Your driver brings the car to this address at the pickup time.",
+  "getaway": "Ready for your getaway?",
+  "getawaySub": "Review your booking before paying.",
+  "pickupDay": "Pickup · {day}",
+  "@pickupDay": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "returnDay": "Return · {day}",
+  "@returnDay": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "timePlace": "{time} · {place}",
+  "@timePlace": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "airportFlightBadge": "Airport · {terminal} · {flight} · arrives {time}",
+  "@airportFlightBadge": {
+    "placeholders": {
+      "terminal": {
+        "type": "String"
+      },
+      "flight": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "daysTimesRate": "{days} × {rate}",
+  "@daysTimesRate": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "protectionLine": "Extra protection · {days} × {rate}",
+  "@protectionLine": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "airportPickupLine": "Airport pickup",
+  "totalLine": "Total to pay now",
+  "depositHeldAtPickup": "{amount} refundable deposit held at pickup",
+  "@depositHeldAtPickup": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "cashAtPickup": "Pay the driver in cash at pickup",
+  "acceptTermsLong": "I accept the rental terms. My licence is valid. Cancel free before {when}.",
+  "@acceptTermsLong": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "confirmPay": "Confirm & pay {amount}",
+  "@confirmPay": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "confirmCash": "Confirm · pay cash at pickup",
+  "carBooked": "Your car is booked",
+  "carBookedSub": "Booking {ref} · Details in your notifications",
+  "@carBookedSub": {
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "paidBadge": "Paid · {amount}",
+  "@paidBadge": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentPendingBadge": "Payment pending · {amount}",
+  "@paymentPendingBadge": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "cashBadge": "Cash at pickup · {amount}",
+  "@cashBadge": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "allSetAirport": "All set for airport pickup",
+  "allSetAddress": "All set for delivery",
+  "flightSummary": "Flight {flight} · {date} · Arrival {time}",
+  "@flightSummary": {
+    "placeholders": {
+      "flight": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "driverMeetsYou": "Your driver will meet you at arrivals at {time}.",
+  "@driverMeetsYou": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "driverBringsCar": "Your driver brings the car to {place} at {time}.",
+  "@driverBringsCar": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "bringDocuments": "Bring your driving licence, photo ID and the phone used for your deposit.",
+  "handoverPinBadge": "Your handover PIN · {pin}",
+  "@handoverPinBadge": {
+    "placeholders": {
+      "pin": {
+        "type": "String"
+      }
+    }
+  },
+  "viewMyRental": "View my rental",
+  "addToCalendar": "Add to calendar",
+  "calendarTitle": "iyodriver rental · {car}",
+  "@calendarTitle": {
+    "placeholders": {
+      "car": {
+        "type": "String"
+      }
+    }
+  },
+  "keysAreYours": "The keys are yours",
+  "activeSince": "Active rental · {when}",
+  "@activeSince": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "activeBadge": "Active · {ref}",
+  "@activeBadge": {
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "carPlate": "{car} · {plate}",
+  "@carPlate": {
+    "placeholders": {
+      "car": {
+        "type": "String"
+      },
+      "plate": {
+        "type": "String"
+      }
+    }
+  },
+  "returnBy": "Return by {day} · {time}",
+  "@returnBy": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "remainingExtend": "{left} remaining · Extend rental ›",
+  "@remainingExtend": {
+    "placeholders": {
+      "left": {
+        "type": "String"
+      }
+    }
+  },
+  "daysHours": "{d} days, {h} hours",
+  "@daysHours": {
+    "placeholders": {
+      "d": {
+        "type": "String"
+      },
+      "h": {
+        "type": "String"
+      }
+    }
+  },
+  "hoursOnly": "{h} hours",
+  "@hoursOnly": {
+    "placeholders": {
+      "h": {
+        "type": "String"
+      }
+    }
+  },
+  "driverTrips": "★ {rating} · {trips} trips",
+  "@driverTrips": {
+    "placeholders": {
+      "rating": {
+        "type": "String"
+      },
+      "trips": {
+        "type": "String"
+      }
+    }
+  },
+  "activeFootnote": "{km} km included · Return with a full tank. Need roadside assistance? Call support.",
+  "@activeFootnote": {
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
+  },
+  "viewReturnInstructions": "View return instructions",
+  "manageRental": "Manage your rental",
+  "manageSub": "Booking {ref} · {name}",
+  "@manageSub": {
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "confirmedHandoverPending": "Confirmed · Handover pending",
+  "pickupReturnTimes": "{pickup} pickup · {ret} return · {days}",
+  "@pickupReturnTimes": {
+    "placeholders": {
+      "pickup": {
+        "type": "String"
+      },
+      "ret": {
+        "type": "String"
+      },
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "pickupAndReturn": "Pickup & return",
+  "arrivalsMeetingPoint": "Arrivals meeting point · Flight {flight}",
+  "@arrivalsMeetingPoint": {
+    "placeholders": {
+      "flight": {
+        "type": "String"
+      }
+    }
+  },
+  "deliveryAddressLine": "Delivery address",
+  "handoverContact": "Your handover contact · Message or call",
+  "handoverContactPending": "Driver to be assigned",
+  "driverAssignedSoon": "We will assign your driver before pickup.",
+  "extendRental": "Extend rental",
+  "extendRentalSub": "Extra days from {price}, subject to availability",
+  "@extendRentalSub": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "changeBooking": "Change booking",
+  "changeBookingSub": "Update pickup, return or flight details",
+  "returnVehicle": "Return vehicle",
+  "returnVehicleSub": "View return location and inspection steps",
+  "cancelBookingSub": "Free until pickup",
+  "bookingPaid": "Booking paid",
+  "bookingDue": "Booking total",
+  "depositSeparate": "{amount} refundable deposit held separately. Any change is priced before you confirm.",
+  "@depositSeparate": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "viewPickupInstructions": "View pickup instructions",
+  "returnInspection": "Return inspection",
+  "returnInspectionSub": "{ref} · {car} · {plate}",
+  "@returnInspectionSub": {
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      },
+      "car": {
+        "type": "String"
+      },
+      "plate": {
+        "type": "String"
+      }
+    }
+  },
+  "inspectionComplete": "Inspection complete",
+  "inspectionWaiting": "Waiting for the driver",
+  "returnedAt": "{date} · Returned at {time}",
+  "@returnedAt": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "checkedWith": "Checked with {name} · Review before signing.",
+  "@checkedWith": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "vehicleCondition": "Vehicle condition",
+  "exteriorInterior": "Exterior & interior",
+  "photosAttached": "{damage} · {n} photos attached",
+  "@photosAttached": {
+    "placeholders": {
+      "damage": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "fuelMileage": "Fuel & mileage",
+  "fuelMileageLine": "{fuel} · {used} km used of {included} included",
+  "@fuelMileageLine": {
+    "placeholders": {
+      "fuel": {
+        "type": "String"
+      },
+      "used": {
+        "type": "String"
+      },
+      "included": {
+        "type": "String"
+      }
+    }
+  },
+  "keysAccessories": "Keys & accessories",
+  "allItemsReturned": "All items returned",
+  "itemsMissing": "Some items missing · see notes",
+  "depositSummary": "Deposit summary",
+  "depositHeldLine": "Deposit held",
+  "feesLine": "Damage, fuel & late fees",
+  "depositReleaseLine": "Deposit to release",
+  "releaseNote": "Release is requested after you confirm. Your operator may take 1–3 working days to remove the hold.",
+  "reportBeforeConfirm": "Something not right? Report an issue before confirming.",
+  "confirmReturnSummary": "Confirm return summary",
+  "returnStepsTitle": "How the return works",
+  "returnStepsBody": "Bring the car to {place} by {when}. Your driver inspects it with you, then you confirm the summary here.",
+  "@returnStepsBody": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "startReturnNow": "I’m returning the car",
+  "fullTank": "Full tank"
 }

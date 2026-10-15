@@ -129,8 +129,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get welcomeHeadline => 'A little less waiting.\nA lot more going.';
 
   @override
-  String get welcomeBody =>
-      'Book a ride or find a car for a few days. Wherever life takes you, go with iyodriver.';
+  String get welcomeBody => 'Book a ride or find a car for a few days. Wherever life takes you, go with iyodriver.';
 
   @override
   String get welcomeGetStarted => 'Get started';
@@ -224,8 +223,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get saferStartTitle => 'A safer start';
 
   @override
-  String get saferStartBody =>
-      'Verification helps keep every iyodriver journey connected to a real person.';
+  String get saferStartBody => 'Verification helps keep every iyodriver journey connected to a real person.';
 
   @override
   String get verifyContinue => 'Verify & continue';
@@ -418,8 +416,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tryAgainShortly => 'Let\'s try again shortly';
 
   @override
-  String get noMatchBody =>
-      'We couldn\'t match your request with an available driver. You haven\'t been charged.';
+  String get noMatchBody => 'We couldn\'t match your request with an available driver. You haven\'t been charged.';
 
   @override
   String toPlace(String place) {
@@ -430,8 +427,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get requestNotBooked => 'Request not booked';
 
   @override
-  String get noDriversHint =>
-      'Try a nearby pickup spot or request again in a few minutes. Availability can change quickly.';
+  String get noDriversHint => 'Try a nearby pickup spot or request again in a few minutes. Availability can change quickly.';
 
   @override
   String get tryAgain => 'Try again';
@@ -533,8 +529,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get messagePreview => 'Message preview';
 
   @override
-  String get defaultAlertMessage =>
-      'I need help. Please check on me and follow my live iyodriver trip.';
+  String get defaultAlertMessage => 'I need help. Please check on me and follow my live iyodriver trip.';
 
   @override
   String currentLocationAt(String place) {
@@ -545,8 +540,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sendAlert => 'Send security alert';
 
   @override
-  String get sendAlertFooter =>
-      'Sends your live location and trip details to your trusted contact and iyodriver safety team.';
+  String get sendAlertFooter => 'Sends your live location and trip details to your trusted contact and iyodriver safety team.';
 
   @override
   String get alertSentTitle => 'Your alert has been sent';
@@ -602,8 +596,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get otherFavourites => 'Other favourites';
 
   @override
-  String get savedFooter =>
-      'Tap a place to edit its name or address. Saved places are only visible to you.';
+  String get savedFooter => 'Tap a place to edit its name or address. Saved places are only visible to you.';
 
   @override
   String get addPlace => 'Add a place';
@@ -621,8 +614,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shareJourneyBody1 => 'Send a live trip link to your contacts from any active ride.';
 
   @override
-  String get shareJourneyBody2 =>
-      'Contacts can see your route, driver and estimated arrival when you choose to share.';
+  String get shareJourneyBody2 => 'Contacts can see your route, driver and estimated arrival when you choose to share.';
 
   @override
   String yourContacts(String count, String max) {
@@ -647,8 +639,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inControl => 'You\'re in control';
 
   @override
-  String get inControlBody =>
-      'Sharing starts only when you send a trip link. You can stop sharing or remove a contact at any time.';
+  String get inControlBody => 'Sharing starts only when you send a trip link. You can stop sharing or remove a contact at any time.';
 
   @override
   String tcFooter(String number) {
@@ -744,8 +735,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get locationDeniedTitle => 'Location is off';
 
   @override
-  String get locationDeniedBody =>
-      'Allow location so drivers can find you, or type your pickup address.';
+  String get locationDeniedBody => 'Allow location so drivers can find you, or type your pickup address.';
 
   @override
   String get openSettings => 'Open settings';
@@ -1004,8 +994,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contactsEmptyTitle => 'Add someone you trust';
 
   @override
-  String get contactsEmptyBody =>
-      'They get a text with your live trip if you raise a safety alert.';
+  String get contactsEmptyBody => 'They get a text with your live trip if you raise a safety alert.';
 
   @override
   String get flowRent => 'Rider · Rent';
@@ -1044,8 +1033,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get airportPickupBadge => 'Airport pickup';
 
   @override
-  String get placeholderPricing =>
-      'Prices shown are placeholders until the fleet rates are confirmed.';
+  String get placeholderPricing => 'Prices shown are placeholders until the fleet rates are confirmed.';
 
   @override
   String get transmissionAutomatic => 'Automatic';
@@ -1172,8 +1160,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reviewTitle => 'Review your rental';
 
   @override
-  String get reviewSubtitle =>
-      'You pay the rental now. The deposit is held when the car is handed over.';
+  String get reviewSubtitle => 'You pay the rental now. The deposit is held when the car is handed over.';
 
   @override
   String rentalDates(String start, String end) {
@@ -1217,8 +1204,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookCash => 'Book · pay cash at handover';
 
   @override
-  String get carTaken =>
-      'This car is already booked for those dates. Pick other dates or another car.';
+  String get carTaken => 'This car is already booked for those dates. Pick other dates or another car.';
 
   @override
   String get paymentMethodMissing => 'Add this payment method in your wallet first.';
@@ -1254,8 +1240,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get handoverReadyTitle => 'Check the car';
 
   @override
-  String get handoverReadyBody =>
-      'The driver recorded the car’s condition. Check it with them, then confirm.';
+  String get handoverReadyBody => 'The driver recorded the car’s condition. Check it with them, then confirm.';
 
   @override
   String get confirmHandover => 'Confirm handover';
@@ -1278,8 +1263,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get returnReadyTitle => 'Check the return';
 
   @override
-  String get returnReadyBody =>
-      'Check the return inspection. Your deposit is released when you confirm.';
+  String get returnReadyBody => 'Check the return inspection. Your deposit is released when you confirm.';
 
   @override
   String get confirmReturn => 'Confirm return';
@@ -1380,4 +1364,542 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rentalReportProblem => 'Report a problem';
+
+  @override
+  String flowRental(String step) {
+    return 'Rental · $step';
+  }
+
+  @override
+  String get flowRentalPlain => 'Rental';
+
+  @override
+  String get rentACar => 'Rent a car';
+
+  @override
+  String get carForPlans => 'A car for your plans';
+
+  @override
+  String carForPlansSub(String city) {
+    return '$city · Flexible rentals, simple pickup';
+  }
+
+  @override
+  String datesRowTitle(String range, String days) {
+    return '$range · $days';
+  }
+
+  @override
+  String datesRowSub(String time) {
+    return '$time pickup & return · Change dates';
+  }
+
+  @override
+  String airportAvailableLine(String km) {
+    return '✓ Airport pickup available · $km km / day';
+  }
+
+  @override
+  String kmPerDayLine(String km) {
+    return '$km km / day included';
+  }
+
+  @override
+  String viewCarFor(String model, String price, String days) {
+    return '$model · $price for $days';
+  }
+
+  @override
+  String get myRentalsLink => 'My rentals';
+
+  @override
+  String get taglineSedan => 'Comfortable and easy on fuel.';
+
+  @override
+  String get taglineSuv => 'Room for the family and the luggage.';
+
+  @override
+  String get taglineEconomy => 'Small, nimble, made for the city.';
+
+  @override
+  String get taglinePickup => 'Built for the road and the load.';
+
+  @override
+  String seatsBadge(String n) {
+    return '$n seats';
+  }
+
+  @override
+  String perDayPrice(String price) {
+    return '$price / day';
+  }
+
+  @override
+  String kmIncludedTitle(String km) {
+    return '$km km a day included';
+  }
+
+  @override
+  String kmIncludedSub(String price) {
+    return 'Extra km $price / km · Fuel: return full';
+  }
+
+  @override
+  String get coverTitle => 'Standard cover included';
+
+  @override
+  String coverSub(String price) {
+    return 'Optional protection · $price / day';
+  }
+
+  @override
+  String coverAdded(String price) {
+    return 'Extra protection added · $price / day';
+  }
+
+  @override
+  String get airportAvailableTitle => 'Airport pickup available';
+
+  @override
+  String airportAvailableSub(String airport, String fee) {
+    return '$airport · $fee pickup fee';
+  }
+
+  @override
+  String get addressOnlyTitle => 'Delivered to your address';
+
+  @override
+  String get addressOnlySub => 'Airport pickup is not offered for this car.';
+
+  @override
+  String detailsFootnote(String deposit) {
+    return 'Valid driving licence required. $deposit refundable deposit hold. Free cancellation until pickup.';
+  }
+
+  @override
+  String chooseDatesPrice(String price) {
+    return 'Choose dates · $price / day';
+  }
+
+  @override
+  String get makeTime => 'Make time for your plans';
+
+  @override
+  String get makeTimeSub => 'Choose pickup and return dates.';
+
+  @override
+  String pickupFieldLabel(String date) {
+    return 'Pickup · $date';
+  }
+
+  @override
+  String returnFieldLabel(String date) {
+    return 'Return · $date';
+  }
+
+  @override
+  String daysBasePrice(String days, String price) {
+    return '$days · $price base price';
+  }
+
+  @override
+  String get datesFootnote => 'All times are local to Douala and Yaoundé. The return time must be after pickup. Late returns may incur an extra daily charge.';
+
+  @override
+  String continueDays(String days) {
+    return 'Continue · $days';
+  }
+
+  @override
+  String get pickReturnDay => 'Now pick the return day.';
+
+  @override
+  String get monthNames => 'January,February,March,April,May,June,July,August,September,October,November,December';
+
+  @override
+  String get weekdayInitials => 'M,T,W,T,F,S,S';
+
+  @override
+  String get whereMeet => 'Where should we meet?';
+
+  @override
+  String whereMeetSub(String when) {
+    return 'Pickup · $when';
+  }
+
+  @override
+  String get airportPickupToggle => 'Airport pickup';
+
+  @override
+  String flightKnown(String airline, String flight) {
+    return '✓ $airline · flight $flight';
+  }
+
+  @override
+  String flightArrivalLabel(String date) {
+    return 'Flight arrival · $date';
+  }
+
+  @override
+  String localTime(String time) {
+    return '$time · local time';
+  }
+
+  @override
+  String meetAtArrivals(String terminal) {
+    return 'Meet at arrivals, $terminal';
+  }
+
+  @override
+  String meetAllow(String minutes) {
+    return 'We allow $minutes min after landing for your pickup.';
+  }
+
+  @override
+  String airportFeeBadge(String fee) {
+    return 'Airport pickup fee · $fee';
+  }
+
+  @override
+  String get savePickupReview => 'Save pickup & review';
+
+  @override
+  String get addressPickupNote => 'Your driver brings the car to this address at the pickup time.';
+
+  @override
+  String get getaway => 'Ready for your getaway?';
+
+  @override
+  String get getawaySub => 'Review your booking before paying.';
+
+  @override
+  String pickupDay(String day) {
+    return 'Pickup · $day';
+  }
+
+  @override
+  String returnDay(String day) {
+    return 'Return · $day';
+  }
+
+  @override
+  String timePlace(String time, String place) {
+    return '$time · $place';
+  }
+
+  @override
+  String airportFlightBadge(String terminal, String flight, String time) {
+    return 'Airport · $terminal · $flight · arrives $time';
+  }
+
+  @override
+  String daysTimesRate(String days, String rate) {
+    return '$days × $rate';
+  }
+
+  @override
+  String protectionLine(String days, String rate) {
+    return 'Extra protection · $days × $rate';
+  }
+
+  @override
+  String get airportPickupLine => 'Airport pickup';
+
+  @override
+  String get totalLine => 'Total to pay now';
+
+  @override
+  String depositHeldAtPickup(String amount) {
+    return '$amount refundable deposit held at pickup';
+  }
+
+  @override
+  String get cashAtPickup => 'Pay the driver in cash at pickup';
+
+  @override
+  String acceptTermsLong(String when) {
+    return 'I accept the rental terms. My licence is valid. Cancel free before $when.';
+  }
+
+  @override
+  String confirmPay(String amount) {
+    return 'Confirm & pay $amount';
+  }
+
+  @override
+  String get confirmCash => 'Confirm · pay cash at pickup';
+
+  @override
+  String get carBooked => 'Your car is booked';
+
+  @override
+  String carBookedSub(String ref) {
+    return 'Booking $ref · Details in your notifications';
+  }
+
+  @override
+  String paidBadge(String amount) {
+    return 'Paid · $amount';
+  }
+
+  @override
+  String paymentPendingBadge(String amount) {
+    return 'Payment pending · $amount';
+  }
+
+  @override
+  String cashBadge(String amount) {
+    return 'Cash at pickup · $amount';
+  }
+
+  @override
+  String get allSetAirport => 'All set for airport pickup';
+
+  @override
+  String get allSetAddress => 'All set for delivery';
+
+  @override
+  String flightSummary(String flight, String date, String time) {
+    return 'Flight $flight · $date · Arrival $time';
+  }
+
+  @override
+  String driverMeetsYou(String time) {
+    return 'Your driver will meet you at arrivals at $time.';
+  }
+
+  @override
+  String driverBringsCar(String place, String time) {
+    return 'Your driver brings the car to $place at $time.';
+  }
+
+  @override
+  String get bringDocuments => 'Bring your driving licence, photo ID and the phone used for your deposit.';
+
+  @override
+  String handoverPinBadge(String pin) {
+    return 'Your handover PIN · $pin';
+  }
+
+  @override
+  String get viewMyRental => 'View my rental';
+
+  @override
+  String get addToCalendar => 'Add to calendar';
+
+  @override
+  String calendarTitle(String car) {
+    return 'iyodriver rental · $car';
+  }
+
+  @override
+  String get keysAreYours => 'The keys are yours';
+
+  @override
+  String activeSince(String when) {
+    return 'Active rental · $when';
+  }
+
+  @override
+  String activeBadge(String ref) {
+    return 'Active · $ref';
+  }
+
+  @override
+  String carPlate(String car, String plate) {
+    return '$car · $plate';
+  }
+
+  @override
+  String returnBy(String day, String time) {
+    return 'Return by $day · $time';
+  }
+
+  @override
+  String remainingExtend(String left) {
+    return '$left remaining · Extend rental ›';
+  }
+
+  @override
+  String daysHours(String d, String h) {
+    return '$d days, $h hours';
+  }
+
+  @override
+  String hoursOnly(String h) {
+    return '$h hours';
+  }
+
+  @override
+  String driverTrips(String rating, String trips) {
+    return '★ $rating · $trips trips';
+  }
+
+  @override
+  String activeFootnote(String km) {
+    return '$km km included · Return with a full tank. Need roadside assistance? Call support.';
+  }
+
+  @override
+  String get viewReturnInstructions => 'View return instructions';
+
+  @override
+  String get manageRental => 'Manage your rental';
+
+  @override
+  String manageSub(String ref, String name) {
+    return 'Booking $ref · $name';
+  }
+
+  @override
+  String get confirmedHandoverPending => 'Confirmed · Handover pending';
+
+  @override
+  String pickupReturnTimes(String pickup, String ret, String days) {
+    return '$pickup pickup · $ret return · $days';
+  }
+
+  @override
+  String get pickupAndReturn => 'Pickup & return';
+
+  @override
+  String arrivalsMeetingPoint(String flight) {
+    return 'Arrivals meeting point · Flight $flight';
+  }
+
+  @override
+  String get deliveryAddressLine => 'Delivery address';
+
+  @override
+  String get handoverContact => 'Your handover contact · Message or call';
+
+  @override
+  String get handoverContactPending => 'Driver to be assigned';
+
+  @override
+  String get driverAssignedSoon => 'We will assign your driver before pickup.';
+
+  @override
+  String get extendRental => 'Extend rental';
+
+  @override
+  String extendRentalSub(String price) {
+    return 'Extra days from $price, subject to availability';
+  }
+
+  @override
+  String get changeBooking => 'Change booking';
+
+  @override
+  String get changeBookingSub => 'Update pickup, return or flight details';
+
+  @override
+  String get returnVehicle => 'Return vehicle';
+
+  @override
+  String get returnVehicleSub => 'View return location and inspection steps';
+
+  @override
+  String get cancelBookingSub => 'Free until pickup';
+
+  @override
+  String get bookingPaid => 'Booking paid';
+
+  @override
+  String get bookingDue => 'Booking total';
+
+  @override
+  String depositSeparate(String amount) {
+    return '$amount refundable deposit held separately. Any change is priced before you confirm.';
+  }
+
+  @override
+  String get viewPickupInstructions => 'View pickup instructions';
+
+  @override
+  String get returnInspection => 'Return inspection';
+
+  @override
+  String returnInspectionSub(String ref, String car, String plate) {
+    return '$ref · $car · $plate';
+  }
+
+  @override
+  String get inspectionComplete => 'Inspection complete';
+
+  @override
+  String get inspectionWaiting => 'Waiting for the driver';
+
+  @override
+  String returnedAt(String date, String time) {
+    return '$date · Returned at $time';
+  }
+
+  @override
+  String checkedWith(String name) {
+    return 'Checked with $name · Review before signing.';
+  }
+
+  @override
+  String get vehicleCondition => 'Vehicle condition';
+
+  @override
+  String get exteriorInterior => 'Exterior & interior';
+
+  @override
+  String photosAttached(String damage, String n) {
+    return '$damage · $n photos attached';
+  }
+
+  @override
+  String get fuelMileage => 'Fuel & mileage';
+
+  @override
+  String fuelMileageLine(String fuel, String used, String included) {
+    return '$fuel · $used km used of $included included';
+  }
+
+  @override
+  String get keysAccessories => 'Keys & accessories';
+
+  @override
+  String get allItemsReturned => 'All items returned';
+
+  @override
+  String get itemsMissing => 'Some items missing · see notes';
+
+  @override
+  String get depositSummary => 'Deposit summary';
+
+  @override
+  String get depositHeldLine => 'Deposit held';
+
+  @override
+  String get feesLine => 'Damage, fuel & late fees';
+
+  @override
+  String get depositReleaseLine => 'Deposit to release';
+
+  @override
+  String get releaseNote => 'Release is requested after you confirm. Your operator may take 1–3 working days to remove the hold.';
+
+  @override
+  String get reportBeforeConfirm => 'Something not right? Report an issue before confirming.';
+
+  @override
+  String get confirmReturnSummary => 'Confirm return summary';
+
+  @override
+  String get returnStepsTitle => 'How the return works';
+
+  @override
+  String returnStepsBody(String place, String when) {
+    return 'Bring the car to $place by $when. Your driver inspects it with you, then you confirm the summary here.';
+  }
+
+  @override
+  String get startReturnNow => 'I’m returning the car';
+
+  @override
+  String get fullTank => 'Full tank';
 }

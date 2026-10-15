@@ -30,9 +30,12 @@ class IyoText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final effective = variant.style.copyWith(color: color).merge(style);
     final widget = Text(
       variant.uppercase ? text.toUpperCase() : text,
-      style: variant.style.copyWith(color: color).merge(style),
+      style: effective,
+      // Lines keep the design height even when a glyph (★, ✓) falls back to another font.
+      strutStyle: StrutStyle.fromTextStyle(effective, forceStrutHeight: true),
       textAlign: align,
       maxLines: maxLines,
       overflow: maxLines == null ? null : TextOverflow.ellipsis,
@@ -178,7 +181,8 @@ class IyoBadge extends StatelessWidget {
             ),
             const SizedBox(width: 6),
           ],
-          IyoText(label, variant: IyoTextVariant.status, color: fg),
+          // Long statuses (flight details, French) ellipsize instead of overflowing.
+          Flexible(child: IyoText(label, variant: IyoTextVariant.status, color: fg, maxLines: 1)),
           if (trailingIcon != null) ...[
             const SizedBox(width: 6),
             IyoIcon(trailingIcon!, size: 12, color: fg),
@@ -201,14 +205,24 @@ String initialsOf(String name) {
 
 /// Portrait photo, or initials on the pale-yellow circle when there is no photo.
 class IyoAvatar extends StatelessWidget {
-  const IyoAvatar({super.key, required this.name, this.photoUrl, this.size = IyoSizes.avatar});
+  const IyoAvatar({
+    super.key,
+    required this.name,
+    this.photoUrl,
+    this.photo,
+    this.size = IyoSizes.avatar,
+  });
 
   final String name;
   final String? photoUrl;
+
+  /// Bundled photo (design samples); wins over [photoUrl].
+  final ImageProvider? photo;
   final double size;
 
   @override
   Widget build(BuildContext context) {
+    final image = photo ?? (photoUrl == null ? null : NetworkImage(photoUrl!));
     final initials = IyoText(
       initialsOf(name),
       variant: IyoTextVariant.avatar,
@@ -224,13 +238,10 @@ class IyoAvatar extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: photoUrl == null ? context.iyo.accentSoft : IyoPalette.surface,
-          image:
-              photoUrl == null
-                  ? null
-                  : DecorationImage(image: NetworkImage(photoUrl!), fit: BoxFit.cover),
+          color: image == null ? context.iyo.accentSoft : IyoPalette.surface,
+          image: image == null ? null : DecorationImage(image: image, fit: BoxFit.cover),
         ),
-        child: photoUrl == null ? initials : null,
+        child: image == null ? initials : null,
       ),
     );
   }

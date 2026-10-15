@@ -338,6 +338,7 @@ class IyoPersonInfoCard extends StatelessWidget {
     super.key,
     required this.name,
     this.photoUrl,
+    this.photo,
     this.meta,
     this.detail,
     this.onCall,
@@ -348,6 +349,7 @@ class IyoPersonInfoCard extends StatelessWidget {
 
   final String name;
   final String? photoUrl;
+  final ImageProvider? photo;
 
   /// Secondary line, e.g. "★ 4.9 · 1 248 trips".
   final String? meta;
@@ -363,7 +365,7 @@ class IyoPersonInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        IyoAvatar(name: name, photoUrl: photoUrl, size: IyoSizes.portrait),
+        IyoAvatar(name: name, photoUrl: photoUrl, photo: photo, size: IyoSizes.portrait),
         const SizedBox(width: IyoSpacing.md),
         Expanded(
           child: Column(

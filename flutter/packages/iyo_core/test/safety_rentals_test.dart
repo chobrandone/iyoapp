@@ -78,7 +78,7 @@ void main() {
     expect(booking.flightNumber, 'AF900');
     final ready = await _until(b, booking.id, (x) => x.handover != null);
     expect(ready.status, RentalBookingStatus.driverAssigned);
-    await b.confirmInspection(booking.id, InspectionType.handover);
+    // The driver confirms the handover with the rider's PIN (simulated in the demo).
     final active = await _until(b, booking.id, (x) => x.status == RentalBookingStatus.active);
     expect(active.depositStatus, DepositStatus.held);
     await expectLater(
@@ -147,8 +147,37 @@ void main() {
         onProgress: progress.add,
       );
       expect(progress.last, 1);
+      final wrong = await b.confirmHandoverPin(r.id, '0000');
+      expect(wrong.ok, isFalse);
+      expect(wrong.attemptsLeft, 4);
+      expect((await b.confirmHandoverPin(r.id, demoHandoverPin)).ok, isTrue);
       final active = await _until(b, r.id, (x) => x.status == RentalBookingStatus.active);
       expect(active.handover!.odometerKm, 41200);
     },
   );
+
+  test('earnings: week buckets, totals and payouts from the trip history', () async {
+    final b = await _signedIn(AppRole.driver);
+    addTearDown(b.dispose);
+    b.approveDemoDriver();
+    final now = DateTime.now();
+    final trips = await b.tripsSince(now.subtract(const Duration(days: 400)));
+    expect(trips, isNotEmpty);
+    final week = EarningsSummary.from(trips, EarningsPeriod.week, now);
+    expect(week.buckets, hasLength(7));
+    expect(week.buckets.fold(0, (a, c) => a + c), week.total);
+    expect(week.buckets[week.currentBucket], 0); // nothing yet today
+    final payouts = await b.payouts();
+    expect(payouts, hasLength(4));
+    final p = payouts.first;
+    final inPeriod =
+        trips
+            .where(
+              (t) =>
+                  !t.completedAt.isBefore(p.periodStart!) &&
+                  t.completedAt.isBefore(p.periodEnd!.add(const Duration(days: 1))),
+            )
+            .toList();
+    expect(PayoutBreakdown.of(inPeriod).net, p.amount);
+  });
 }

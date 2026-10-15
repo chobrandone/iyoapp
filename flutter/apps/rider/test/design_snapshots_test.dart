@@ -57,6 +57,8 @@ void main() {
 
     await tester.pumpWidget(ProviderScope(overrides: riderOverrides, child: const RiderApp()));
     for (final (path, _) in designScreens) {
+      // Taller Figma frames are rendered at their own height.
+      tester.view.physicalSize = Size(390, _frameHeights[path] ?? 844);
       routerOf(tester).go(path);
       await tester.pumpAndSettle();
       // Let Image.asset decode.
@@ -67,6 +69,8 @@ void main() {
     }
   });
 }
+
+const _frameHeights = {'/design/rent-manage': 982.0, '/design/rent-return': 908.0};
 
 GoRouter routerOf(WidgetTester tester) =>
     ProviderScope.containerOf(tester.element(find.byType(RiderApp))).read(routerProvider);

@@ -7,8 +7,21 @@ import '../theme/typography.dart';
 import 'primitives.dart';
 
 /// Shared screen layout from Figma: status bar → header row → page heading →
-/// content column (gap 14) → pinned actions (padding 8 / 16, gap 10).
+/// content column → pinned actions (padding 8 / 16, gap 10).
 /// The bottom tab bar (root screens only) comes from the app shell.
+/// App-wide [IyoScreen] spacing: the rider frames space blocks 16 apart, the driver frames 14.
+class IyoScreenDefaults extends InheritedWidget {
+  const IyoScreenDefaults({super.key, required this.blockGap, required super.child});
+
+  final double blockGap;
+
+  static double blockGapOf(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<IyoScreenDefaults>()?.blockGap ?? IyoSpacing.stack;
+
+  @override
+  bool updateShouldNotify(IyoScreenDefaults old) => old.blockGap != blockGap;
+}
+
 class IyoScreen extends StatelessWidget {
   const IyoScreen({
     super.key,
@@ -41,11 +54,12 @@ class IyoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gutter = padded ? IyoSpacing.screenPadding : 0.0;
+    final gap = IyoScreenDefaults.blockGapOf(context);
     final column = <Widget>[if (heading != null) heading!, ...children];
     final spaced = <Widget>[
       for (var i = 0; i < column.length; i++) ...[
-        // Heading → first block is 13 in the frames; blocks are 16 apart.
-        if (i > 0) SizedBox(height: i == 1 && heading != null ? 13 : IyoSpacing.stack),
+        // Heading → first block is 13 in the frames; blocks are [gap] apart.
+        if (i > 0) SizedBox(height: i == 1 && heading != null ? 13 : gap),
         column[i],
       ],
     ];

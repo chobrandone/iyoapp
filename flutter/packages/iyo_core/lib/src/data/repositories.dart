@@ -2,6 +2,7 @@
 //   * DemoBackend   — in memory, simulates the other app (no network, no Supabase project);
 //   * SupabaseBackend — the RPCs / Edge Functions in supabase/ (Phase 3).
 import '../supabase/db_enums.dart';
+import 'earnings_models.dart';
 import 'models.dart';
 import 'safety_rental_models.dart';
 
@@ -72,6 +73,8 @@ abstract interface class DriverRepository {
     required String licenceNumber,
     required String nationalIdNumber,
     required VehicleInfo vehicle,
+    String? legalName,
+    DateTime? dateOfBirth,
   });
   Future<void> uploadDocument(
     DocumentType type,
@@ -97,6 +100,10 @@ abstract interface class DriverRepository {
 
   Future<DriverDaySummary> today();
   Future<List<CompletedTrip>> recentTrips();
+
+  /// Completed trips since [from], newest first (earnings charts, payout breakdowns).
+  Future<List<CompletedTrip>> tripsSince(DateTime from);
+  Future<List<Payout>> payouts();
 }
 
 abstract interface class SafetyRepository {
@@ -147,10 +154,16 @@ abstract interface class RentalRepository {
   /// Rider tells the team the car is coming back (the assigned driver then inspects it).
   Future<void> requestReturn(String bookingId);
 
+  /// FCFA per day for the optional protection (app_config.rental_protection_daily).
+  Future<int> rentalProtectionDaily();
+
   /// Driver: rentals assigned to me (D15).
   Stream<List<RentalBooking>> watchAssignedRentals();
 
   /// Driver: handover / return checklist with photos (D16).
+  /// Driver: the rider's handover PIN confirms the handover after the checklist.
+  Future<PinCheck> confirmHandoverPin(String bookingId, String pin);
+
   Future<void> submitInspection(
     String bookingId,
     InspectionType type,

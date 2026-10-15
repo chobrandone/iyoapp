@@ -927,4 +927,878 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get menuReportIncident => 'Report an incident';
+
+  @override
+  String greetingMorning(String name) {
+    return 'Good morning, $name';
+  }
+
+  @override
+  String greetingAfternoon(String name) {
+    return 'Good afternoon, $name';
+  }
+
+  @override
+  String greetingEvening(String name) {
+    return 'Good evening, $name';
+  }
+
+  @override
+  String get homeOfflineSubtitle => 'You’re offline. Ready when you are.';
+
+  @override
+  String get todaysEarnings => 'Today’s earnings';
+
+  @override
+  String get completedTrips => 'Completed trips';
+
+  @override
+  String get offlineBadge => 'Offline · No ride requests';
+
+  @override
+  String nextRental(String when) {
+    return 'Next rental · $when';
+  }
+
+  @override
+  String nextRentalDetail(String place, String car, String days) {
+    return '$place · $car · $days';
+  }
+
+  @override
+  String daysCount(String n) {
+    return '$n days';
+  }
+
+  @override
+  String get oneDay => '1 day';
+
+  @override
+  String get homeOnlineTitle => 'You’re online';
+
+  @override
+  String get homeOnlineSubtitle => 'Looking for riders nearby…';
+
+  @override
+  String get busyAreaHeading => 'You’re in a busy area';
+
+  @override
+  String busyAreaText(String area) {
+    return '$area · Stay nearby for your next ride. Keep your phone mounted safely.';
+  }
+
+  @override
+  String todayAmount(String amount) {
+    return 'Today · $amount';
+  }
+
+  @override
+  String tripsOnline(String trips, String online) {
+    return '$trips · $online online';
+  }
+
+  @override
+  String tripsN(String n) {
+    return '$n trips';
+  }
+
+  @override
+  String get oneTrip => '1 trip';
+
+  @override
+  String get requestTitle => 'A new ride nearby';
+
+  @override
+  String requestSubtitle(String category, String seconds) {
+    return '$category · Accept within $seconds seconds';
+  }
+
+  @override
+  String get estEarningsBadge => 'Your est. earnings';
+
+  @override
+  String requestMeta(String pickup, String trip, String distance) {
+    return '$pickup min to pickup · Trip $trip min · $distance';
+  }
+
+  @override
+  String pickupSuffix(String area) {
+    return '$area · Pickup';
+  }
+
+  @override
+  String dropoffSuffix(String area) {
+    return '$area · Drop-off';
+  }
+
+  @override
+  String verifiedRider(String rating) {
+    return '★ $rating · Verified rider';
+  }
+
+  @override
+  String get askForPin => 'Ask for the pickup PIN at the car';
+
+  @override
+  String acceptRideSeconds(String seconds) {
+    return 'Accept ride · ${seconds}s';
+  }
+
+  @override
+  String get declineRequest => 'Decline request';
+
+  @override
+  String headToRider(String name) {
+    return 'Head to $name';
+  }
+
+  @override
+  String headToSubtitle(String place, String minutes, String distance) {
+    return '$place · $minutes min · $distance';
+  }
+
+  @override
+  String navContinue(String distance) {
+    return 'Continue for $distance';
+  }
+
+  @override
+  String navTowards(String place) {
+    return 'Towards $place';
+  }
+
+  @override
+  String navArriving(String place) {
+    return 'Arriving at $place';
+  }
+
+  @override
+  String get tileMessage => 'Message';
+
+  @override
+  String get tileShareTrip => 'Share trip';
+
+  @override
+  String get tileSafety => 'Safety';
+
+  @override
+  String pickupNote(String note) {
+    return 'Pickup note: “$note”';
+  }
+
+  @override
+  String get stopSafely => 'Please stop safely before contacting your rider.';
+
+  @override
+  String get arrivedAtPickup => 'I’ve arrived at pickup';
+
+  @override
+  String get atPickupTitle => 'You’re at the pickup';
+
+  @override
+  String atPickupSubtitle(String name) {
+    return '$name has been notified you’ve arrived.';
+  }
+
+  @override
+  String askPinLabel(String name) {
+    return 'Ask $name for the 4-digit pickup PIN';
+  }
+
+  @override
+  String get pinVerified => '✓ PIN verified · You can start the ride.';
+
+  @override
+  String confirmRiderNote(String place) {
+    return 'Confirm the rider’s name before departure. Destination: $place.';
+  }
+
+  @override
+  String driveTo(String place) {
+    return 'Drive to $place';
+  }
+
+  @override
+  String driveSubtitle(String time, String minutes, String distance) {
+    return 'Arrive $time · $minutes min · $distance left';
+  }
+
+  @override
+  String tripInProgress(String ref) {
+    return 'Trip in progress · $ref';
+  }
+
+  @override
+  String get endRide => 'End ride at destination';
+
+  @override
+  String get cancelThisRide => 'Cancel this ride';
+
+  @override
+  String navTurnRight(String distance) {
+    return 'Turn right in $distance';
+  }
+
+  @override
+  String navInto(String street) {
+    return 'Into $street';
+  }
+
+  @override
+  String navOn(String street) {
+    return 'On $street';
+  }
+
+  @override
+  String mainEntrance(String area) {
+    return '$area · Main entrance';
+  }
+
+  @override
+  String get earnTitle => 'Your earnings';
+
+  @override
+  String earnSubtitle(String range) {
+    return '$range · Net after service fees';
+  }
+
+  @override
+  String get periodWeek => 'Week';
+
+  @override
+  String get periodMonth => 'Month';
+
+  @override
+  String get periodYear => 'Year';
+
+  @override
+  String get weekSoFar => 'This week so far';
+
+  @override
+  String get monthSoFar => 'This month so far';
+
+  @override
+  String get yearSoFar => 'This year so far';
+
+  @override
+  String tripsDriving(String trips, String time) {
+    return '$trips · $time driving';
+  }
+
+  @override
+  String get nextPayout => 'Next scheduled payout';
+
+  @override
+  String nextPayoutDetail(String date, String account) {
+    return '$date · $account';
+  }
+
+  @override
+  String get payoutHistory => 'Payout history';
+
+  @override
+  String paidTo(String account) {
+    return 'Paid to $account';
+  }
+
+  @override
+  String payoutPending(String account) {
+    return 'Being sent to $account';
+  }
+
+  @override
+  String payoutFailed(String reason) {
+    return 'Failed · $reason';
+  }
+
+  @override
+  String get statusPaid => 'Paid';
+
+  @override
+  String get statusPending => 'Pending';
+
+  @override
+  String get statusFailed => 'Failed';
+
+  @override
+  String get viewPayoutDetails => 'View payout details';
+
+  @override
+  String get noPayoutsYet => 'No payouts yet. Earnings are paid weekly, every Monday.';
+
+  @override
+  String get weekdayLetters => 'M,T,W,T,F,S,S';
+
+  @override
+  String get monthLetters => 'J,F,M,A,M,J,J,A,S,O,N,D';
+
+  @override
+  String weekN(String n) {
+    return 'W$n';
+  }
+
+  @override
+  String get payoutTitle => 'Payout details';
+
+  @override
+  String payoutSubtitle(String ref, String range) {
+    return '$ref · $range';
+  }
+
+  @override
+  String sentOn(String date) {
+    return 'Sent on $date';
+  }
+
+  @override
+  String requestedOn(String date) {
+    return 'Requested on $date';
+  }
+
+  @override
+  String get payoutBreakdown => 'Payout breakdown';
+
+  @override
+  String rideFaresLine(String trips) {
+    return 'Ride fares · $trips';
+  }
+
+  @override
+  String get rentalHandoverEarnings => 'Rental handover earnings';
+
+  @override
+  String get tipsLine => 'Tips';
+
+  @override
+  String get serviceFeesLine => 'Service fees';
+
+  @override
+  String get netPayout => 'Net payout';
+
+  @override
+  String mobileMoneyTransfer(String name) {
+    return '$name · Mobile money transfer';
+  }
+
+  @override
+  String get transferTimeline => 'Transfer timeline';
+
+  @override
+  String get tlCreated => 'Payout created';
+
+  @override
+  String tlCreatedBody(String time) {
+    return '$time · Weekly earnings calculated';
+  }
+
+  @override
+  String get tlSent => 'Transfer sent';
+
+  @override
+  String tlSentBody(String time, String ref) {
+    return '$time · Reference $ref';
+  }
+
+  @override
+  String get tlDelivered => 'Transfer delivered';
+
+  @override
+  String tlDeliveredBody(String time) {
+    return '$time · Funds delivered';
+  }
+
+  @override
+  String get tlWaiting => 'Waiting for the operator';
+
+  @override
+  String payoutHelp(String ref) {
+    return 'Need help? Quote $ref when contacting support.';
+  }
+
+  @override
+  String get downloadStatement => 'Download statement';
+
+  @override
+  String statementTitle(String ref) {
+    return 'iyodriver payout $ref';
+  }
+
+  @override
+  String get bookingsHeading => 'Your bookings';
+
+  @override
+  String get bookingsSub => 'Upcoming handovers and completed trips.';
+
+  @override
+  String get segUpcoming => 'Upcoming';
+
+  @override
+  String get segHistory => 'History';
+
+  @override
+  String airportPickupConfirmed(String status) {
+    return 'Airport pickup · $status';
+  }
+
+  @override
+  String addressPickupStatus(String status) {
+    return 'Delivery · $status';
+  }
+
+  @override
+  String get statusConfirmedShort => 'Confirmed';
+
+  @override
+  String rentalWhenWhere(String when, String place) {
+    return '$when · $place';
+  }
+
+  @override
+  String returnWhenWhere(String when, String place) {
+    return 'Return: $when · $place';
+  }
+
+  @override
+  String get viewHandoverRequirements => 'View handover requirements';
+
+  @override
+  String get viewReturnSteps => 'View return inspection';
+
+  @override
+  String get todaysCompletedRides => 'Today’s completed rides';
+
+  @override
+  String get statusCompletedShort => 'Completed';
+
+  @override
+  String get bookingsFootnote => 'Ride amounts show net earnings after service fees. View all past bookings in History.';
+
+  @override
+  String get noUpcomingTitle => 'Nothing booked yet';
+
+  @override
+  String get noUpcomingBody => 'Rental handovers assigned to you appear here.';
+
+  @override
+  String get pastRentals => 'Rentals';
+
+  @override
+  String get pastRides => 'Rides';
+
+  @override
+  String perDayBadge(String price) {
+    return '$price / day';
+  }
+
+  @override
+  String carSpecs(String fuel, String gearbox, String seats) {
+    return '$fuel · $gearbox · $seats seats';
+  }
+
+  @override
+  String get fuelPetrol => 'Petrol';
+
+  @override
+  String get fuelDiesel => 'Diesel';
+
+  @override
+  String get fuelHybrid => 'Hybrid';
+
+  @override
+  String get fuelElectric => 'Electric';
+
+  @override
+  String get gearAutomatic => 'Automatic';
+
+  @override
+  String get gearManual => 'Manual';
+
+  @override
+  String get accountHeading => 'Driver account';
+
+  @override
+  String get accountSub => 'Your profile and road-ready documents.';
+
+  @override
+  String driverMeta(String rating, String trips, String ref) {
+    return '★ $rating · $trips · Driver $ref';
+  }
+
+  @override
+  String get verifiedDriver => 'Verified driver';
+
+  @override
+  String get yourVehicle => 'Your vehicle';
+
+  @override
+  String vehicleSpecs(String colour, String year, String seats) {
+    return '$colour · $year · $seats seats';
+  }
+
+  @override
+  String plateServices(String plate) {
+    return '$plate · Ride & rental';
+  }
+
+  @override
+  String categoryApproved(String category) {
+    return '$category · Approved';
+  }
+
+  @override
+  String categoryInReview(String category) {
+    return '$category · In review';
+  }
+
+  @override
+  String get documentsHeading => 'Documents';
+
+  @override
+  String docVerifiedExpires(String date) {
+    return 'Verified · Expires $date';
+  }
+
+  @override
+  String get docVerified => 'Verified';
+
+  @override
+  String docRenewBy(String date) {
+    return 'Renew by $date';
+  }
+
+  @override
+  String get docInReview => 'In review';
+
+  @override
+  String docNeedsAction(String reason) {
+    return 'Action needed · $reason';
+  }
+
+  @override
+  String get docNotUploaded => 'Not uploaded yet';
+
+  @override
+  String get payoutDetailsRow => 'Payout details';
+
+  @override
+  String get notSet => 'Not set';
+
+  @override
+  String get vehicleChangeNote => 'Changes to vehicle details may require a new review before you can go online.';
+
+  @override
+  String get editAccount => 'Edit account details';
+
+  @override
+  String get moreSection => 'More';
+
+  @override
+  String flowSetup(String step) {
+    return 'Driver setup · $step';
+  }
+
+  @override
+  String get setupTitle => 'Let’s get you road-ready';
+
+  @override
+  String get setupStep1 => 'Step 1 of 2 · Identity & vehicle';
+
+  @override
+  String get driverAccountBadge => 'Driver account';
+
+  @override
+  String get legalName => 'Legal name';
+
+  @override
+  String get dateOfBirth => 'Date of birth';
+
+  @override
+  String get dateOfBirthHint => 'DD/MM/YYYY';
+
+  @override
+  String get dobInvalid => 'Enter your date of birth (you must be 21 or older).';
+
+  @override
+  String get vehicleMakeModel => 'Vehicle make & model';
+
+  @override
+  String get vehicleMakeModelHint => 'Toyota Corolla · 2018 · Blanc';
+
+  @override
+  String get vehicleRegistration => 'Vehicle registration';
+
+  @override
+  String get vehicleCheckedHelper => 'Your vehicle details will be checked with your documents.';
+
+  @override
+  String get legalDetailsNote => 'Your legal details are used for verification. Riders will only see your first name and vehicle details.';
+
+  @override
+  String get saveAndContinue => 'Save & continue to documents';
+
+  @override
+  String get vehicleSheetTitle => 'Your vehicle';
+
+  @override
+  String get moreDetails => 'Also needed for verification';
+
+  @override
+  String get docsTitle => 'A quick safety check';
+
+  @override
+  String get setupStep2 => 'Step 2 of 2 · Upload your documents';
+
+  @override
+  String docsReady(String n, String total) {
+    return '$n of $total documents ready';
+  }
+
+  @override
+  String get groupIdentity => 'Photo ID & selfie';
+
+  @override
+  String get groupIdentityDone => 'Identity photos received';
+
+  @override
+  String get groupLicence => 'Driving licence';
+
+  @override
+  String get groupLicenceDone => 'Licence uploaded';
+
+  @override
+  String get groupVehicle => 'Vehicle papers';
+
+  @override
+  String get groupVehicleDone => 'Carte grise and visite technique uploaded';
+
+  @override
+  String get groupInsurance => 'Insurance certificate';
+
+  @override
+  String get groupInsuranceDone => 'Insurance uploaded';
+
+  @override
+  String get groupApproved => 'Approved';
+
+  @override
+  String get groupInReview => 'Uploaded · in review';
+
+  @override
+  String groupMissing(String n) {
+    return '$n to upload';
+  }
+
+  @override
+  String nextDocument(String doc) {
+    return 'Next: $doc';
+  }
+
+  @override
+  String get noFileYet => 'No photo yet';
+
+  @override
+  String get uploadTips => 'Tips for a successful upload';
+
+  @override
+  String get uploadTipsBody => 'Keep all four corners visible. Use good lighting and avoid glare. Accepted: JPG, PNG or PDF, up to 10 MB.';
+
+  @override
+  String get reviewTimeNote => 'After you submit, reviews usually take 1–2 working days. We’ll notify you when you’re approved.';
+
+  @override
+  String uploadDoc(String doc) {
+    return 'Upload $doc photo';
+  }
+
+  @override
+  String retakeDoc(String doc) {
+    return 'Retake $doc photo';
+  }
+
+  @override
+  String get identityLocked => 'Verified details are locked. Contact support to change them.';
+
+  @override
+  String flowDriverRental(String step) {
+    return 'Driver rental · $step';
+  }
+
+  @override
+  String get airportRentalPickup => 'Airport rental pickup';
+
+  @override
+  String get addressRentalPickup => 'Rental delivery';
+
+  @override
+  String get rentalReturnTitle => 'Rental return';
+
+  @override
+  String confirmedBooking(String ref) {
+    return 'Confirmed booking · $ref';
+  }
+
+  @override
+  String upcomingWhen(String when) {
+    return 'Upcoming · $when';
+  }
+
+  @override
+  String withRiderUntil(String when) {
+    return 'With rider · until $when';
+  }
+
+  @override
+  String carWithFuel(String car, String fuel) {
+    return '$car · $fuel';
+  }
+
+  @override
+  String rentalPeriodDays(String range, String days) {
+    return '$range · $days';
+  }
+
+  @override
+  String pickupOn(String day) {
+    return 'Pickup · $day';
+  }
+
+  @override
+  String returnOn(String day) {
+    return 'Return · $day';
+  }
+
+  @override
+  String timeAtPlace(String time, String place) {
+    return '$time · $place';
+  }
+
+  @override
+  String get airportRequirementsTitle => 'Airport pickup requirements';
+
+  @override
+  String flightLine(String flight, String route) {
+    return '$flight · $route';
+  }
+
+  @override
+  String landingLine(String when, String terminal) {
+    return 'Landing: $when · $terminal';
+  }
+
+  @override
+  String meetLine(String time, String name) {
+    return 'Meet at arrivals, $time. Hold an iyodriver name sign for $name.';
+  }
+
+  @override
+  String prepareCarNote(String minutes, String name) {
+    return 'Prepare a clean car with a full tank. Allow $minutes min after landing and contact $name if the flight is delayed.';
+  }
+
+  @override
+  String prepareCarNoteAddress(String name) {
+    return 'Prepare a clean car with a full tank. Call $name if you are running late.';
+  }
+
+  @override
+  String navigateToPlace(String place) {
+    return 'Navigate to $place';
+  }
+
+  @override
+  String get openHandover => 'Start the handover';
+
+  @override
+  String get askHandoverPin => 'Ask for the handover PIN at the car';
+
+  @override
+  String get smoothHandover => 'A smooth handover';
+
+  @override
+  String handoverSubtitle(String name, String place, String date) {
+    return '$name · $place · $date';
+  }
+
+  @override
+  String carPlateBadge(String car, String plate) {
+    return '$car · $plate';
+  }
+
+  @override
+  String get checkIdentity => 'Identity & licence checked';
+
+  @override
+  String get checkIdentityBody => 'Name matches the booking';
+
+  @override
+  String get checkIdentityTap => 'Tap once you have seen the ID and licence';
+
+  @override
+  String get checkDeposit => 'Deposit authorised';
+
+  @override
+  String checkDepositBody(String amount, String method) {
+    return '$amount hold · $method';
+  }
+
+  @override
+  String get checkPhotos => 'Vehicle condition photos';
+
+  @override
+  String checkPhotosDone(String n, String damage) {
+    return '$n photos saved · $damage';
+  }
+
+  @override
+  String get checkPhotosTodo => 'Take the 5 photos';
+
+  @override
+  String get noNewDamage => 'No new damage';
+
+  @override
+  String get damageNoted => 'Damage noted';
+
+  @override
+  String get checkFuel => 'Fuel & mileage recorded';
+
+  @override
+  String checkFuelDone(String fuel, String km) {
+    return '$fuel · $km km';
+  }
+
+  @override
+  String get checkFuelTodo => 'Recorded with the photos';
+
+  @override
+  String get fullTank => 'Full tank';
+
+  @override
+  String tankEighths(String n) {
+    return '$n/8 tank';
+  }
+
+  @override
+  String get customerHandoverPin => 'Customer handover PIN';
+
+  @override
+  String get handoverPinVerified => '✓ PIN verified · Rental agreement accepted';
+
+  @override
+  String handoverReturnNote(String when, String place, String name) {
+    return 'Return: $when · $place. Give $name the keys after confirming all checks.';
+  }
+
+  @override
+  String get confirmHandoverStart => 'Confirm handover & start rental';
+
+  @override
+  String handoverPinWrong(String n) {
+    return 'Wrong PIN · $n attempts left';
+  }
+
+  @override
+  String get handoverPinLocked => 'Too many wrong PINs. The safety team has been told; call support.';
+
+  @override
+  String get handoverDone => 'Handover complete. The rental has started.';
 }

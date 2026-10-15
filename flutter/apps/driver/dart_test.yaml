@@ -1,0 +1,3 @@
+tags:
+  snapshots:
+    skip: "Run with --tags snapshots --update-goldens"
