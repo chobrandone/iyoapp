@@ -68,7 +68,9 @@ class IyoCard extends StatelessWidget {
   }
 }
 
-enum IyoIconWellTone { surface, accent, white }
+/// Background of the 36 px icon well. `none` keeps the 36 px slot but draws only the icon
+/// (the home "Home / recent destination" card).
+enum IyoIconWellTone { surface, accent, white, none }
 
 /// Figma "Detail row": 36 px icon well, 13 px Medium title, 11 px secondary subtitle;
 /// padding 9, gap 12.
@@ -84,10 +86,23 @@ class IyoListRow extends StatelessWidget {
     this.showChevron,
     this.onPressed,
     this.destructive = false,
+    this.titleVariant = IyoTextVariant.rowTitle,
+    this.inlineChevron = false,
+    this.titleAside,
+    this.verticalPadding = 9,
   });
 
   final String title;
   final String? subtitle;
+
+  final IyoTextVariant titleVariant;
+
+  /// Small "›" right after the title text (saved places, notifications, wallet).
+  final bool inlineChevron;
+
+  /// Bold text right after the title, e.g. a fare "3 600 FCFA".
+  final String? titleAside;
+  final double verticalPadding;
 
   /// Icon shown in a 36 px rounded well on the left.
   final IconData? icon;
@@ -109,13 +124,14 @@ class IyoListRow extends StatelessWidget {
       IyoIconWellTone.surface => IyoPalette.surface,
       IyoIconWellTone.accent => context.iyo.accentSoft,
       IyoIconWellTone.white => IyoPalette.white,
+      IyoIconWellTone.none => Colors.transparent,
     };
-    final chevron = showChevron ?? onPressed != null;
+    final chevron = showChevron ?? (onPressed != null && !inlineChevron);
 
     final row = ConstrainedBox(
       constraints: const BoxConstraints(minHeight: IyoSizes.minTouchTarget),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 9),
+        padding: EdgeInsets.symmetric(vertical: verticalPadding),
         child: Row(
           children: [
             if (leading != null) ...[
@@ -138,9 +154,16 @@ class IyoListRow extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  IyoText(title, variant: IyoTextVariant.rowTitle, color: fg),
+                  _TitleLine(
+                    title: title,
+                    variant: titleVariant,
+                    color: fg,
+                    aside: titleAside,
+                    chevron: inlineChevron,
+                  ),
                   if (subtitle != null) ...[
-                    const SizedBox(height: IyoSpacing.xxs),
+                    // Card titles (14 Medium) sit 6 above their subtitle; list rows 2.
+                    SizedBox(height: titleVariant == IyoTextVariant.listTitle ? 6 : IyoSpacing.xxs),
                     IyoText(
                       subtitle!,
                       variant: IyoTextVariant.caption,
@@ -377,6 +400,41 @@ class IyoPersonInfoCard extends StatelessWidget {
             onPressed: onCall,
             iconSize: 19,
           ),
+      ],
+    );
+  }
+}
+
+/// Title text followed by an optional bold aside ("3 600 FCFA") and a small inline chevron.
+class _TitleLine extends StatelessWidget {
+  const _TitleLine({
+    required this.title,
+    required this.variant,
+    required this.color,
+    this.aside,
+    this.chevron = false,
+  });
+
+  final String title;
+  final IyoTextVariant variant;
+  final Color color;
+  final String? aside;
+  final bool chevron;
+
+  @override
+  Widget build(BuildContext context) {
+    if (aside == null && !chevron) return IyoText(title, variant: variant, color: color);
+    return Row(
+      children: [
+        Flexible(child: IyoText(title, variant: variant, color: color, maxLines: 1)),
+        if (aside != null) ...[
+          const SizedBox(width: 10),
+          IyoText(aside!, variant: IyoTextVariant.bodyStrong, color: color),
+        ],
+        if (chevron) ...[
+          const SizedBox(width: 8),
+          IyoIcon(LucideIcons.chevronRight, size: 12, color: color),
+        ],
       ],
     );
   }

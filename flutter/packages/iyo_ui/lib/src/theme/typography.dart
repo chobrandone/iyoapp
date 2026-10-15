@@ -40,6 +40,15 @@ enum IyoTextVariant {
   /// List row titles.
   rowTitle,
 
+  /// Titles inside notification / journey cards (14 Medium).
+  listTitle,
+
+  /// Receipt total, e.g. "2 500 FCFA" on the arrival screen.
+  amountHero,
+
+  /// Balance figures, e.g. wallet ride credit.
+  amount,
+
   /// Text field value.
   input,
 
@@ -88,6 +97,9 @@ enum IyoTextVariant {
     subheading => _poppins(_semibold, 14, 21),
     bodyStrong => _poppins(_semibold, 13, 19.5),
     rowTitle => _poppins(_medium, 13, 19.5),
+    listTitle => _poppins(_medium, 14, 21),
+    amountHero => _poppins(_semibold, 36, 44),
+    amount => _poppins(_semibold, 32, 40),
     input => _poppins(_regular, 13, 19.5),
     body => _poppins(_regular, 12, 18),
     caption => _poppins(_regular, 11, 16.5),
@@ -99,7 +111,7 @@ enum IyoTextVariant {
     label => _poppins(_medium, 9, 13.5, letterSpacing: 0.3),
     tab => _poppins(_regular, 9, 13.5),
     tabActive => _poppins(_semibold, 9, 13.5),
-    button => _poppins(_semibold, 14, 21),
+    button => _poppins(_semibold, 15, 22.5),
     buttonSmall => _poppins(_semibold, 12, 18),
     digit => _poppins(_medium, 23, 30),
     avatar => _poppins(_semibold, 19, 28.5),

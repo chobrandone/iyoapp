@@ -8,6 +8,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../theme/iyo_theme.dart';
 import '../theme/tokens.dart';
 import '../widgets/buttons.dart';
+import 'map_illustration.dart';
 import 'map_style.dart';
 import 'marker_glyphs.dart';
 
@@ -18,7 +19,7 @@ const LatLng doualaCenter = LatLng(4.0511, 9.7679);
 const LatLng yaoundeCenter = LatLng(3.848, 11.5021);
 
 /// The Maps SDK key is compiled in with `--dart-define-from-file`. Without it the Google Maps
-/// SDK would fail on Android, so [IyoMapCard] draws a schematic map instead.
+/// SDK would fail on Android, so [IyoMapCard] draws the Figma map illustration instead.
 const String _mapsKey = String.fromEnvironment('GOOGLE_MAPS_API_KEY');
 bool get googleMapsAvailable => _mapsKey.isNotEmpty;
 
@@ -52,6 +53,7 @@ class IyoMapCard extends StatefulWidget {
     this.onRecenter,
     this.recenterLabel = 'Recenter map',
     this.showsUserLocation = false,
+    this.labels = const IyoMapLabels(),
   });
 
   final LatLng center;
@@ -69,6 +71,9 @@ class IyoMapCard extends StatefulWidget {
   final VoidCallback? onRecenter;
   final String recenterLabel;
   final bool showsUserLocation;
+
+  /// Neighbourhood names on the fallback illustration.
+  final IyoMapLabels labels;
 
   @override
   State<IyoMapCard> createState() => _IyoMapCardState();
@@ -162,14 +167,14 @@ class _IyoMapCardState extends State<IyoMapCard> {
         },
       );
     } else {
-      map = CustomPaint(
-        painter: _SchematicMapPainter(
-          center: widget.center,
-          markers: widget.markers,
-          route: widget.route,
-          accent: accent,
-        ),
-        size: Size.infinite,
+      // UI-only builds: the Figma illustration, with each marker kind in its Figma slot.
+      map = IyoMapIllustration(
+        accent: accent,
+        labels: widget.labels,
+        route: widget.route.length >= 2 ? IyoMapSlots.route : const [],
+        pins: [
+          for (final m in widget.markers) IyoMapPin(m.kind, _slotFor(m.kind), heading: m.heading),
+        ],
       );
     }
 
@@ -219,101 +224,9 @@ LatLngBounds _bounds(List<LatLng> points) {
   return LatLngBounds(southwest: LatLng(south, west), northeast: LatLng(north, east));
 }
 
-/// Stand-in used when no Maps key is configured: warm-grey land, a faint street grid, the route
-/// and the real marker glyphs, all projected into the card.
-class _SchematicMapPainter extends CustomPainter {
-  _SchematicMapPainter({
-    required this.center,
-    required this.markers,
-    required this.route,
-    required this.accent,
-  });
-
-  final LatLng center;
-  final List<IyoMapMarker> markers;
-  final List<LatLng> route;
-  final Color accent;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    canvas.drawRect(Offset.zero & size, Paint()..color = IyoPalette.mapBackground);
-
-    // Faint street grid with a park and a river, echoing the Figma illustration.
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        Rect.fromLTWH(size.width * 0.08, size.height * 0.12, size.width * 0.22, size.height * 0.24),
-        const Radius.circular(10),
-      ),
-      Paint()..color = IyoPalette.mapPark,
-    );
-    final river =
-        Path()
-          ..moveTo(size.width * 0.72, -10)
-          ..quadraticBezierTo(
-            size.width * 0.6,
-            size.height * 0.5,
-            size.width * 0.9,
-            size.height + 10,
-          );
-    canvas.drawPath(
-      river,
-      Paint()
-        ..color = IyoPalette.mapWater
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 18,
-    );
-    final street =
-        Paint()
-          ..color = IyoPalette.white
-          ..strokeWidth = 6;
-    for (var x = size.width * 0.18; x < size.width; x += size.width * 0.27) {
-      canvas.drawLine(Offset(x, 0), Offset(x - 30, size.height), street);
-    }
-    for (var y = size.height * 0.28; y < size.height; y += size.height * 0.36) {
-      canvas.drawLine(Offset(0, y), Offset(size.width, y + 18), street);
-    }
-
-    final points = [center, for (final m in markers) m.position, ...route];
-    final bounds = _bounds(points);
-    // Pad so markers never touch the edges; keep a minimum span (~1 km) around a lone point.
-    final latSpan = math.max(bounds.northeast.latitude - bounds.southwest.latitude, 0.01);
-    final lngSpan = math.max(bounds.northeast.longitude - bounds.southwest.longitude, 0.01);
-    final midLat = (bounds.northeast.latitude + bounds.southwest.latitude) / 2;
-    final midLng = (bounds.northeast.longitude + bounds.southwest.longitude) / 2;
-    const pad = 36.0;
-    final scale = math.min((size.width - 2 * pad) / lngSpan, (size.height - 2 * pad) / latSpan);
-    Offset project(LatLng p) => Offset(
-      size.width / 2 + (p.longitude - midLng) * scale,
-      size.height / 2 - (p.latitude - midLat) * scale,
-    );
-
-    if (route.length >= 2) {
-      final path = Path()..moveTo(project(route.first).dx, project(route.first).dy);
-      for (final p in route.skip(1)) {
-        final o = project(p);
-        path.lineTo(o.dx, o.dy);
-      }
-      Paint line(Color c, double w) =>
-          Paint()
-            ..color = c
-            ..style = PaintingStyle.stroke
-            ..strokeWidth = w
-            ..strokeCap = StrokeCap.round
-            ..strokeJoin = StrokeJoin.round;
-      canvas.drawPath(path, line(IyoPalette.ink, 7));
-      canvas.drawPath(path, line(accent, 4));
-    }
-
-    for (final m in markers) {
-      final o = project(m.position) - m.kind.size.center(Offset.zero);
-      canvas.save();
-      canvas.translate(o.dx, o.dy);
-      paintMarker(canvas, m.kind, heading: m.heading);
-      canvas.restore();
-    }
-  }
-
-  @override
-  bool shouldRepaint(_SchematicMapPainter old) =>
-      old.center != center || old.markers != markers || old.route != route || old.accent != accent;
-}
+/// Where each marker kind sits on the Figma illustration.
+MapSlot _slotFor(IyoMarkerKind kind) => switch (kind) {
+  IyoMarkerKind.pickup => IyoMapSlots.pickup,
+  IyoMarkerKind.car => IyoMapSlots.car,
+  IyoMarkerKind.destination => IyoMapSlots.destination,
+};

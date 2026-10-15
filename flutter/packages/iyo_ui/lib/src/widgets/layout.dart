@@ -44,7 +44,8 @@ class IyoScreen extends StatelessWidget {
     final column = <Widget>[if (heading != null) heading!, ...children];
     final spaced = <Widget>[
       for (var i = 0; i < column.length; i++) ...[
-        if (i > 0) const SizedBox(height: IyoSpacing.stack),
+        // Heading → first block is 13 in the frames; blocks are 16 apart.
+        if (i > 0) SizedBox(height: i == 1 && heading != null ? 13 : IyoSpacing.stack),
         column[i],
       ],
     ];
@@ -83,7 +84,8 @@ class IyoScreen extends StatelessWidget {
                     IyoSpacing.screenPadding,
                     IyoSpacing.sm,
                     IyoSpacing.screenPadding,
-                    IyoSpacing.lg,
+                    // Frames: the pinned button ends 5 above the home-indicator inset.
+                    5,
                   ),
                   child: Column(
                     children: [
@@ -159,6 +161,7 @@ class IyoPageHeading extends StatelessWidget {
     this.hero = false,
     this.onBack,
     this.backLabel = 'Back',
+    this.compact,
   });
 
   final String title;
@@ -171,22 +174,32 @@ class IyoPageHeading extends StatelessWidget {
   final VoidCallback? onBack;
   final String backLabel;
 
+  /// 12 instead of 16 above the title. Defaults to true when [onBack] is set: the frames with
+  /// a back chevron (and the Activity / Notifications tabs) sit 4 px higher.
+  final bool? compact;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: IyoSpacing.lg),
+      padding: EdgeInsets.only(top: (compact ?? onBack != null) ? 12 : IyoSpacing.lg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               if (onBack != null)
-                Transform.translate(
-                  offset: const Offset(-8, 0),
-                  child: IyoPressable(
-                    onPressed: onBack,
-                    semanticLabel: backLabel,
-                    child: const IyoIcon(LucideIcons.chevronLeft, size: 26),
+                // Figma: a small bold "‹" with the title starting 19 px in.
+                IyoPressable(
+                  onPressed: onBack,
+                  semanticLabel: backLabel,
+                  minHitSize: 0,
+                  child: const SizedBox(
+                    width: 19,
+                    height: 36,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: IyoIcon(LucideIcons.chevronLeft600, size: 16),
+                    ),
                   ),
                 ),
               Expanded(

@@ -28,7 +28,9 @@ class IyoChatBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final maxWidth = MediaQuery.sizeOf(context).width * 0.82;
+    // Figma: bubbles are at most 280 wide (82% of the width on small phones).
+    final width = MediaQuery.sizeOf(context).width * 0.82;
+    final maxWidth = width < 280 ? width : 280.0;
     return Column(
       crossAxisAlignment: message.mine ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
@@ -144,7 +146,7 @@ class _IyoChatComposerState extends State<IyoChatComposer> {
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(minHeight: IyoSizes.buttonHeight),
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+      padding: const EdgeInsets.fromLTRB(16, 6, 14, 6),
       decoration: BoxDecoration(
         color: IyoPalette.surface,
         borderRadius: BorderRadius.circular(IyoRadii.md),
@@ -152,15 +154,18 @@ class _IyoChatComposerState extends State<IyoChatComposer> {
       child: Row(
         children: [
           if (widget.onAttach != null && widget.attachLabel != null) ...[
-            IyoIconButton(
-              icon: LucideIcons.plus,
-              tone: IyoIconButtonTone.ghost,
-              size: 24,
-              iconSize: 18,
-              semanticLabel: widget.attachLabel!,
+            // Figma: bare 18 px "+" 16 from the edge, placeholder 12 after it.
+            IyoPressable(
               onPressed: widget.onAttach,
+              semanticLabel: widget.attachLabel,
+              minHitSize: 0,
+              child: const SizedBox(
+                width: 18,
+                height: 40,
+                child: IyoIcon(LucideIcons.plus, size: 18),
+              ),
             ),
-            const SizedBox(width: IyoSpacing.sm),
+            const SizedBox(width: 12),
           ],
           Expanded(
             child: TextField(
@@ -188,8 +193,9 @@ class _IyoChatComposerState extends State<IyoChatComposer> {
             size: 32,
             iconSize: 18,
             semanticLabel: widget.sendLabel,
+            // Stays solid like the frame; sending empty text is a no-op.
             onPressed: _send,
-            disabled: !_canSend,
+            disabled: !widget.enabled,
           ),
         ],
       ),

@@ -137,13 +137,22 @@ enum IyoBadgeTone { accent, neutral, dark, success, danger }
 /// Status pill (Figma "Status"): 10 px Medium uppercase, radius 6, padding 10 × 5.
 /// Also exported as [IyoPill]: the spec calls status pills both Badge and Pill.
 class IyoBadge extends StatelessWidget {
-  const IyoBadge(this.label, {super.key, this.tone = IyoBadgeTone.accent, this.dot = false});
+  const IyoBadge(
+    this.label, {
+    super.key,
+    this.tone = IyoBadgeTone.accent,
+    this.dot = false,
+    this.trailingIcon,
+  });
 
   final String label;
   final IyoBadgeTone tone;
 
   /// Leading dot, e.g. "● ACCEPTING RIDE REQUESTS".
   final bool dot;
+
+  /// Small icon after the label, e.g. the chevron in "NOW · 1 RIDER ⌄".
+  final IconData? trailingIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -170,6 +179,10 @@ class IyoBadge extends StatelessWidget {
             const SizedBox(width: 6),
           ],
           IyoText(label, variant: IyoTextVariant.status, color: fg),
+          if (trailingIcon != null) ...[
+            const SizedBox(width: 6),
+            IyoIcon(trailingIcon!, size: 12, color: fg),
+          ],
         ],
       ),
     );

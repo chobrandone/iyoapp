@@ -21,6 +21,8 @@ class IyoButton extends StatelessWidget {
     this.loading = false,
     this.disabled = false,
     this.icon,
+    this.iconSize = IyoSizes.iconSmall,
+    this.mirrorIcon = false,
     this.fullWidth = true,
   });
 
@@ -33,6 +35,10 @@ class IyoButton extends StatelessWidget {
 
   /// Icon rendered before the label.
   final IconData? icon;
+
+  /// Defaults to 18; the home search button uses a tiny 11 px mirrored glass.
+  final double iconSize;
+  final bool mirrorIcon;
 
   /// Full width (default) or hug the content.
   final bool fullWidth;
@@ -60,7 +66,10 @@ class IyoButton extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 if (icon != null) ...[
-                  IyoIcon(icon!, size: IyoSizes.iconSmall, color: fg),
+                  Transform.flip(
+                    flipX: mirrorIcon,
+                    child: IyoIcon(icon!, size: iconSize, color: fg),
+                  ),
                   const SizedBox(width: IyoSpacing.sm),
                 ],
                 Flexible(

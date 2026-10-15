@@ -77,8 +77,8 @@ abstract final class IyoSpacing {
   static const double sm = 8;
   static const double md = 12;
 
-  /// Gap between stacked cards in a content column (Figma: 14).
-  static const double stack = 14;
+  /// Gap between stacked blocks in a content column (16 in the rider frames).
+  static const double stack = 16;
   static const double lg = 16;
   static const double xl = 20;
   static const double xxl = 24;
@@ -96,7 +96,7 @@ abstract final class IyoSizes {
   static const double minTouchTarget = 44;
 
   /// Header row height (wordmark + flow label).
-  static const double headerHeight = 44;
+  static const double headerHeight = 38;
   static const double icon = 22;
   static const double iconSmall = 18;
   static const double iconTab = 20;

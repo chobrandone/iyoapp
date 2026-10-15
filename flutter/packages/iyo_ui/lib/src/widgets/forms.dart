@@ -81,6 +81,11 @@ class IyoTextField extends StatefulWidget {
     this.leading,
     this.trailing,
     this.autofillHints,
+    this.highlighted = false,
+    this.obscureText = false,
+    this.revealLabel = 'Show password',
+    this.readOnly = false,
+    this.onTap,
   });
 
   final String? label;
@@ -101,6 +106,16 @@ class IyoTextField extends StatefulWidget {
   final Widget? trailing;
   final Iterable<String>? autofillHints;
 
+  /// Draw the 2 px accent border even when not focused (the field the flow is about,
+  /// e.g. Destination on "Plan your ride").
+  final bool highlighted;
+
+  /// Password entry with a show / hide toggle.
+  final bool obscureText;
+  final String revealLabel;
+  final bool readOnly;
+  final VoidCallback? onTap;
+
   @override
   State<IyoTextField> createState() => _IyoTextFieldState();
 }
@@ -108,6 +123,7 @@ class IyoTextField extends StatefulWidget {
 class _IyoTextFieldState extends State<IyoTextField> {
   final _focus = FocusNode();
   TextEditingController? _ownController;
+  bool _revealed = false;
 
   TextEditingController get _controller =>
       widget.controller ?? (_ownController ??= TextEditingController(text: widget.initialValue));
@@ -127,7 +143,7 @@ class _IyoTextFieldState extends State<IyoTextField> {
 
   @override
   Widget build(BuildContext context) {
-    final focused = _focus.hasFocus;
+    final focused = _focus.hasFocus || widget.highlighted;
     final hasError = widget.error != null;
     // Keep content from shifting when the border thickens.
     final inset = 13.0 - (focused || hasError ? 1 : 0);
@@ -159,10 +175,14 @@ class _IyoTextFieldState extends State<IyoTextField> {
                 controller: _controller,
                 focusNode: _focus,
                 enabled: widget.enabled,
+                readOnly: widget.readOnly,
+                onTap: widget.onTap,
+                obscureText: widget.obscureText && !_revealed,
+                obscuringCharacter: '•',
                 onChanged: widget.onChanged,
                 keyboardType: widget.multiline ? TextInputType.multiline : widget.keyboardType,
                 textInputAction: widget.textInputAction,
-                maxLines: widget.multiline ? null : 1,
+                maxLines: widget.multiline ? 5 : 1,
                 minLines: widget.multiline ? 3 : 1,
                 autofillHints: widget.autofillHints,
                 style: IyoTextVariant.input.style.copyWith(color: IyoPalette.ink),
@@ -177,11 +197,77 @@ class _IyoTextFieldState extends State<IyoTextField> {
                 ),
               ),
             ),
+            if (widget.obscureText)
+              IyoPressable(
+                onPressed: () => setState(() => _revealed = !_revealed),
+                semanticLabel: widget.revealLabel,
+                selected: _revealed,
+                child: IyoIcon(
+                  _revealed ? LucideIcons.eyeOff : LucideIcons.eye,
+                  size: IyoSizes.iconSmall,
+                ),
+              ),
             if (widget.trailing != null) ...[
               const SizedBox(width: IyoSpacing.sm),
               widget.trailing!,
             ],
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Square 14 px checkbox (ink when checked) with an optional inline label, as in the sign-up
+/// terms row and the trusted-contact picker.
+class IyoCheckbox extends StatelessWidget {
+  const IyoCheckbox({
+    super.key,
+    required this.value,
+    required this.onChanged,
+    this.label,
+    this.labelVariant = IyoTextVariant.body,
+  });
+
+  final bool value;
+  final ValueChanged<bool> onChanged;
+  final String? label;
+  final IyoTextVariant labelVariant;
+
+  @override
+  Widget build(BuildContext context) {
+    final box = AnimatedContainer(
+      duration: const Duration(milliseconds: 120),
+      width: 14,
+      height: 14,
+      decoration: BoxDecoration(
+        color: value ? IyoPalette.charcoal : IyoPalette.white,
+        borderRadius: BorderRadius.circular(3),
+        border: Border.all(color: value ? IyoPalette.charcoal : IyoPalette.muted, width: 1.2),
+      ),
+      child: value ? const Icon(LucideIcons.check, size: 10, color: IyoPalette.white) : null,
+    );
+    return Semantics(
+      checked: value,
+      label: label,
+      excludeSemantics: true,
+      child: IyoPressable(
+        onPressed: () => onChanged(!value),
+        isButton: false,
+        pressedOpacity: 0.8,
+        minHitSize: 0,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 6),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              box,
+              if (label != null) ...[
+                const SizedBox(width: 6),
+                Flexible(child: IyoText(label!, variant: labelVariant)),
+              ],
+            ],
+          ),
         ),
       ),
     );
@@ -680,7 +766,7 @@ class IyoSegmentedTabs<T> extends StatelessWidget {
                 final active = option.value == value;
                 final variant =
                     large
-                        ? IyoTextVariant.bodyStrong
+                        ? IyoTextVariant.subheading
                         : (active ? IyoTextVariant.buttonSmall : IyoTextVariant.body);
                 return IyoPressable(
                   onPressed: () => onChanged(option.value),
@@ -689,14 +775,15 @@ class IyoSegmentedTabs<T> extends StatelessWidget {
                   child: Container(
                     height: large ? IyoSizes.serviceOptionHeight : IyoSizes.buttonSmallHeight,
                     padding: EdgeInsets.symmetric(
-                      horizontal: large ? IyoSpacing.md : IyoSpacing.sm,
+                      // The service selector hugs its icon to the left edge (Figma: 2 px).
+                      horizontal: large ? 2 : IyoSpacing.sm,
                     ),
                     decoration: BoxDecoration(
                       color: active ? iyo.accent : IyoPalette.surface,
                       borderRadius: BorderRadius.circular(IyoRadii.md),
                     ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: large ? MainAxisAlignment.start : MainAxisAlignment.center,
                       children: [
                         if (option.icon != null) ...[
                           IyoIcon(option.icon!, color: active ? iyo.onAccent : IyoPalette.ink),

@@ -28,5 +28,553 @@
     }
   },
   "placeholderPrimary": "Get started",
-  "placeholderSecondary": "Switch to Français"
+  "placeholderSecondary": "Switch to Français",
+  "flowStart": "Start · {step}",
+  "@flowStart": {
+    "placeholders": {
+      "step": {
+        "type": "String"
+      }
+    }
+  },
+  "flowAccount": "Account · {step}",
+  "@flowAccount": {
+    "placeholders": {
+      "step": {
+        "type": "String"
+      }
+    }
+  },
+  "flowRider": "Rider · {step}",
+  "@flowRider": {
+    "placeholders": {
+      "step": {
+        "type": "String"
+      }
+    }
+  },
+  "flowRiderPlain": "Rider",
+  "flowSafety": "Rider · Safety",
+  "flowSafetySent": "Rider · Safety sent",
+  "tabHome": "Home",
+  "tabActivity": "Activity",
+  "tabSafety": "Safety",
+  "tabAccount": "Account",
+  "recenterMap": "Recenter map",
+  "ratingTrips": "★ {rating} · {trips} trips",
+  "@ratingTrips": {
+    "placeholders": {
+      "rating": {
+        "type": "String"
+      },
+      "trips": {
+        "type": "String"
+      }
+    }
+  },
+  "callPerson": "Call {name}",
+  "@callPerson": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "messagePerson": "Message {name}",
+  "@messagePerson": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tileMessage": "Message",
+  "tileShareTrip": "Share trip",
+  "tileSafety": "Safety",
+  "read": "Read",
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "writeMessage": "Write a message…",
+  "send": "Send",
+  "attach": "Attach",
+  "welcomeHeroTitle": "Your city.\nYour way.",
+  "welcomeBadge": "Rides + rentals",
+  "welcomeHeadline": "A little less waiting.\nA lot more going.",
+  "welcomeBody": "Book a ride or find a car for a few days. Wherever life takes you, go with iyodriver.",
+  "welcomeGetStarted": "Get started",
+  "welcomeHaveAccount": "Already have an account?",
+  "logIn": "Log in",
+  "signUpTitle": "Let's get acquainted",
+  "signUpSubtitle": "A few details, and you're ready to go.",
+  "signUpBadge": "Rider account",
+  "fieldFullName": "Full name",
+  "fieldEmail": "Email address",
+  "fieldEmailHelper": "Receipts and rental confirmations go here.",
+  "fieldMobile": "Mobile number",
+  "fieldPassword": "Password",
+  "passwordRule": "✓ 8+ characters, a number and a symbol",
+  "showPassword": "Show password",
+  "agreeTerms": "I agree to the Terms of Service and Privacy Policy.",
+  "alreadyRegistered": "Already registered?",
+  "createAndVerify": "Create account & verify",
+  "loginTitle": "Welcome back",
+  "loginSubtitle": "Log in with your mobile number. We'll text you a code.",
+  "loginSendCode": "Send code",
+  "noAccount": "New to iyodriver?",
+  "createAccount": "Create an account",
+  "verifyTitle": "Check your messages",
+  "verifySubtitle": "Enter the code sent to {phone}.",
+  "@verifySubtitle": {
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "otpLabel": "Verification code",
+  "resendIn": "Didn't get a code? Resend in {time}",
+  "@resendIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "resendNow": "Didn't get a code? Resend",
+  "wrongNumber": "Wrong number?",
+  "changeIt": "Change it",
+  "saferStartTitle": "A safer start",
+  "saferStartBody": "Verification helps keep every iyodriver journey connected to a real person.",
+  "verifyContinue": "Verify & continue",
+  "homeGreeting": "Where to, {name}?",
+  "@homeGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeYouAreAt": "You're at {place}",
+  "@homeYouAreAt": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "serviceRide": "Ride",
+  "serviceRent": "Rent a car",
+  "whereTo": "Where are you going?",
+  "savedHome": "Home",
+  "savedWork": "Work",
+  "recentDestination": "Recent destination · {area}",
+  "@recentDestination": {
+    "placeholders": {
+      "area": {
+        "type": "String"
+      }
+    }
+  },
+  "nearbyRides": "Nearby rides from {fare} · Pickup in about {minutes} min",
+  "@nearbyRides": {
+    "placeholders": {
+      "fare": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "planTitle": "Plan your ride",
+  "planSubtitle": "Confirm where we'll meet you.",
+  "fieldPickup": "Pickup",
+  "fieldDestination": "Destination",
+  "currentLocation": "✓ Current location",
+  "editPickup": "Edit pickup",
+  "whenWho": "Now · 1 rider",
+  "routeSummary": "{distance} · About {minutes} minutes in current traffic",
+  "@routeSummary": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "confirmRoute": "Confirm route",
+  "arrivingTitle": "{name} is on the way",
+  "@arrivingTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "arrivingSubtitle": "Arriving in {minutes} min · {distance} away",
+  "@arrivingSubtitle": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      },
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "pickupPin": "Your pickup PIN · {pin}",
+  "@pickupPin": {
+    "placeholders": {
+      "pin": {
+        "type": "String"
+      }
+    }
+  },
+  "pinCardBody": "Meet at {place}. Share this PIN with {name} before starting your ride.",
+  "@pinCardBody": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "checkPlate": "Check the number plate and driver before getting in.",
+  "standardFare": "Standard fare · {fare}",
+  "@standardFare": {
+    "placeholders": {
+      "fare": {
+        "type": "String"
+      }
+    }
+  },
+  "viewPickupDetails": "View pickup details",
+  "onWayTitle": "You're on your way",
+  "arriveAt": "{place} · Arrive {time}",
+  "@arriveAt": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "timeLeft": "{minutes} min left · {distance}",
+  "@timeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      },
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "tripFooter": "{fare} · {method} · Trip {trip}",
+  "@tripFooter": {
+    "placeholders": {
+      "fare": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      },
+      "trip": {
+        "type": "String"
+      }
+    }
+  },
+  "arrivedTitle": "You've arrived",
+  "arrivedSubtitle": "Thanks for riding with iyodriver.",
+  "paymentComplete": "✓ Payment complete",
+  "rideFare": "Ride fare",
+  "bookingFee": "Booking fee",
+  "receiptSent": "{method} · Receipt sent to your email",
+  "@receiptSent": {
+    "placeholders": {
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "howWasRide": "How was your ride?",
+  "starsLabel": "{count} of 5 stars",
+  "@starsLabel": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "noTip": "No tip",
+  "submitRating": "Submit rating & finish",
+  "chatWith": "Chat with {name}",
+  "@chatWith": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "chatSubtitle": "{ride} · Pickup at {place}",
+  "@chatSubtitle": {
+    "placeholders": {
+      "ride": {
+        "type": "String"
+      },
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "arrivingIn": "Arriving in {minutes} min",
+  "@arrivingIn": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyNote": "Today · Your phone number stays private.",
+  "imHere": "I'm here",
+  "callDriver": "Call driver",
+  "chatFooter": "Keep messages about your pickup. For urgent danger, call {number}.",
+  "@chatFooter": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "noDriversTitle": "No drivers nearby",
+  "noDriversSubtitle": "There's high demand around {area} right now.",
+  "@noDriversSubtitle": {
+    "placeholders": {
+      "area": {
+        "type": "String"
+      }
+    }
+  },
+  "tryAgainShortly": "Let's try again shortly",
+  "noMatchBody": "We couldn't match your request with an available driver. You haven't been charged.",
+  "toPlace": "To {place}",
+  "@toPlace": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "requestNotBooked": "Request not booked",
+  "noDriversHint": "Try a nearby pickup spot or request again in a few minutes. Availability can change quickly.",
+  "tryAgain": "Try again",
+  "changePickup": "Change pickup",
+  "notificationsTitle": "Notifications",
+  "notificationsSubtitle": "Updates on your rides and rentals.",
+  "filterAll": "All",
+  "filterUnread": "Unread",
+  "markAllRead": "Mark all as read",
+  "badgeNew": "New",
+  "badgeRentalUpdate": "Rental update",
+  "notificationsFooter": "Manage push and email updates in your account.",
+  "activityTitle": "Your activity",
+  "activitySubtitle": "All your journeys, in one place.",
+  "filterRides": "Rides",
+  "filterRentals": "Rentals",
+  "upcomingRental": "Upcoming rental",
+  "recentJourneys": "Recent journeys",
+  "perDay": "{rate} / day",
+  "@perDay": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "statusConfirmed": "Confirmed",
+  "statusCompleted": "Completed",
+  "activityFooter": "Select a journey to view its receipt or get help.",
+  "safetyTitle": "Your safety comes first",
+  "safetySubtitle": "Help is always within reach.",
+  "activeTrip": "Active trip · {trip}",
+  "@activeTrip": {
+    "placeholders": {
+      "trip": {
+        "type": "String"
+      }
+    }
+  },
+  "emergencyHelp": "Emergency help · Call {number}",
+  "@emergencyHelp": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "emergencyHelpBody": "For immediate danger or urgent medical help.",
+  "alertNotEmergency": "An alert does not automatically call emergency services.",
+  "shareLiveTrip": "Share live trip",
+  "shareLiveTripBody": "Let someone follow your journey.",
+  "trustedContactSelected": "Trusted contact · Selected",
+  "trustedContactHelper": "Live location, driver, vehicle and trip link will be sent.",
+  "messagePreview": "Message preview",
+  "defaultAlertMessage": "I need help. Please check on me and follow my live iyodriver trip.",
+  "currentLocationAt": "Current location: {place}",
+  "@currentLocationAt": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "sendAlert": "Send security alert",
+  "sendAlertFooter": "Sends your live location and trip details to your trusted contact and iyodriver safety team.",
+  "alertSentTitle": "Your alert has been sent",
+  "alertSentSubtitle": "You're not alone. Stay somewhere safe.",
+  "alertActive": "Security alert active",
+  "sentTodayAt": "Sent today at {time}",
+  "@sentTodayAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "contactNotified": "{name} notified",
+  "@contactNotified": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "contactNotifiedBody": "Message and live trip link delivered.",
+  "safetyTeamNotified": "iyodriver safety team notified",
+  "safetyTeamBody": "Your trip details and location were shared.",
+  "liveSharingOn": "Live location sharing is on",
+  "alertSentHint": "If you're in immediate danger, call {number}. Your alert has not contacted emergency services.",
+  "@alertSentHint": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "callEmergency": "Call emergency services · {number}",
+  "@callEmergency": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "returnToTrip": "Return to live trip",
+  "savedTitle": "Saved places",
+  "savedSubtitle": "Less typing. More getting there.",
+  "otherFavourites": "Other favourites",
+  "savedFooter": "Tap a place to edit its name or address. Saved places are only visible to you.",
+  "addPlace": "Add a place",
+  "tcTitle": "Trusted contacts",
+  "tcSubtitle": "Keep the people you trust in the loop.",
+  "shareJourney": "Share your journey",
+  "shareJourneyBody1": "Send a live trip link to your contacts from any active ride.",
+  "shareJourneyBody2": "Contacts can see your route, driver and estimated arrival when you choose to share.",
+  "yourContacts": "Your contacts · {count} of {max}",
+  "@yourContacts": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "statusVerified": "Verified",
+  "invitationPending": "Invitation pending",
+  "shareTripsWith": "Share trips with {name} · On",
+  "@shareTripsWith": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "resendInvitation": "Resend invitation",
+  "inControl": "You're in control",
+  "inControlBody": "Sharing starts only when you send a trip link. You can stop sharing or remove a contact at any time.",
+  "tcFooter": "Trusted contacts are not emergency responders. For immediate danger, call {number}.",
+  "@tcFooter": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "addTrustedContact": "Add trusted contact",
+  "walletTitle": "Wallet",
+  "walletSubtitle": "Simple, secure payments for every journey.",
+  "rideCredit": "Ride credit",
+  "creditApplied": "Applied automatically to your next ride.",
+  "paymentMethods": "Payment methods",
+  "badgeDefault": "Default",
+  "cashMethod": "Cash",
+  "cashBody": "Pay your driver at the end of the ride",
+  "walletNumber": "Wallet {number}",
+  "@walletNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "recentPayments": "Recent payments",
+  "walletFooter": "Rental deposits are temporary holds, not charges.",
+  "addPaymentMethod": "Add payment method",
+  "supportTitle": "iyodriver support",
+  "supportSubtitle": "Case {caseId} · {topic}",
+  "@supportSubtitle": {
+    "placeholders": {
+      "caseId": {
+        "type": "String"
+      },
+      "topic": {
+        "type": "String"
+      }
+    }
+  },
+  "supportAgent": "{name} · Support specialist",
+  "@supportAgent": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "repliesWithin": "Usually replies within a few minutes",
+  "conversationOpen": "Conversation open",
+  "supportFooter": "This chat is not an emergency service. If you are in immediate danger, call {number}.",
+  "@supportFooter": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "accountTitle": "Account",
+  "accountSubtitle": "Your profile, payments and safety settings.",
+  "menuNotifications": "Notifications",
+  "menuWallet": "Wallet",
+  "menuSavedPlaces": "Saved places",
+  "menuTrustedContacts": "Trusted contacts",
+  "menuSupport": "Help & support",
+  "menuLanguage": "Language",
+  "menuScreens": "All screens (dev)"
 }

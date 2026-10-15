@@ -5,6 +5,7 @@ export 'package:google_maps_flutter/google_maps_flutter.dart' show LatLng;
 export 'package:lucide_icons_flutter/lucide_icons.dart' show LucideIcons;
 
 export 'src/map/map_card.dart';
+export 'src/map/map_illustration.dart' show IyoMapLabels;
 export 'src/map/marker_glyphs.dart' show IyoMarkerKind;
 export 'src/theme/iyo_theme.dart';
 export 'src/theme/tokens.dart';
