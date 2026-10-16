@@ -12,6 +12,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "web", "--workspace", "@iyodriver/driver", "--", "--port", "8082"],
       "port": 8082
+    },
+    {
+      "name": "admin-web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--workspace", "@iyodriver/admin"],
+      "port": 8084
     }
   ]
 }

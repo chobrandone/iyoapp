@@ -265,6 +265,7 @@ export type Database = {
           phone: string;
           provider: string;
           provider_reference: string | null;
+          reference: string;
           requested_at: string;
           status: Database['public']['Enums']['payout_status'];
           updated_at: string;
@@ -282,6 +283,7 @@ export type Database = {
           phone: string;
           provider?: string;
           provider_reference?: string | null;
+          reference?: string;
           requested_at?: string;
           status?: Database['public']['Enums']['payout_status'];
           updated_at?: string;
@@ -299,6 +301,7 @@ export type Database = {
           phone?: string;
           provider?: string;
           provider_reference?: string | null;
+          reference?: string;
           requested_at?: string;
           status?: Database['public']['Enums']['payout_status'];
           updated_at?: string;
@@ -318,11 +321,13 @@ export type Database = {
           approved_at: string | null;
           city_code: string | null;
           created_at: string;
+          date_of_birth: string | null;
           licence_expiry: string | null;
           licence_number: string | null;
           national_id_number: string | null;
           payout_method: Database['public']['Enums']['payment_method_type'] | null;
           payout_phone: string | null;
+          reference: string;
           review_notes: string | null;
           reviewed_at: string | null;
           reviewed_by: string | null;
@@ -335,11 +340,13 @@ export type Database = {
           approved_at?: string | null;
           city_code?: string | null;
           created_at?: string;
+          date_of_birth?: string | null;
           licence_expiry?: string | null;
           licence_number?: string | null;
           national_id_number?: string | null;
           payout_method?: Database['public']['Enums']['payment_method_type'] | null;
           payout_phone?: string | null;
+          reference?: string;
           review_notes?: string | null;
           reviewed_at?: string | null;
           reviewed_by?: string | null;
@@ -352,11 +359,13 @@ export type Database = {
           approved_at?: string | null;
           city_code?: string | null;
           created_at?: string;
+          date_of_birth?: string | null;
           licence_expiry?: string | null;
           licence_number?: string | null;
           national_id_number?: string | null;
           payout_method?: Database['public']['Enums']['payment_method_type'] | null;
           payout_phone?: string | null;
+          reference?: string;
           review_notes?: string | null;
           reviewed_at?: string | null;
           reviewed_by?: string | null;
@@ -555,6 +564,7 @@ export type Database = {
         Row: {
           acknowledged_at: string | null;
           acknowledged_by: string | null;
+          assigned_to: string | null;
           category: string;
           created_at: string;
           description: string | null;
@@ -562,8 +572,10 @@ export type Database = {
           id: string;
           is_urgent: boolean;
           location: unknown | null;
+          reference: string;
           rental_booking_id: string | null;
           reported_by: string;
+          resolution_note: string | null;
           resolved_at: string | null;
           ride_id: string | null;
           rider_id: string | null;
@@ -574,6 +586,7 @@ export type Database = {
         Insert: {
           acknowledged_at?: string | null;
           acknowledged_by?: string | null;
+          assigned_to?: string | null;
           category: string;
           created_at?: string;
           description?: string | null;
@@ -581,8 +594,10 @@ export type Database = {
           id?: string;
           is_urgent?: boolean;
           location?: unknown | null;
+          reference?: string;
           rental_booking_id?: string | null;
           reported_by: string;
+          resolution_note?: string | null;
           resolved_at?: string | null;
           ride_id?: string | null;
           rider_id?: string | null;
@@ -593,6 +608,7 @@ export type Database = {
         Update: {
           acknowledged_at?: string | null;
           acknowledged_by?: string | null;
+          assigned_to?: string | null;
           category?: string;
           created_at?: string;
           description?: string | null;
@@ -600,8 +616,10 @@ export type Database = {
           id?: string;
           is_urgent?: boolean;
           location?: unknown | null;
+          reference?: string;
           rental_booking_id?: string | null;
           reported_by?: string;
+          resolution_note?: string | null;
           resolved_at?: string | null;
           ride_id?: string | null;
           rider_id?: string | null;
@@ -610,6 +628,13 @@ export type Database = {
           vehicle_id?: string | null;
         };
         Relationships: [
+          {
+            foreignKeyName: 'incident_reports_assigned_to_fkey';
+            columns: ['assigned_to'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
           {
             foreignKeyName: 'incident_reports_driver_id_fkey';
             columns: ['driver_id'];
@@ -797,6 +822,7 @@ export type Database = {
           provider: string;
           provider_reference: string | null;
           purpose: Database['public']['Enums']['payment_purpose'];
+          reference: string;
           rental_booking_id: string | null;
           ride_id: string | null;
           status: Database['public']['Enums']['payment_status'];
@@ -814,6 +840,7 @@ export type Database = {
           provider?: string;
           provider_reference?: string | null;
           purpose: Database['public']['Enums']['payment_purpose'];
+          reference?: string;
           rental_booking_id?: string | null;
           ride_id?: string | null;
           status?: Database['public']['Enums']['payment_status'];
@@ -831,6 +858,7 @@ export type Database = {
           provider?: string;
           provider_reference?: string | null;
           purpose?: Database['public']['Enums']['payment_purpose'];
+          reference?: string;
           rental_booking_id?: string | null;
           ride_id?: string | null;
           status?: Database['public']['Enums']['payment_status'];
@@ -991,6 +1019,57 @@ export type Database = {
             columns: ['ride_id'];
             isOneToOne: false;
             referencedRelation: 'rides';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      refunds: {
+        Row: {
+          amount: number;
+          created_at: string;
+          id: string;
+          payment_id: string;
+          reason: string;
+          reference: string;
+          requested_by: string | null;
+          status: string;
+          updated_at: string;
+        };
+        Insert: {
+          amount: number;
+          created_at?: string;
+          id?: string;
+          payment_id: string;
+          reason: string;
+          reference?: string;
+          requested_by?: string | null;
+          status?: string;
+          updated_at?: string;
+        };
+        Update: {
+          amount?: number;
+          created_at?: string;
+          id?: string;
+          payment_id?: string;
+          reason?: string;
+          reference?: string;
+          requested_by?: string | null;
+          status?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'refunds_payment_id_fkey';
+            columns: ['payment_id'];
+            isOneToOne: false;
+            referencedRelation: 'payments';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'refunds_requested_by_fkey';
+            columns: ['requested_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
             referencedColumns: ['id'];
           },
         ];
@@ -1252,16 +1331,19 @@ export type Database = {
           category: string;
           city_code: string;
           color: string | null;
+          compliance_due: string | null;
           created_at: string;
           daily_rate: number;
           deposit_amount: number;
           extra_km_rate: number;
           features: string[];
           fuel_type: Database['public']['Enums']['fuel_type'];
+          home_location: string | null;
           id: string;
           image_paths: string[];
           is_placeholder_pricing: boolean;
           km_per_day: number;
+          maintenance_note: string | null;
           make: string;
           model: string;
           plate: string;
@@ -1276,16 +1358,19 @@ export type Database = {
           category: string;
           city_code: string;
           color?: string | null;
+          compliance_due?: string | null;
           created_at?: string;
           daily_rate: number;
           deposit_amount: number;
           extra_km_rate?: number;
           features?: string[];
           fuel_type: Database['public']['Enums']['fuel_type'];
+          home_location?: string | null;
           id?: string;
           image_paths?: string[];
           is_placeholder_pricing?: boolean;
           km_per_day: number;
+          maintenance_note?: string | null;
           make: string;
           model: string;
           plate: string;
@@ -1300,16 +1385,19 @@ export type Database = {
           category?: string;
           city_code?: string;
           color?: string | null;
+          compliance_due?: string | null;
           created_at?: string;
           daily_rate?: number;
           deposit_amount?: number;
           extra_km_rate?: number;
           features?: string[];
           fuel_type?: Database['public']['Enums']['fuel_type'];
+          home_location?: string | null;
           id?: string;
           image_paths?: string[];
           is_placeholder_pricing?: boolean;
           km_per_day?: number;
+          maintenance_note?: string | null;
           make?: string;
           model?: string;
           plate?: string;
@@ -1543,6 +1631,7 @@ export type Database = {
           pickup_location: unknown;
           pickup_place_id: string | null;
           quote_id: string | null;
+          reference: string;
           requested_at: string;
           rider_id: string;
           route_polyline: string | null;
@@ -1584,6 +1673,7 @@ export type Database = {
           pickup_location: unknown;
           pickup_place_id?: string | null;
           quote_id?: string | null;
+          reference?: string;
           requested_at?: string;
           rider_id: string;
           route_polyline?: string | null;
@@ -1625,6 +1715,7 @@ export type Database = {
           pickup_location?: unknown;
           pickup_place_id?: string | null;
           quote_id?: string | null;
+          reference?: string;
           requested_at?: string;
           rider_id?: string;
           route_polyline?: string | null;
@@ -1708,6 +1799,7 @@ export type Database = {
         Row: {
           acknowledged_at: string | null;
           acknowledged_by: string | null;
+          assigned_to: string | null;
           contacts_notified_at: string | null;
           created_at: string;
           driver_id: string | null;
@@ -1716,6 +1808,8 @@ export type Database = {
           note: string | null;
           raised_by: string;
           reason: string | null;
+          reference: string;
+          resolution_note: string | null;
           resolved_at: string | null;
           ride_id: string | null;
           rider_id: string | null;
@@ -1726,6 +1820,7 @@ export type Database = {
         Insert: {
           acknowledged_at?: string | null;
           acknowledged_by?: string | null;
+          assigned_to?: string | null;
           contacts_notified_at?: string | null;
           created_at?: string;
           driver_id?: string | null;
@@ -1734,6 +1829,8 @@ export type Database = {
           note?: string | null;
           raised_by: string;
           reason?: string | null;
+          reference?: string;
+          resolution_note?: string | null;
           resolved_at?: string | null;
           ride_id?: string | null;
           rider_id?: string | null;
@@ -1744,6 +1841,7 @@ export type Database = {
         Update: {
           acknowledged_at?: string | null;
           acknowledged_by?: string | null;
+          assigned_to?: string | null;
           contacts_notified_at?: string | null;
           created_at?: string;
           driver_id?: string | null;
@@ -1752,6 +1850,8 @@ export type Database = {
           note?: string | null;
           raised_by?: string;
           reason?: string | null;
+          reference?: string;
+          resolution_note?: string | null;
           resolved_at?: string | null;
           ride_id?: string | null;
           rider_id?: string | null;
@@ -1760,6 +1860,13 @@ export type Database = {
           vehicle_id?: string | null;
         };
         Relationships: [
+          {
+            foreignKeyName: 'safety_alerts_assigned_to_fkey';
+            columns: ['assigned_to'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
           {
             foreignKeyName: 'safety_alerts_driver_id_fkey';
             columns: ['driver_id'];
@@ -1793,6 +1900,61 @@ export type Database = {
             columns: ['vehicle_id'];
             isOneToOne: false;
             referencedRelation: 'vehicles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      safety_case_events: {
+        Row: {
+          actor_id: string | null;
+          alert_id: string | null;
+          created_at: string;
+          id: string;
+          incident_id: string | null;
+          kind: string;
+          note: string | null;
+          status: Database['public']['Enums']['alert_status'] | null;
+        };
+        Insert: {
+          actor_id?: string | null;
+          alert_id?: string | null;
+          created_at?: string;
+          id?: string;
+          incident_id?: string | null;
+          kind: string;
+          note?: string | null;
+          status?: Database['public']['Enums']['alert_status'] | null;
+        };
+        Update: {
+          actor_id?: string | null;
+          alert_id?: string | null;
+          created_at?: string;
+          id?: string;
+          incident_id?: string | null;
+          kind?: string;
+          note?: string | null;
+          status?: Database['public']['Enums']['alert_status'] | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'safety_case_events_actor_id_fkey';
+            columns: ['actor_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'safety_case_events_alert_id_fkey';
+            columns: ['alert_id'];
+            isOneToOne: false;
+            referencedRelation: 'safety_alerts';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'safety_case_events_incident_id_fkey';
+            columns: ['incident_id'];
+            isOneToOne: false;
+            referencedRelation: 'incident_reports';
             referencedColumns: ['id'];
           },
         ];
@@ -2091,6 +2253,10 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      _require_admin: {
+        Args: never;
+        Returns: string;
+      };
       _transition_ride: {
         Args: {
           p_ride_id: string;
@@ -2100,6 +2266,75 @@ export type Database = {
           p_metadata?: Json;
         };
         Returns: Database['public']['Tables']['rides']['Row'];
+      };
+      admin_add_rental_vehicle: {
+        Args: {
+          p_city_code: string;
+          p_make: string;
+          p_model: string;
+          p_year: number;
+          p_category: string;
+          p_transmission: Database['public']['Enums']['transmission_type'];
+          p_seats: number;
+          p_fuel_type: Database['public']['Enums']['fuel_type'];
+          p_plate: string;
+          p_color: string;
+          p_daily_rate: number;
+          p_deposit_amount: number;
+          p_km_per_day: number;
+          p_airport_pickup?: boolean;
+          p_home_location?: string;
+        };
+        Returns: Database['public']['Tables']['rental_vehicles']['Row'];
+      };
+      admin_decide_driver: {
+        Args: {
+          p_driver_id: string;
+          p_approve: boolean;
+          p_note?: string;
+          p_reject_document?: Database['public']['Enums']['document_type'];
+        };
+        Returns: Database['public']['Tables']['driver_profiles']['Row'];
+      };
+      admin_overview: {
+        Args: {
+          p_city_code?: string;
+          p_now?: string;
+        };
+        Returns: Json;
+      };
+      admin_payments_summary: {
+        Args: {
+          p_from: string;
+          p_to: string;
+        };
+        Returns: Json;
+      };
+      admin_request_refund: {
+        Args: {
+          p_payment_id: string;
+          p_amount: number;
+          p_reason: string;
+        };
+        Returns: Database['public']['Tables']['refunds']['Row'];
+      };
+      admin_set_rental_vehicle_status: {
+        Args: {
+          p_vehicle_id: string;
+          p_status: Database['public']['Enums']['rental_vehicle_status'];
+          p_note?: string;
+        };
+        Returns: Database['public']['Tables']['rental_vehicles']['Row'];
+      };
+      admin_update_safety_case: {
+        Args: {
+          p_kind: string;
+          p_id: string;
+          p_assign_to?: string;
+          p_status?: Database['public']['Enums']['alert_status'];
+          p_note?: string;
+        };
+        Returns: Json;
       };
       assign_rental_driver: {
         Args: {
@@ -2349,6 +2584,14 @@ export type Database = {
           p_amount: number;
         };
         Returns: number;
+      };
+      safety_severity: {
+        Args: {
+          p_kind: string;
+          p_category: string;
+          p_urgent: boolean;
+        };
+        Returns: string;
       };
       server_transition_ride: {
         Args: {

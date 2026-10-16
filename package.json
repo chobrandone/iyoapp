@@ -9,6 +9,7 @@
   "scripts": {
     "rider": "npm run start --workspace @iyodriver/rider",
     "driver": "npm run start --workspace @iyodriver/driver",
+    "admin": "npm run dev --workspace @iyodriver/admin",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "lint": "eslint .",
     "format": "prettier --write .",

@@ -658,6 +658,154 @@ await test('rental handover PIN: rider reads it, driver confirms with it; protec
   assert.deepEqual(after, { status: 'active', deposit_status: 'held' });
 });
 
+await test('admin dashboard: only admins call admin RPCs; references and overview', async () => {
+  await rejects(U.aicha, `select public.admin_overview()`, [], /wrong_role/);
+  await rejects(
+    U.jeanPaul,
+    `select public.admin_payments_summary(current_date - 6, current_date)`,
+    [],
+    /wrong_role/,
+  );
+  const [o] = await as(U.admin, `select public.admin_overview() as o`);
+  for (const k of [
+    'rides_today',
+    'active_rentals',
+    'revenue_today',
+    'drivers_online',
+    'daily',
+    'open_alerts',
+  ]) {
+    assert.ok(k in o.o, k);
+  }
+  assert.equal(o.o.daily.length, 7);
+  const [r] = await as(U.admin, `select reference from public.rides limit 1`);
+  if (r) assert.match(r.reference, /^RD-\d+$/);
+  const [d] = await as(U.admin, `select reference from public.driver_profiles where user_id = $1`, [
+    U.jeanPaul,
+  ]);
+  assert.match(d.reference, /^DR-\d{3}$/);
+});
+
+await test('admin decides driver applications: a note is required to send one back', async () => {
+  await rejects(
+    U.jeanPaul,
+    `select public.admin_decide_driver($1, true)`,
+    [U.patrick],
+    /wrong_role/,
+  );
+  await rejects(
+    U.admin,
+    `select public.admin_decide_driver($1, false, '  ')`,
+    [U.patrick],
+    /note_required/,
+  );
+  const [back] = await as(
+    U.admin,
+    `select * from public.admin_decide_driver($1, false, 'Licence photo is blurry', 'driving_licence')`,
+    [U.patrick],
+  );
+  assert.equal(back.verification_status, 'action_needed');
+  assert.equal(back.review_notes, 'Licence photo is blurry');
+});
+
+await test('admin handles safety cases: assign, notes, resolve with a note', async () => {
+  const [ride] = await as(U.admin, `select id from public.rides where rider_id = $1 limit 1`, [
+    U.aicha,
+  ]);
+  const [alert] = await as(
+    U.aicha,
+    `select * from public.raise_safety_alert($1, 4.05, 9.70, 'rider_sos', 'I do not feel safe')`,
+    [ride ? ride.id : null],
+  );
+  assert.match(alert.reference, /^SA-\d{3}$/);
+  const [a] = await as(U.admin, `select public.admin_update_safety_case('alert', $1, $2) as r`, [
+    alert.id,
+    U.admin,
+  ]);
+  assert.equal(a.r.status, 'acknowledged');
+  await rejects(
+    U.admin,
+    `select public.admin_update_safety_case('alert', $1, p_status => 'resolved')`,
+    [alert.id],
+    /note_required/,
+  );
+  await as(
+    U.admin,
+    `select public.admin_update_safety_case('alert', $1, p_note => 'Called the rider back')`,
+    [alert.id],
+  );
+  const [done] = await as(
+    U.admin,
+    `select public.admin_update_safety_case('alert', $1, p_status => 'resolved', p_note => 'Rider safe at home') as r`,
+    [alert.id],
+  );
+  assert.equal(done.r.status, 'resolved');
+  const events = await as(
+    U.admin,
+    `select kind from public.safety_case_events where alert_id = $1 order by created_at`,
+    [alert.id],
+  );
+  assert.deepEqual(
+    events.map((e) => e.kind),
+    ['assigned', 'note', 'status'],
+  );
+  assert.equal((await as(U.aicha, `select id from public.safety_case_events`)).length, 0);
+});
+
+await test('admin refunds: succeeded payments only, never more than paid', async () => {
+  const [p] = await as(
+    U.admin,
+    `select id, amount from public.payments order by created_at limit 1`,
+  );
+  await as('service', `update public.payments set status = 'pending' where id = $1`, [p.id]);
+  await rejects(
+    U.admin,
+    `select public.admin_request_refund($1, 100, 'Duplicate charge')`,
+    [p.id],
+    /payment_not_refundable/,
+  );
+  await as(
+    'service',
+    `update public.payments set status = 'succeeded', confirmed_at = now() where id = $1`,
+    [p.id],
+  );
+  await rejects(
+    U.admin,
+    `select public.admin_request_refund($1, $2, 'Duplicate charge')`,
+    [p.id, p.amount + 1],
+    /invalid_refund_amount/,
+  );
+  const [rf] = await as(
+    U.admin,
+    `select * from public.admin_request_refund($1, 100, 'Duplicate charge')`,
+    [p.id],
+  );
+  assert.match(rf.reference, /^RF-\d{4}$/);
+  assert.equal(rf.status, 'requested');
+  const [s] = await as(
+    U.admin,
+    `select public.admin_payments_summary(current_date - 6, current_date) as s`,
+  );
+  assert.ok(s.s.refunds_processing >= 100);
+  assert.equal(s.s.daily.length, 7);
+});
+
+await test('admin fleet: add a car, plates are unique, maintenance needs the status', async () => {
+  const add = `select * from public.admin_add_rental_vehicle('douala', 'Kia', 'Sportage', 2024::smallint, 'suv',
+     'automatic', 5::smallint, 'petrol', 'LT 990 KS', 'Gris', 40000, 150000, 200, true, 'Hub Akwa')`;
+  await rejects(U.aicha, add, [], /wrong_role/);
+  const [v] = await as(U.admin, add);
+  assert.equal(v.home_location, 'Hub Akwa');
+  await rejects(U.admin, add, [], /plate_taken/);
+  const [m] = await as(
+    U.admin,
+    `select * from public.admin_set_rental_vehicle_status($1, 'maintenance', 'Tyre replacement')`,
+    [v.id],
+  );
+  assert.equal(m.status, 'maintenance');
+  assert.equal(m.maintenance_note, 'Tyre replacement');
+});
+
 await test('trusted contacts are capped at 5', async () => {
   for (let i = 0; i < 4; i += 1) {
     await as(
