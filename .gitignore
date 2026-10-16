@@ -29,3 +29,6 @@ supabase/.temp/
 .DS_Store
 npm-debug.*
 yarn-error.*
+
+# Built APKs to share (not source)
+releases/
