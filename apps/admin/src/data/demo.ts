@@ -21,6 +21,7 @@ import {
   type PaymentMethod,
   type PaymentStatus,
   type PaymentsSummary,
+  type Place,
   type RentalBookingStatus,
   type RentalVehicleStatus,
   type ReviewStatus,
@@ -29,6 +30,7 @@ import {
   type TimelineEntry,
   type TransactionKind,
 } from './models';
+import { searchOsmPlaces } from './geocode';
 import type { AdminRepository } from './repository';
 import { addDays, doualaDay } from './time';
 
@@ -816,5 +818,27 @@ export class DemoAdminBackend implements AdminRepository {
       tone: 'neutral',
       refundable: false,
     });
+  }
+
+  // -------------------------------------------------------------------------
+  // Places and live updates
+  // -------------------------------------------------------------------------
+
+  /** Douala areas from the dataset first (works offline), then OpenStreetMap. */
+  async searchPlaces(query: string): Promise<Place[]> {
+    const q = query.trim().toLowerCase();
+    const local = Object.entries(COORDS)
+      .filter(([area]) => area.toLowerCase().includes(q))
+      .map(([area, location]) => ({ name: area, address: `${area}, Douala`, location }));
+    if (local.length) return local;
+    try {
+      return await searchOsmPlaces(query, 'fr');
+    } catch {
+      return [];
+    }
+  }
+
+  subscribe() {
+    return () => {};
   }
 }

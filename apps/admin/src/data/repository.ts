@@ -12,6 +12,7 @@ import type {
   LiveDriver,
   NewRentalVehicle,
   PaymentsSummary,
+  Place,
   RentalVehicleStatus,
   SafetyCase,
 } from './models';
@@ -55,4 +56,15 @@ export interface AdminRepository {
   paymentsSummary(from: Date, to: Date): Promise<PaymentsSummary>;
   transactions(): Promise<AdminTransaction[]>;
   requestRefund(paymentId: string, amount: number, reason: string): Promise<void>;
+
+  /** Places matching [query] in Cameroon, best first (for moving the map). */
+  searchPlaces(query: string): Promise<Place[]>;
+
+  /**
+   * Calls [onChange] when the rider or driver apps change shared data (realtime), so the
+   * dashboard refreshes without a reload. Returns an unsubscribe. The demo has no other apps.
+   */
+  subscribe(onChange: (topic: ChangeTopic) => void): () => void;
 }
+
+export type ChangeTopic = 'rides' | 'drivers' | 'rentals' | 'fleet' | 'safety' | 'payments';

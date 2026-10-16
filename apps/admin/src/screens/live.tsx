@@ -1,10 +1,11 @@
 // Admin · Live operations map (Figma 2021:3074).
-import { useState } from 'react';
+import { MapPin, X } from 'lucide-react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router';
+import { Link, useNavigate, useSearchParams } from 'react-router';
 
-import { isActiveRide, type AdminRide, type LiveDriverState } from '@/data/models';
-import { useLiveDrivers, useNow, useRides } from '@/data/queries';
+import { isActiveRide, type AdminRide, type LiveDriverState, type Place } from '@/data/models';
+import { useLiveDrivers, useNow, useRepo, useRides } from '@/data/queries';
 import { areaOf } from '@/data/time';
 import { count, timeSeconds } from '@/ui/format';
 import {
@@ -25,7 +26,9 @@ import { groupLabel, rideGroup, rideStatusLabel, type RideGroup } from './labels
 
 export default function LiveScreen() {
   const rides = useRides();
-  return <Async query={rides}>{(all) => <LiveBody all={all} />}</Async>;
+  // A new header search starts a fresh search here.
+  const [params] = useSearchParams();
+  return <Async query={rides}>{(all) => <LiveBody key={params.get('q') ?? ''} all={all} />}</Async>;
 }
 
 function LiveBody({ all }: { all: AdminRide[] }) {
@@ -33,12 +36,18 @@ function LiveBody({ all }: { all: AdminRide[] }) {
   const now = useNow();
   const navigate = useNavigate();
   const drivers = useLiveDrivers();
-  const [query, setQuery] = useState('');
+  const repo = useRepo();
+  const [params] = useSearchParams();
+  const [query, setQuery] = useState(params.get('q') ?? '');
+  const [places, setPlaces] = useState<Place[]>([]);
+  const [place, setPlace] = useState<Place>();
+  const [lookup, setLookup] = useState<'idle' | 'searching' | 'none'>('idle');
+  const searched = useRef<string>('');
   const [group, setGroup] = useState<RideGroup | ''>('');
   const [state, setState] = useState<LiveDriverState | ''>('');
   const [selectedId, setSelectedId] = useState<string>();
 
-  const q = query.trim().toLowerCase();
+  const q = place || lookup !== 'idle' ? '' : query.trim().toLowerCase();
   const active = all
     .filter(
       (r) =>
@@ -53,6 +62,53 @@ function LiveBody({ all }: { all: AdminRide[] }) {
     0,
     5,
   );
+  // A search that matches no active trip is treated as a place: the map moves there.
+  const findPlace = async (text: string) => {
+    const term = text.trim();
+    if (term.length < 2 || searched.current === term) return;
+    searched.current = term;
+    setLookup('searching');
+    try {
+      const found = (await repo.searchPlaces(term)).filter((p) => p.location);
+      if (searched.current !== term) return;
+      setPlaces(found);
+      setPlace(found[0]);
+      setLookup(found.length ? 'idle' : 'none');
+    } catch {
+      setLookup('none');
+    }
+  };
+  const tripMatches = (text: string) => {
+    const s = text.trim().toLowerCase();
+    return all.some(
+      (r) =>
+        isActiveRide(r) &&
+        [r.reference, r.riderName, r.driverName].some((x) => x?.toLowerCase().includes(s)),
+    );
+  };
+  const submit = (e: FormEvent) => {
+    e.preventDefault();
+    if (query.trim() && !tripMatches(query)) {
+      searched.current = '';
+      void findPlace(query);
+    }
+  };
+  const clearPlace = () => {
+    setPlace(undefined);
+    setPlaces([]);
+    setLookup('idle');
+    setQuery('');
+    searched.current = '';
+  };
+  // Arriving from the header search with ?q=…
+  useEffect(() => {
+    const initial = params.get('q');
+    if (!initial || tripMatches(initial)) return;
+    const id = setTimeout(() => void findPlace(initial));
+    return () => clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const live = drivers.data ?? [];
   const n = (s: LiveDriverState) => live.filter((d) => d.state === s).length;
 
@@ -95,7 +151,21 @@ function LiveBody({ all }: { all: AdminRide[] }) {
         }
       />
       <Toolbar>
-        <SearchBox label={t('findTrip')} value={query} onChange={setQuery} />
+        <form role="search" onSubmit={submit} className="flex min-w-0 flex-1">
+          <SearchBox
+            label={t('findTripOrPlace')}
+            value={query}
+            onChange={(v) => {
+              setQuery(v);
+              if (place || lookup !== 'idle') {
+                setPlace(undefined);
+                setPlaces([]);
+                setLookup('idle');
+                searched.current = '';
+              }
+            }}
+          />
+        </form>
         <Select
           label={t('cityField')}
           value="DLA"
@@ -127,9 +197,61 @@ function LiveBody({ all }: { all: AdminRide[] }) {
           ]}
         />
       </Toolbar>
+      {(place || lookup !== 'idle') && (
+        <div role="status" className="-mt-2 flex flex-wrap items-center gap-2 text-[12px]">
+          {lookup === 'searching' && <span className="text-sub">{t('searchingPlaces')}</span>}
+          {lookup === 'none' && (
+            <>
+              <span className="text-sub">{t('placeNotFound', { q: query.trim() })}</span>
+              <Link
+                to={`/rides?q=${encodeURIComponent(query.trim())}`}
+                className="font-medium hover:underline"
+              >
+                {t('searchRidesFor', { q: query.trim() })}
+              </Link>
+            </>
+          )}
+          {place && lookup === 'idle' && (
+            <>
+              <MapPin size={14} aria-hidden />
+              <span className="font-medium">{t('placeShowing', { name: place.name })}</span>
+              <span className="truncate text-sub">{place.address}</span>
+              {places.length > 1 && (
+                <span className="flex flex-wrap gap-1.5" aria-label={t('otherPlaces')}>
+                  {places
+                    .filter((p) => p !== place)
+                    .map((p) => (
+                      <button
+                        key={p.address}
+                        type="button"
+                        onClick={() => setPlace(p)}
+                        className="cursor-pointer rounded-md bg-white px-2 py-0.5 text-[11px] hover:bg-canvas"
+                      >
+                        {p.name}
+                      </button>
+                    ))}
+                </span>
+              )}
+              <button
+                type="button"
+                onClick={clearPlace}
+                className="inline-flex cursor-pointer items-center gap-1 rounded-md px-1.5 text-[11px] text-sub hover:text-ink"
+              >
+                <X size={12} aria-hidden />
+                {t('clearPlace')}
+              </button>
+            </>
+          )}
+        </div>
+      )}
       <div className="flex items-start gap-5">
         <div className="flex min-w-0 flex-1 flex-col gap-3.5">
           <OpsMap
+            focus={
+              place?.location
+                ? { id: 'place', at: place.location, kind: 'place', label: place.name }
+                : undefined
+            }
             height={495}
             label={t('navLive')}
             markers={markers}

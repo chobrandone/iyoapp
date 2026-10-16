@@ -437,5 +437,13 @@
   "pageNotFound": "This page does not exist.",
   "backToOverview": "Back to overview",
   "mapUnavailable": "Map unavailable",
-  "refundAmountInvalid": "Enter an amount between 1 and {{max}} FCFA."
+  "refundAmountInvalid": "Enter an amount between 1 and {{max}} FCFA.",
+  "findTripOrPlace": "Find driver, rider, trip ID or place",
+  "placeShowing": "Map centred on {{name}}",
+  "placeNotFound": "No active trip or place matches “{{q}}”.",
+  "searchRidesFor": "Search all rides for “{{q}}”",
+  "clearPlace": "Clear",
+  "searchingPlaces": "Searching places…",
+  "otherPlaces": "Other matches",
+  "searchEverythingPlaces": "Search trips, bookings, people or places"
 }

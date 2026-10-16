@@ -15,7 +15,7 @@ const bodySchema = z.object({
 });
 
 serve(['POST'], async (req) => {
-  const caller = await requireCaller(req, ['rider', 'driver']);
+  const caller = await requireCaller(req, ['rider', 'driver', 'admin']);
   const body = await readBody(req, bodySchema);
   await rateLimit(caller, 'places', 60);
   const suggestions = await placesAutocomplete(body);

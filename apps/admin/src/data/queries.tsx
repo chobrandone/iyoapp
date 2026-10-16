@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useToast } from '@/ui/toast';
 import { BackendError, type AdminProfile } from './models';
-import type { AdminRepository } from './repository';
+import type { AdminRepository, ChangeTopic } from './repository';
 import { addDays, doualaDay } from './time';
 
 // ---------------------------------------------------------------------------
@@ -41,6 +41,23 @@ export function DataProvider({
   children: ReactNode;
 }) {
   const [now, setNow] = useState(() => fixedNow ?? new Date());
+  const client = useQueryClient();
+  // Rider and driver apps write to the same project: refresh what they changed.
+  useEffect(
+    () =>
+      repo.subscribe((topic) => {
+        const affected: Record<ChangeTopic, (readonly unknown[])[]> = {
+          rides: [keys.rides, keys.live, keys.overview, ['ride']],
+          drivers: [keys.drivers, keys.overview],
+          rentals: [keys.rentals, keys.fleet, keys.overview],
+          fleet: [keys.fleet],
+          safety: [keys.cases, keys.rides, keys.overview],
+          payments: [keys.transactions, keys.payments, ['ride']],
+        };
+        for (const k of affected[topic]) void client.invalidateQueries({ queryKey: k });
+      }),
+    [repo, client],
+  );
   useEffect(() => {
     if (fixedNow) return;
     const id = setInterval(() => setNow(new Date()), 30_000);

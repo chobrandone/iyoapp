@@ -159,5 +159,24 @@ test('header search sends each reference to its section', () => {
   expect(searchTarget('DR-032')).toBe('/drivers?q=DR-032');
   expect(searchTarget('TX-8801')).toBe('/payments?q=TX-8801');
   expect(searchTarget('LT 211 RB')).toBe('/fleet?q=LT%20211%20RB');
-  expect(searchTarget('Aïcha')).toBe('/rides?q=A%C3%AFcha');
+  expect(searchTarget('RD-1042')).toBe('/rides?q=RD-1042');
+  expect(searchTarget('Akwa')).toBe('/live?q=Akwa');
+});
+
+test('searching a place on the live map centres the map there', async () => {
+  const { user } = start('/live');
+  const box = await screen.findByRole('searchbox', { name: 'Find driver, rider, trip ID or place' });
+  await user.type(box, 'Makepe{Enter}');
+  expect(await screen.findByText('Map centred on Makepe')).toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: 'Clear' }));
+  expect(screen.queryByText('Map centred on Makepe')).not.toBeInTheDocument();
+});
+
+test('a header search for a place opens the live map on it', async () => {
+  const { user } = start('/overview');
+  await user.type(
+    await screen.findByRole('searchbox', { name: 'Search trips, bookings, people or places' }),
+    'Bonapriso{Enter}',
+  );
+  expect(await screen.findByText('Map centred on Bonapriso')).toBeInTheDocument();
 });

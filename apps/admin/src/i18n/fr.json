@@ -437,5 +437,13 @@
   "pageNotFound": "Cette page n'existe pas.",
   "backToOverview": "Retour à la vue d'ensemble",
   "mapUnavailable": "Carte indisponible",
-  "refundAmountInvalid": "Saisissez un montant entre 1 et {{max}} FCFA."
+  "refundAmountInvalid": "Saisissez un montant entre 1 et {{max}} FCFA.",
+  "findTripOrPlace": "Chauffeur, client, course ou lieu",
+  "placeShowing": "Carte centrée sur {{name}}",
+  "placeNotFound": "Aucune course active ni aucun lieu ne correspond à « {{q}} ».",
+  "searchRidesFor": "Chercher « {{q}} » dans toutes les courses",
+  "clearPlace": "Effacer",
+  "searchingPlaces": "Recherche des lieux…",
+  "otherPlaces": "Autres résultats",
+  "searchEverythingPlaces": "Courses, réservations, personnes ou lieux"
 }

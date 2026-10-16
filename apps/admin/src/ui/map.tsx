@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 import type { GeoPoint } from '@/data/models';
 
-export type MarkerKind = 'car' | 'car_available' | 'car_pickup' | 'pickup' | 'dropoff';
+export type MarkerKind = 'car' | 'car_available' | 'car_pickup' | 'pickup' | 'dropoff' | 'place';
 
 export interface MapMarker {
   id: string;
@@ -27,7 +27,12 @@ function markerElement(m: MapMarker): HTMLElement {
   const el = document.createElement(m.onClick ? 'button' : 'div');
   el.setAttribute('aria-label', m.label);
   el.title = m.label;
-  if (m.kind === 'pickup' || m.kind === 'dropoff') {
+  if (m.kind === 'place') {
+    // A pin whose tip sits on the point.
+    el.className = 'flex flex-col items-center -translate-y-1/2';
+    el.innerHTML =
+      '<svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="#191919" stroke="white" stroke-width="1.5" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3" fill="#f6c200" stroke="none"/></svg>';
+  } else if (m.kind === 'pickup' || m.kind === 'dropoff') {
     el.className =
       m.kind === 'pickup'
         ? 'flex size-9 items-center justify-center rounded-full bg-[#f6c200]/30'
@@ -61,6 +66,7 @@ export function OpsMap({
   route,
   label,
   zoom = 13,
+  focus,
 }: {
   height: number;
   markers: MapMarker[];
@@ -68,6 +74,8 @@ export function OpsMap({
   route?: [GeoPoint, GeoPoint];
   label: string;
   zoom?: number;
+  /** A searched place: pinned and centred instead of fitting all markers. */
+  focus?: MapMarker;
 }) {
   const { t } = useTranslation();
   const box = useRef<HTMLDivElement>(null);
@@ -77,12 +85,17 @@ export function OpsMap({
   const [failed, setFailed] = useState(false);
   const [ready, setReady] = useState(false);
 
-  const signature = JSON.stringify([markers.map((x) => [x.id, x.kind, x.at]), route]);
+  const shown = focus ? [...markers, focus] : markers;
+  const signature = JSON.stringify([shown.map((x) => [x.id, x.kind, x.at]), route]);
 
   const fit = () => {
     const m = map.current;
     const points = [...markers.map((x) => x.at), ...(route ?? [])];
     if (!m || !lib.current) return;
+    if (focus) {
+      m.flyTo({ center: [focus.at.lng, focus.at.lat], zoom: 15, duration: 800 });
+      return;
+    }
     if (points.length < 2) {
       m.jumpTo({ center: points[0] ?? DOUALA, zoom });
       return;
@@ -139,7 +152,7 @@ export function OpsMap({
     const maplibre = lib.current;
     if (!m || !maplibre || !ready) return;
     for (const p of placed.current) p.remove();
-    placed.current = markers.map((x) =>
+    placed.current = shown.map((x) =>
       new maplibre.Marker({ element: markerElement(x) }).setLngLat([x.at.lng, x.at.lat]).addTo(m),
     );
     const data = {

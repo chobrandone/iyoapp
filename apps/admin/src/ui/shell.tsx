@@ -50,7 +50,9 @@ export function searchTarget(q: string): string {
   if (/^DR-/i.test(s)) return `/drivers?q=${enc}`;
   if (/^(TX|RF|PO|DH)-/i.test(s)) return `/payments?q=${enc}`;
   if (/^LT\s?\d/i.test(s)) return `/fleet?q=${enc}`;
-  return `/rides?q=${enc}`;
+  if (/^RD-/i.test(s)) return `/rides?q=${enc}`;
+  // Names and places: active trips first, otherwise the live map moves to the place.
+  return `/live?q=${enc}`;
 }
 
 export function Shell({ admin }: { admin: AdminProfile }) {
@@ -192,7 +194,7 @@ function Header({ admin }: { admin: AdminProfile }) {
     <header className="flex h-[76px] shrink-0 items-center border-b border-line bg-white px-8">
       <form role="search" onSubmit={submit} className="relative w-[380px]">
         <label htmlFor="global-search" className="sr-only">
-          {t('searchEverything')}
+          {t('searchEverythingPlaces')}
         </label>
         <Search
           size={14}
@@ -204,7 +206,7 @@ function Header({ admin }: { admin: AdminProfile }) {
           type="search"
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder={t('searchEverything')}
+          placeholder={t('searchEverythingPlaces')}
           className="h-10 w-full rounded-[10px] bg-canvas pr-4 pl-10 text-[12px] placeholder:text-sub focus:outline-2 focus:outline-accent"
         />
       </form>

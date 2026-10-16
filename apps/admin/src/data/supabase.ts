@@ -27,7 +27,7 @@ import {
   type SafetyCase,
   type TransactionKind,
 } from './models';
-import type { AdminRepository } from './repository';
+import type { AdminRepository, ChangeTopic } from './repository';
 import { fromIsoDay, isoDay, sameDoualaDay } from './time';
 
 type Row = Record<string, unknown>;
@@ -747,5 +747,59 @@ export class SupabaseAdminBackend implements AdminRepository {
       p_amount: amount,
       p_reason: reason,
     });
+  }
+
+  // -------------------------------------------------------------------------
+  // Places (Google, through the same Edge Functions the rider app uses)
+  // -------------------------------------------------------------------------
+
+  async searchPlaces(query: string): Promise<Place[]> {
+    const input = query.trim();
+    if (input.length < 2) return [];
+    const sessionToken = crypto.randomUUID();
+    const { data, error } = await this.db.functions.invoke<{
+      suggestions: { placeId: string; primaryText: string; secondaryText?: string }[];
+    }>('places-autocomplete', {
+      body: { input, sessionToken, bias: { lat: 4.0511, lng: 9.7085 } },
+    });
+    if (error) throw toBackendError(error);
+    const top = data?.suggestions.slice(0, 3) ?? [];
+    const places = await Promise.all(
+      top.map(async (s) => {
+        const { data: d } = await this.db.functions.invoke<{
+          place: { name: string; address: string; location: { lat: number; lng: number } };
+        }>('place-details', { body: { placeId: s.placeId, sessionToken } });
+        return d?.place;
+      }),
+    );
+    return places.filter((p): p is NonNullable<typeof p> => Boolean(p?.location));
+  }
+
+  // -------------------------------------------------------------------------
+  // Live updates from the rider and driver apps (Supabase Realtime, RLS applies)
+  // -------------------------------------------------------------------------
+
+  subscribe(onChange: (topic: ChangeTopic) => void) {
+    const tables: Record<string, ChangeTopic> = {
+      rides: 'rides',
+      driver_locations: 'rides',
+      driver_profiles: 'drivers',
+      driver_documents: 'drivers',
+      rental_bookings: 'rentals',
+      rental_vehicles: 'fleet',
+      safety_alerts: 'safety',
+      incident_reports: 'safety',
+      safety_case_events: 'safety',
+      payments: 'payments',
+      refunds: 'payments',
+    };
+    let channel = this.db.channel('admin-dashboard');
+    for (const [table, topic] of Object.entries(tables)) {
+      channel = channel.on('postgres_changes', { event: '*', schema: 'public', table }, () =>
+        onChange(topic),
+      );
+    }
+    channel.subscribe();
+    return () => void this.db.removeChannel(channel);
   }
 }
