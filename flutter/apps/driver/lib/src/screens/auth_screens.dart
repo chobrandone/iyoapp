@@ -115,12 +115,12 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
-  String _phone = '';
+  ParsedPhone? _phone;
   String? _error;
   bool _sending = false;
 
   Future<void> _submit() async {
-    final e164 = toE164(_phone);
+    final e164 = (_phone?.isValid ?? false ? _phone!.e164 : null);
     if (e164 == null) {
       setState(() => _error = CommonLocalizations.of(context).validationPhoneInvalid);
       return;
@@ -151,12 +151,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         IyoButton(label: t.sendCode, loading: _sending, onPressed: _submit),
       ],
       children: [
-        IyoTextField(
+        IyoPhoneField(
           label: t.fieldMobile,
-          prefix: '+237',
-          placeholder: '6 77 88 99 00',
-          keyboardType: TextInputType.phone,
-          autofillHints: const [AutofillHints.telephoneNumber],
           error: _error,
           onChanged:
               (v) => setState(() {
@@ -181,14 +177,14 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   bool _agreed = true;
   bool _sending = false;
   String _name = '';
-  String _phone = '';
+  ParsedPhone? _phone;
   String? _nameError;
   String? _phoneError;
   String? _formError;
 
   Future<void> _submit() async {
     final common = CommonLocalizations.of(context);
-    final e164 = toE164(_phone);
+    final e164 = (_phone?.isValid ?? false ? _phone!.e164 : null);
     setState(() {
       _nameError = validateRequired(_name)?.message(common);
       _phoneError = e164 == null ? common.validationPhoneInvalid : null;
@@ -245,15 +241,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               autofillHints: const [AutofillHints.name],
             ),
             gap,
-            IyoTextField(
-              label: t.fieldMobile,
-              prefix: '+237',
-              placeholder: '6 77 88 99 00',
-              error: _phoneError,
-              onChanged: (v) => _phone = v,
-              keyboardType: TextInputType.phone,
-              autofillHints: const [AutofillHints.telephoneNumber],
-            ),
+            IyoPhoneField(label: t.fieldMobile, error: _phoneError, onChanged: (v) => _phone = v),
             const SizedBox(height: 10),
             IyoCheckbox(
               value: _agreed,

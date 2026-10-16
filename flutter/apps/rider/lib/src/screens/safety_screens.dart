@@ -659,7 +659,7 @@ class TrustedContactsScreen extends ConsumerWidget {
   }
 }
 
-/// Add a trusted contact: name, +237 mobile, optional relationship.
+/// Add a trusted contact: name, mobile (any African country), optional relationship.
 Future<void> showAddContactSheet(BuildContext context, WidgetRef ref) => showModalBottomSheet<void>(
   context: context,
   isScrollControlled: true,
@@ -677,14 +677,15 @@ class _AddContactSheet extends ConsumerStatefulWidget {
 }
 
 class _AddContactSheetState extends ConsumerState<_AddContactSheet> {
-  String _name = '', _phone = '', _relationship = '';
+  String _name = '', _relationship = '';
+  ParsedPhone? _phone;
   String? _nameError, _phoneError, _error;
   bool _saving = false;
 
   Future<void> _save() async {
     final t = context.t;
     final common = CommonLocalizations.of(context);
-    final e164 = toE164(_phone);
+    final e164 = (_phone?.isValid ?? false ? _phone!.e164 : null);
     setState(() {
       _nameError = _name.trim().isEmpty ? common.validationRequired : null;
       _phoneError = e164 == null ? common.validationPhoneInvalid : null;
@@ -740,16 +741,7 @@ class _AddContactSheetState extends ConsumerState<_AddContactSheet> {
               autofillHints: const [AutofillHints.name],
               textInputAction: TextInputAction.next,
             ),
-            IyoTextField(
-              label: t.contactPhone,
-              prefix: '+237',
-              placeholder: '6 71 23 45 67',
-              error: _phoneError,
-              onChanged: (v) => _phone = v,
-              keyboardType: TextInputType.phone,
-              autofillHints: const [AutofillHints.telephoneNumber],
-              textInputAction: TextInputAction.next,
-            ),
+            IyoPhoneField(label: t.contactPhone, error: _phoneError, onChanged: (v) => _phone = v),
             IyoTextField(
               label: t.contactRelationship,
               placeholder: t.contactRelationshipHint,

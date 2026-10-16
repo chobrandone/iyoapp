@@ -3,8 +3,8 @@ import 'phone.dart';
 /// Validation results are error keys; screens translate them with CommonLocalizations.
 enum ValidationError { phoneInvalid, otpInvalid, pinInvalid, required }
 
-ValidationError? validatePhone(String? value) =>
-    value != null && isCameroonMobile(value) ? null : ValidationError.phoneInvalid;
+ValidationError? validatePhone(String? value, {PhoneCountry? country}) =>
+    value != null && isValidPhone(value, country: country) ? null : ValidationError.phoneInvalid;
 
 ValidationError? validateOtp(String? value) =>
     value != null && RegExp(r'^\d{6}$').hasMatch(value) ? null : ValidationError.otpInvalid;

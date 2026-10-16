@@ -12,7 +12,7 @@ export interface ChargeRequest {
   amount: number; // FCFA
   currency: 'XAF';
   method: Exclude<PaymentMethodType, 'cash'>;
-  phone?: string | null; // mobile money wallet, +237…
+  phone?: string | null; // mobile money wallet, E.164 (+236…, +237…)
   description: string;
 }
 

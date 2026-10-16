@@ -52,6 +52,80 @@ const demoOtpCode = '123456';
 const demoHandoverPin = '6318';
 const demoPin = '4826';
 
+/// Bangui places (launch city) used for search, saved places and simulated trips.
+/// Approximate positions, good enough for demo routes and fares.
+const List<Place> banguiPlaces = [
+  Place(
+    name: 'Place de la République',
+    address: 'Centre-ville, Bangui',
+    location: GeoPoint(4.3647, 18.5839),
+    placeId: 'demo-bg-republique',
+  ),
+  Place(
+    name: 'Marché Central',
+    address: 'Centre-ville, Bangui',
+    location: GeoPoint(4.3660, 18.5815),
+    placeId: 'demo-bg-marche-central',
+  ),
+  Place(
+    name: 'Aéroport international Bangui M’Poko',
+    address: 'Hall des arrivées, Bangui',
+    location: GeoPoint(4.3985, 18.5188),
+    placeId: 'demo-bg-airport',
+  ),
+  Place(
+    name: 'Avenue des Martyrs',
+    address: 'Lakouanga, Bangui',
+    location: GeoPoint(4.3600, 18.5700),
+    placeId: 'demo-bg-lakouanga',
+  ),
+  Place(
+    name: 'Université de Bangui',
+    address: 'Avenue des Martyrs, Bangui',
+    location: GeoPoint(4.3760, 18.5630),
+    placeId: 'demo-bg-universite',
+  ),
+  Place(
+    name: 'Stade Barthélemy Boganda',
+    address: 'Avenue Boganda, Bangui',
+    location: GeoPoint(4.3790, 18.5520),
+    placeId: 'demo-bg-stade',
+  ),
+  Place(
+    name: 'Marché du PK5',
+    address: 'PK5, Bangui',
+    location: GeoPoint(4.3720, 18.5420),
+    placeId: 'demo-bg-pk5',
+  ),
+  Place(
+    name: 'Boy-Rabe',
+    address: 'Boy-Rabe, Bangui',
+    location: GeoPoint(4.4000, 18.5450),
+    placeId: 'demo-bg-boy-rabe',
+  ),
+  Place(
+    name: 'PK12',
+    address: 'PK12, Bangui',
+    location: GeoPoint(4.4300, 18.5250),
+    placeId: 'demo-bg-pk12',
+  ),
+  Place(
+    name: 'Hôpital communautaire',
+    address: 'Sica, Bangui',
+    location: GeoPoint(4.3640, 18.5650),
+    placeId: 'demo-bg-hopital',
+  ),
+  Place(
+    name: 'Ouango',
+    address: 'Ouango, Bangui',
+    location: GeoPoint(4.3560, 18.6100),
+    placeId: 'demo-bg-ouango',
+  ),
+];
+
+/// Every demo place: Bangui first, then Douala.
+const List<Place> demoPlaces = [...banguiPlaces, ...doualaPlaces];
+
 /// Douala places used for search and simulated trips.
 const List<Place> doualaPlaces = [
   Place(
@@ -193,20 +267,83 @@ double _bearing(GeoPoint a, GeoPoint b) {
   return (deg + 360) % 360;
 }
 
-/// Road distance ≈ 1.3 × straight line; 22 km/h average in Douala traffic.
+/// Road distance ≈ 1.3 × straight line; 22 km/h average in city traffic.
 RouteInfo demoRoute(GeoPoint a, GeoPoint b) {
   final meters = (_haversine(a, b) * 1.3).round();
   return RouteInfo(distanceMeters: meters, durationSeconds: (meters / (22000 / 3600)).round());
 }
 
-/// Same formula and PLACEHOLDER values as public.compute_fare / fare_config (Douala).
-int demoFare(int meters, int seconds, double multiplier) {
-  final metered = 500 + 150 * meters / 1000 + 25 * seconds / 60;
-  return roundToNearest50((metered < 1000 ? 1000 : metered) * multiplier);
+/// Per-city tariffs, the same PLACEHOLDER values as public.fare_config: every city starts at a
+/// 350 XAF base, then distance and time are added (Uber / Yango style).
+const Map<String, ({int base, int perKm, int perMin, int minimum})> demoTariffs = {
+  'bangui': (base: 350, perKm: 120, perMin: 15, minimum: 600),
+  'douala': (base: 350, perKm: 150, perMin: 25, minimum: 1000),
+  'yaounde': (base: 350, perKm: 150, perMin: 25, minimum: 1000),
+};
+
+/// City centres, for picking the tariff from the pickup (nearest city).
+const Map<String, GeoPoint> demoCityCentres = {
+  'bangui': GeoPoint(4.3733, 18.5628),
+  'douala': GeoPoint(4.0511, 9.7679),
+  'yaounde': GeoPoint(3.8480, 11.5021),
+};
+
+/// The city whose centre is nearest [at] (Bangui when unknown).
+String demoCityFor(GeoPoint? at) {
+  if (at == null) return 'bangui';
+  return demoCityCentres.entries
+      .reduce((a, b) => _haversine(at, a.value) <= _haversine(at, b.value) ? a : b)
+      .key;
+}
+
+/// Same formula as public.compute_fare:
+/// max(minimum, base + per_km × km + per_min × min) × category multiplier, rounded to 50 XAF.
+int demoFare(int meters, int seconds, double multiplier, {String cityCode = 'bangui'}) {
+  final t = demoTariffs[cityCode] ?? demoTariffs['bangui']!;
+  final metered = t.base + t.perKm * meters / 1000 + t.perMin * seconds / 60;
+  return roundToNearest50((metered < t.minimum ? t.minimum : metered) * multiplier);
 }
 
 /// Demo rental fleet (same cars and PLACEHOLDER prices as supabase/seed.sql).
 const List<RentalVehicle> demoRentalFleet = [
+  RentalVehicle(
+    id: 'demo-car-bg-corolla',
+    cityCode: 'bangui',
+    make: 'Toyota',
+    model: 'Corolla',
+    year: 2019,
+    category: 'sedan',
+    transmission: TransmissionType.automatic,
+    seats: 5,
+    fuelType: FuelType.petrol,
+    plate: 'BG 4021 A',
+    color: 'Blanc',
+    dailyRate: 25000,
+    depositAmount: 100000,
+    kmPerDay: 200,
+    extraKmRate: 150,
+    features: ['ac', 'bluetooth'],
+    airportPickupAvailable: true,
+  ),
+  RentalVehicle(
+    id: 'demo-car-bg-hilux',
+    cityCode: 'bangui',
+    make: 'Toyota',
+    model: 'Hilux',
+    year: 2020,
+    category: 'pickup',
+    transmission: TransmissionType.manual,
+    seats: 5,
+    fuelType: FuelType.diesel,
+    plate: 'BG 4022 B',
+    color: 'Gris',
+    dailyRate: 45000,
+    depositAmount: 200000,
+    kmPerDay: 200,
+    extraKmRate: 250,
+    features: ['ac', '4x4'],
+    airportPickupAvailable: true,
+  ),
   RentalVehicle(
     id: 'demo-car-corolla',
     cityCode: 'douala',
@@ -325,6 +462,13 @@ const List<RentalVehicle> demoRentalFleet = [
 /// PLACEHOLDER airport pickup fees (airports table).
 const List<Airport> demoAirports = [
   Airport(
+    code: 'BGF',
+    name: 'Bangui M’Poko International Airport',
+    cityCode: 'bangui',
+    pickupFee: 5000,
+    terminals: ['Arrivals'],
+  ),
+  Airport(
     code: 'DLA',
     name: 'Douala International Airport',
     cityCode: 'douala',
@@ -432,18 +576,18 @@ class DemoBackend implements IyoBackend {
     final q = _fold(input.trim());
     if (q.length < 2) return const [];
     return [
-      for (final p in doualaPlaces)
+      for (final p in demoPlaces)
         if (_fold('${p.name} ${p.address}').contains(q))
           Place(name: p.name, address: p.address, placeId: p.placeId),
     ];
   }
 
   @override
-  Future<Place> details(Place suggestion, {required String sessionToken}) async => doualaPlaces
-      .firstWhere((p) => p.placeId == suggestion.placeId, orElse: () => doualaPlaces.first);
+  Future<Place> details(Place suggestion, {required String sessionToken}) async =>
+      demoPlaces.firstWhere((p) => p.placeId == suggestion.placeId, orElse: () => demoPlaces.first);
 
   @override
-  Future<List<Place>> savedPlaces() async => [doualaPlaces[3], doualaPlaces[4]];
+  Future<List<Place>> savedPlaces() async => [banguiPlaces[3], banguiPlaces[1]];
 
   // ---------------------------------------------------------------------------
   // Rides (shared state)
@@ -510,6 +654,7 @@ class DemoBackend implements IyoBackend {
     final a = pickup.location, b = dropoff.location;
     if (a == null || b == null) throw const BackendException('invalid_request');
     final route = demoRoute(a, b);
+    final city = demoCityFor(a);
     final expires = DateTime.now().add(const Duration(minutes: 10));
     final options = [
       for (final c in _categories)
@@ -519,7 +664,12 @@ class DemoBackend implements IyoBackend {
           nameEn: c.en,
           nameFr: c.fr,
           seats: c.seats,
-          fareAmount: demoFare(route.distanceMeters, route.durationSeconds, c.multiplier),
+          fareAmount: demoFare(
+            route.distanceMeters,
+            route.durationSeconds,
+            c.multiplier,
+            cityCode: city,
+          ),
           expiresAt: expires,
           etaMinutes: c.code == 'xl' ? null : 3 + _random.nextInt(4),
           isPlaceholder: true,
@@ -720,7 +870,7 @@ class DemoBackend implements IyoBackend {
   final _offerCtrl = StreamController<RideOffer?>.broadcast();
   RideOffer? _offer;
   Timer? _offerTimer;
-  GeoPoint _driverAt = const GeoPoint(4.0483, 9.7008);
+  GeoPoint _driverAt = const GeoPoint(4.3660, 18.5790);
   final List<CompletedTrip> _trips = [];
   DateTime? _onlineSince;
   int _onlineSeconds = 0;
@@ -870,16 +1020,41 @@ class DemoBackend implements IyoBackend {
         _driverAt.lat + 0.004 + _random.nextDouble() * 0.004,
         _driverAt.lng + 0.003,
       );
-      final dropoff = doualaPlaces[_random.nextInt(doualaPlaces.length)];
+      final city = demoCityFor(_driverAt);
+      // A destination in the driver's city (within 25 km), else a point a few km away.
+      final nearby = [
+        for (final p in demoPlaces)
+          if (_haversine(p.location!, _driverAt) < 25000) p,
+      ];
+      final dropoff =
+          nearby.isNotEmpty
+              ? nearby[_random.nextInt(nearby.length)]
+              : Place(
+                name: 'Centre-ville',
+                address: 'Centre-ville',
+                location: GeoPoint(_driverAt.lat + 0.025, _driverAt.lng + 0.02),
+              );
       final route = demoRoute(pickup, dropoff.location!);
       final rider = _demoRiders[_random.nextInt(_demoRiders.length)];
       final ride = Ride(
         id: _id('ride'),
         status: RideStatus.searching,
-        pickup: Place(name: 'Rue Joss', address: 'Akwa, Douala', location: pickup),
+        pickup: Place(
+          name: switch (city) {
+            'bangui' => 'Avenue Boganda',
+            'douala' => 'Rue Joss',
+            _ => 'Point de prise en charge',
+          },
+          address: switch (city) {
+            'bangui' => 'Centre-ville, Bangui',
+            'douala' => 'Akwa, Douala',
+            _ => 'Centre-ville',
+          },
+          location: pickup,
+        ),
         dropoff: dropoff,
         categoryCode: 'standard',
-        fareAmount: demoFare(route.distanceMeters, route.durationSeconds, 1),
+        fareAmount: demoFare(route.distanceMeters, route.durationSeconds, 1, cityCode: city),
         paymentMethod: PaymentMethodType.mtnMomo,
         distanceMeters: route.distanceMeters,
         durationSeconds: route.durationSeconds,
@@ -1493,7 +1668,7 @@ class DemoBackend implements IyoBackend {
     _setAccount(
       DriverAccount(
         status: VerificationStatus.approved,
-        cityCode: 'douala',
+        cityCode: 'bangui',
         licenceNumber: 'LT-DL-204518',
         nationalIdNumber: '112233445',
         payoutMethod: PaymentMethodType.mtnMomo,

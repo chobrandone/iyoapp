@@ -9,9 +9,9 @@ extension RiderL10n on BuildContext {
 }
 
 /// Douala sample coordinates; the UI-only map draws the Figma illustration in their place.
-const _samplePickup = GeoPoint(4.0469, 9.6953);
-const _sampleCar = GeoPoint(4.0452, 9.7005);
-const _sampleDestination = GeoPoint(4.0560, 9.7280);
+const _samplePickup = GeoPoint(4.3647, 18.5839);
+const _sampleCar = GeoPoint(4.3628, 18.5862);
+const _sampleDestination = GeoPoint(4.3760, 18.5630);
 
 LatLng _ll(GeoPoint p) => LatLng(p.lat, p.lng);
 

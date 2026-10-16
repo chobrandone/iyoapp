@@ -165,7 +165,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 title: t.savedHome,
                 subtitle: Sample.homeAddress,
                 showChevron: false,
-                onPressed: () => goPlan(doualaPlaces[3]),
+                onPressed: () => goPlan(banguiPlaces[3]),
               ),
               IyoListRow(
                 icon: LucideIcons.clock3,
@@ -173,7 +173,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 title: Sample.recentPlace,
                 subtitle: t.recentDestination(Sample.recentArea),
                 showChevron: false,
-                onPressed: () => goPlan(doualaPlaces[1]),
+                onPressed: () => goPlan(banguiPlaces[1]),
               ),
             ],
           ),

@@ -27,8 +27,7 @@ class CommonLocalizationsEn extends CommonLocalizations {
   String get actionDone => 'Done';
 
   @override
-  String get validationPhoneInvalid =>
-      'Enter a valid Cameroonian mobile number (9 digits starting with 6).';
+  String get validationPhoneInvalid => 'Enter a valid mobile number for the selected country.';
 
   @override
   String get validationOtpInvalid => 'Enter the 6-digit code.';

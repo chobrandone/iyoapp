@@ -46,7 +46,7 @@ void main() {
     expect(find.text('This field is required.'), findsOneWidget);
 
     await tester.enterText(field('Full name'), 'Aïcha Ngo Mbappe');
-    await tester.enterText(field('Mobile number'), '6 71 23 45 67');
+    await tester.enterText(field('Mobile number'), '+237 6 71 23 45 67');
     await tester.tap(find.text('Create account & verify'));
     await tester.pumpAndSettle();
     expect(find.text('Check your messages'), findsOneWidget);

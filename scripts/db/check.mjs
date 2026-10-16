@@ -141,15 +141,32 @@ await test('server-only RPCs are not callable by apps', async () => {
 
 console.log('Pricing');
 
-await test('Douala Standard 3.4 km / 14 min = 1 350 FCFA (placeholder config)', async () => {
+await test('Douala Standard 3.4 km / 14 min = 1 200 FCFA (350 base, placeholder config)', async () => {
   const [r] = await as('service', `select public.compute_fare('douala','standard',3400,840) as q`);
-  assert.equal(r.q.fare_amount, 1350);
-  assert.equal(r.q.driver_earnings, 1080);
+  assert.equal(r.q.fare_amount, 1200); // 350 + 150 × 3.4 + 25 × 14 = 1 210 → 1 200
+  assert.equal(r.q.driver_earnings, 960);
+  assert.equal(r.q.breakdown.base_fare, 350);
+});
+
+await test('Bangui: 350 base, 600 minimum (placeholder config)', async () => {
+  const [r] = await as('service', `select public.compute_fare('bangui','standard',3400,840) as q`);
+  assert.equal(r.q.fare_amount, 950); // 350 + 120 × 3.4 + 15 × 14 = 968 → 950
+  const [short] = await as('service', `select public.compute_fare('bangui','standard',500,60) as q`);
+  assert.equal(short.q.fare_amount, 600); // 350 + 60 + 15 = 425, below the minimum
+  const [city] = await as('service', `select country_code, timezone from public.cities where code = 'bangui'`);
+  assert.deepEqual([city.country_code, city.timezone], ['CF', 'Africa/Bangui']);
+});
+
+await test('phone numbers from any African country are accepted, malformed ones are not', async () => {
+  const [p] = await as('service', `select id from public.profiles limit 1`);
+  await as('service', `update public.profiles set phone = '+23675123456' where id = $1`, [p.id]);
+  await rejects('service', `update public.profiles set phone = '75123456' where id = $1`, [p.id], /check/);
+  await rejects('service', `update public.profiles set phone = '+0123' where id = $1`, [p.id], /check/);
 });
 
 await test('minimum fare applies and Comfort multiplier rounds to 50', async () => {
   const [r] = await as('service', `select public.compute_fare('douala','comfort',500,60) as q`);
-  assert.equal(r.q.fare_amount, 1350); // max(1000, 500+75+25) * 1.35 = 1350
+  assert.equal(r.q.fare_amount, 1350); // max(1000, 350+75+25) * 1.35 = 1350
 });
 
 console.log('Ride lifecycle');

@@ -129,7 +129,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get welcomeHeadline => 'A little less waiting.\nA lot more going.';
 
   @override
-  String get welcomeBody => 'Book a ride or find a car for a few days. Wherever life takes you, go with iyodriver.';
+  String get welcomeBody =>
+      'Book a ride or find a car for a few days. Wherever life takes you, go with iyodriver.';
 
   @override
   String get welcomeGetStarted => 'Get started';
@@ -223,7 +224,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get saferStartTitle => 'A safer start';
 
   @override
-  String get saferStartBody => 'Verification helps keep every iyodriver journey connected to a real person.';
+  String get saferStartBody =>
+      'Verification helps keep every iyodriver journey connected to a real person.';
 
   @override
   String get verifyContinue => 'Verify & continue';
@@ -416,7 +418,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tryAgainShortly => 'Let\'s try again shortly';
 
   @override
-  String get noMatchBody => 'We couldn\'t match your request with an available driver. You haven\'t been charged.';
+  String get noMatchBody =>
+      'We couldn\'t match your request with an available driver. You haven\'t been charged.';
 
   @override
   String toPlace(String place) {
@@ -427,7 +430,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get requestNotBooked => 'Request not booked';
 
   @override
-  String get noDriversHint => 'Try a nearby pickup spot or request again in a few minutes. Availability can change quickly.';
+  String get noDriversHint =>
+      'Try a nearby pickup spot or request again in a few minutes. Availability can change quickly.';
 
   @override
   String get tryAgain => 'Try again';
@@ -529,7 +533,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get messagePreview => 'Message preview';
 
   @override
-  String get defaultAlertMessage => 'I need help. Please check on me and follow my live iyodriver trip.';
+  String get defaultAlertMessage =>
+      'I need help. Please check on me and follow my live iyodriver trip.';
 
   @override
   String currentLocationAt(String place) {
@@ -540,7 +545,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sendAlert => 'Send security alert';
 
   @override
-  String get sendAlertFooter => 'Sends your live location and trip details to your trusted contact and iyodriver safety team.';
+  String get sendAlertFooter =>
+      'Sends your live location and trip details to your trusted contact and iyodriver safety team.';
 
   @override
   String get alertSentTitle => 'Your alert has been sent';
@@ -596,7 +602,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get otherFavourites => 'Other favourites';
 
   @override
-  String get savedFooter => 'Tap a place to edit its name or address. Saved places are only visible to you.';
+  String get savedFooter =>
+      'Tap a place to edit its name or address. Saved places are only visible to you.';
 
   @override
   String get addPlace => 'Add a place';
@@ -614,7 +621,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shareJourneyBody1 => 'Send a live trip link to your contacts from any active ride.';
 
   @override
-  String get shareJourneyBody2 => 'Contacts can see your route, driver and estimated arrival when you choose to share.';
+  String get shareJourneyBody2 =>
+      'Contacts can see your route, driver and estimated arrival when you choose to share.';
 
   @override
   String yourContacts(String count, String max) {
@@ -639,7 +647,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inControl => 'You\'re in control';
 
   @override
-  String get inControlBody => 'Sharing starts only when you send a trip link. You can stop sharing or remove a contact at any time.';
+  String get inControlBody =>
+      'Sharing starts only when you send a trip link. You can stop sharing or remove a contact at any time.';
 
   @override
   String tcFooter(String number) {
@@ -735,7 +744,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get locationDeniedTitle => 'Location is off';
 
   @override
-  String get locationDeniedBody => 'Allow location so drivers can find you, or type your pickup address.';
+  String get locationDeniedBody =>
+      'Allow location so drivers can find you, or type your pickup address.';
 
   @override
   String get openSettings => 'Open settings';
@@ -994,7 +1004,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contactsEmptyTitle => 'Add someone you trust';
 
   @override
-  String get contactsEmptyBody => 'They get a text with your live trip if you raise a safety alert.';
+  String get contactsEmptyBody =>
+      'They get a text with your live trip if you raise a safety alert.';
 
   @override
   String get flowRent => 'Rider · Rent';
@@ -1033,7 +1044,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get airportPickupBadge => 'Airport pickup';
 
   @override
-  String get placeholderPricing => 'Prices shown are placeholders until the fleet rates are confirmed.';
+  String get placeholderPricing =>
+      'Prices shown are placeholders until the fleet rates are confirmed.';
 
   @override
   String get transmissionAutomatic => 'Automatic';
@@ -1160,7 +1172,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reviewTitle => 'Review your rental';
 
   @override
-  String get reviewSubtitle => 'You pay the rental now. The deposit is held when the car is handed over.';
+  String get reviewSubtitle =>
+      'You pay the rental now. The deposit is held when the car is handed over.';
 
   @override
   String rentalDates(String start, String end) {
@@ -1204,7 +1217,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookCash => 'Book · pay cash at handover';
 
   @override
-  String get carTaken => 'This car is already booked for those dates. Pick other dates or another car.';
+  String get carTaken =>
+      'This car is already booked for those dates. Pick other dates or another car.';
 
   @override
   String get paymentMethodMissing => 'Add this payment method in your wallet first.';
@@ -1240,7 +1254,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get handoverReadyTitle => 'Check the car';
 
   @override
-  String get handoverReadyBody => 'The driver recorded the car’s condition. Check it with them, then confirm.';
+  String get handoverReadyBody =>
+      'The driver recorded the car’s condition. Check it with them, then confirm.';
 
   @override
   String get confirmHandover => 'Confirm handover';
@@ -1263,7 +1278,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get returnReadyTitle => 'Check the return';
 
   @override
-  String get returnReadyBody => 'Check the return inspection. Your deposit is released when you confirm.';
+  String get returnReadyBody =>
+      'Check the return inspection. Your deposit is released when you confirm.';
 
   @override
   String get confirmReturn => 'Confirm return';
@@ -1503,7 +1519,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get datesFootnote => 'All times are local to Douala and Yaoundé. The return time must be after pickup. Late returns may incur an extra daily charge.';
+  String get datesFootnote =>
+      'All times are local to Douala and Yaoundé. The return time must be after pickup. Late returns may incur an extra daily charge.';
 
   @override
   String continueDays(String days) {
@@ -1514,7 +1531,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pickReturnDay => 'Now pick the return day.';
 
   @override
-  String get monthNames => 'January,February,March,April,May,June,July,August,September,October,November,December';
+  String get monthNames =>
+      'January,February,March,April,May,June,July,August,September,October,November,December';
 
   @override
   String get weekdayInitials => 'M,T,W,T,F,S,S';
@@ -1674,7 +1692,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get bringDocuments => 'Bring your driving licence, photo ID and the phone used for your deposit.';
+  String get bringDocuments =>
+      'Bring your driving licence, photo ID and the phone used for your deposit.';
 
   @override
   String handoverPinBadge(String pin) {
@@ -1881,7 +1900,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get depositReleaseLine => 'Deposit to release';
 
   @override
-  String get releaseNote => 'Release is requested after you confirm. Your operator may take 1–3 working days to remove the hold.';
+  String get releaseNote =>
+      'Release is requested after you confirm. Your operator may take 1–3 working days to remove the hold.';
 
   @override
   String get reportBeforeConfirm => 'Something not right? Report an issue before confirming.';

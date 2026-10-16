@@ -52,7 +52,7 @@ enum _View { all, unread }
 class _ComponentGalleryState extends State<ComponentGallery> {
   var _service = _Service.ride;
   var _view = _View.all;
-  String? _city = 'douala';
+  String? _city = 'bangui';
   var _otp = '48261';
   var _pin = '4826';
   var _online = true;
@@ -187,6 +187,7 @@ class _ComponentGalleryState extends State<ComponentGallery> {
                   value: _city,
                   onChanged: (v) => setState(() => _city = v),
                   options: const [
+                    IyoSelectOption(value: 'bangui', label: 'Bangui'),
                     IyoSelectOption(value: 'douala', label: 'Douala'),
                     IyoSelectOption(value: 'yaounde', label: 'Yaoundé'),
                   ],
@@ -332,7 +333,7 @@ class _ComponentGalleryState extends State<ComponentGallery> {
                     color: IyoPalette.textSecondary,
                   ),
                 IyoMapCard(
-                  center: doualaCenter,
+                  center: banguiCenter,
                   onRecenter: () {},
                   markers: const [
                     IyoMapMarker(id: 'pickup', kind: IyoMarkerKind.pickup, position: _pickup),

@@ -34,11 +34,11 @@ abstract final class Sample {
   static String destinationDetail(BuildContext c) =>
       tr(c, 'Bessengué, Douala · Main entrance', 'Bessengué, Douala · Entrée principale');
   static const destinationAddress = 'Bessengué, Douala';
-  static const homeAddress = 'Rue Njo-Njo, Bonapriso';
-  static const homeAddressFull = 'Rue Njo-Njo, Bonapriso, Douala';
+  static const homeAddress = 'Avenue des Martyrs, Lakouanga';
+  static const homeAddressFull = 'Avenue des Martyrs, Lakouanga, Bangui';
   static const workAddressFull = '12 Rue Joss, Akwa, Douala';
-  static const recentPlace = 'Marché Sandaga';
-  static const recentArea = 'Boulevard de la Liberté';
+  static const recentPlace = 'Marché Central';
+  static const recentArea = 'Centre-ville, Bangui';
 
   // Trip
   static const rideId = 'RD-1043';
@@ -54,7 +54,7 @@ abstract final class Sample {
   static String fare = formatFcfa(2500);
   static String rideFare = formatFcfa(2300);
   static String bookingFee = formatFcfa(200);
-  static String nearbyFrom = formatFcfa(1500);
+  static String nearbyFrom = formatFcfa(600);
   static const paymentMethod = 'MTN MoMo •••• 45 67';
   static const tripDate = '13/10/2026 · 09:44–09:56 · 3,2 km';
   static List<String> tipAmounts = [formatFcfa(200), formatFcfa(500), formatFcfa(1000)];

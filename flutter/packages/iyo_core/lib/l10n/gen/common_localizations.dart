@@ -133,7 +133,7 @@ abstract class CommonLocalizations {
   /// No description provided for @validationPhoneInvalid.
   ///
   /// In en, this message translates to:
-  /// **'Enter a valid Cameroonian mobile number (9 digits starting with 6).'**
+  /// **'Enter a valid mobile number for the selected country.'**
   String get validationPhoneInvalid;
 
   /// No description provided for @validationOtpInvalid.

@@ -10,6 +10,7 @@ export 'src/map/marker_glyphs.dart' show IyoMarkerKind;
 export 'src/theme/iyo_theme.dart';
 export 'src/theme/tokens.dart';
 export 'src/theme/typography.dart';
+export 'src/widgets/phone_field.dart';
 export 'src/widgets/splash.dart';
 export 'src/widgets/buttons.dart';
 export 'src/widgets/cards.dart';

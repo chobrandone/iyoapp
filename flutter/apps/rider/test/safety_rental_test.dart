@@ -70,7 +70,7 @@ void main() {
       matching: find.byType(EditableText),
     );
     await tester.enterText(fields.at(0), 'Mireille Ngo');
-    await tester.enterText(fields.at(1), '699003352');
+    await tester.enterText(fields.at(1), '+237 699003352');
     await tester.enterText(fields.at(2), 'Sister');
     await tapText(tester, 'Save contact');
     expect(find.text('Mireille Ngo'), findsOneWidget);

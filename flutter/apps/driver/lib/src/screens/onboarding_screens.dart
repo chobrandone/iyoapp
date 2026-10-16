@@ -22,7 +22,7 @@ class IdentityVehicleScreen extends ConsumerStatefulWidget {
 }
 
 class _IdentityVehicleScreenState extends ConsumerState<IdentityVehicleScreen> {
-  String? _city = 'douala';
+  String? _city = 'bangui';
   String _category = 'standard';
   final _name = TextEditingController();
   final _licence = TextEditingController();
@@ -231,6 +231,7 @@ class _IdentityVehicleScreenState extends ConsumerState<IdentityVehicleScreen> {
             value: _city,
             onChanged: (v) => setState(() => _city = v),
             options: const [
+              IyoSelectOption(value: 'bangui', label: 'Bangui'),
               IyoSelectOption(value: 'douala', label: 'Douala'),
               IyoSelectOption(value: 'yaounde', label: 'Yaoundé'),
             ],

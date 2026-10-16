@@ -6,7 +6,7 @@
   "actionRetry": "Try again",
   "actionSave": "Save",
   "actionDone": "Done",
-  "validationPhoneInvalid": "Enter a valid Cameroonian mobile number (9 digits starting with 6).",
+  "validationPhoneInvalid": "Enter a valid mobile number for the selected country.",
   "validationOtpInvalid": "Enter the 6-digit code.",
   "validationPinInvalid": "Enter the 4-digit PIN.",
   "validationRequired": "This field is required.",

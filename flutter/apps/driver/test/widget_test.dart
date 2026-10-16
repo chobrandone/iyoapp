@@ -94,7 +94,7 @@ void main() {
     await tester.tap(find.text('Get started'));
     await tester.pumpAndSettle();
     await tester.enterText(field('Full name (as on your ID)'), 'Patrick Essomba');
-    await tester.enterText(field('Mobile number'), '682334455');
+    await tester.enterText(field('Mobile number'), '+237682334455');
     await tester.tap(find.text('Create account & verify'));
     await pumpUntil(tester, find.text('Check your messages'));
     await tester.enterText(codeField(IyoOtpInput), demoOtpCode);

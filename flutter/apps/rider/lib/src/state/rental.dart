@@ -6,7 +6,7 @@ import 'package:iyo_core/iyo_core.dart';
 @immutable
 class RentalDraft {
   const RentalDraft({
-    this.cityCode = 'douala',
+    this.cityCode = 'bangui',
     this.vehicle,
     this.startsAt,
     this.endsAt,

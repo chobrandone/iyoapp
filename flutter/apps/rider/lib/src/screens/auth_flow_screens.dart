@@ -39,12 +39,12 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
-  String _phone = '';
+  ParsedPhone? _phone;
   String? _error;
   bool _sending = false;
 
   Future<void> _submit() async {
-    final e164 = toE164(_phone);
+    final e164 = (_phone?.isValid ?? false ? _phone!.e164 : null);
     if (e164 == null) {
       setState(() => _error = CommonLocalizations.of(context).validationPhoneInvalid);
       return;
@@ -75,12 +75,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         IyoButton(label: t.loginSendCode, loading: _sending, onPressed: _submit),
       ],
       children: [
-        IyoTextField(
+        IyoPhoneField(
           label: t.fieldMobile,
-          prefix: '+237',
-          placeholder: '6 71 23 45 67',
-          keyboardType: TextInputType.phone,
-          autofillHints: const [AutofillHints.telephoneNumber],
           error: _error,
           onChanged:
               (v) => setState(() {
@@ -109,14 +105,14 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   bool _sending = false;
   String _name = '';
   String _email = '';
-  String _phone = '';
+  ParsedPhone? _phone;
   String? _nameError;
   String? _phoneError;
   String? _formError;
 
   Future<void> _submit() async {
     final common = CommonLocalizations.of(context);
-    final e164 = toE164(_phone);
+    final e164 = (_phone?.isValid ?? false ? _phone!.e164 : null);
     setState(() {
       _nameError = validateRequired(_name)?.message(common);
       _phoneError = e164 == null ? common.validationPhoneInvalid : null;
@@ -196,14 +192,11 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               autofillHints: const [AutofillHints.email],
             ),
             gap,
-            IyoTextField(
+            IyoPhoneField(
               label: t.fieldMobile,
-              placeholder: Sample.riderPhoneDisplay,
-              initialValue: widget.preview ? Sample.riderPhoneDisplay : null,
+              initialValue: widget.preview ? Sample.riderPhone : null,
               error: _phoneError,
               onChanged: (v) => _phone = v,
-              keyboardType: TextInputType.phone,
-              autofillHints: const [AutofillHints.telephoneNumber],
             ),
             gap,
             // Owner decision (15/10/2026): keep the field visually as in Figma; sign-in stays

@@ -28,18 +28,63 @@ void main() {
   });
 
   group('phone', () {
-    test('accepts common ways of typing a +237 mobile', () {
+    test('Cameroon: common ways of typing a +237 mobile', () {
       for (final input in ['671234567', '6 71 23 45 67', '+237 671 23 45 67', '00237671234567']) {
-        expect(toE164(input), '+237671234567', reason: input);
+        expect(toE164(input, country: cameroon), '+237671234567', reason: input);
       }
     });
-    test('rejects non-mobiles', () {
-      expect(isCameroonMobile('233421234'), isFalse);
-      expect(isCameroonMobile('67123456'), isFalse);
-      expect(validatePhone('6712'), ValidationError.phoneInvalid);
+    test('Central African Republic: 8 digits, the default country', () {
+      expect(toE164('75 12 34 56', country: centralAfricanRepublic), '+23675123456');
+      expect(defaultPhoneCountry(localeName: 'fr'), centralAfricanRepublic);
+      expect(defaultPhoneCountry(localeName: 'fr_CM'), cameroon);
+      expect(defaultPhoneCountry(localeName: 'en_US'), centralAfricanRepublic);
+    });
+    test('detects the country from a typed or pasted code', () {
+      final ng = parsePhone('+234 803 123 4567', country: cameroon);
+      expect(ng.country.iso, 'NG');
+      expect(ng.e164, '+2348031234567');
+      expect(parsePhone('00236 75123456').country, centralAfricanRepublic);
+      expect(parsePhone('+27 82 123 4567').country.iso, 'ZA');
+      // Typed with the code but no "+".
+      expect(parsePhone('237671234567', country: centralAfricanRepublic).e164, '+237671234567');
+      expect(parsePhone('23675123456', country: cameroon).e164, '+23675123456');
+      // A valid local number is never mistaken for a code.
+      expect(parsePhone('75123456', country: centralAfricanRepublic).e164, '+23675123456');
+      // Trunk 0 written nationally is dropped.
+      expect(toE164('0803 123 4567', country: countryByIso('NG')), '+2348031234567');
+    });
+    test('rejects numbers of the wrong length', () {
+      expect(isValidPhone('67123456', country: cameroon), isFalse);
+      expect(isValidPhone('751234', country: centralAfricanRepublic), isFalse);
+      expect(validatePhone('6712', country: cameroon), ValidationError.phoneInvalid);
     });
     test('formats for display', () {
       expect(formatPhone('671234567'), '+237 6 71 23 45 67');
+      expect(formatPhone('+23675123456'), '+236 75 12 34 56');
+    });
+    test('every country has a unique dial code and a flag', () {
+      final codes = africanCountries.map((c) => c.iso).toSet();
+      expect(codes.length, africanCountries.length);
+      expect(africanCountries.length, 54);
+      expect(centralAfricanRepublic.flag, '🇨🇫');
+    });
+  });
+
+  group('fares (demo, same as public.compute_fare)', () {
+    test('every city starts from a 350 XAF base', () {
+      for (final t in demoTariffs.values) {
+        expect(t.base, 350);
+      }
+    });
+    test('Bangui: 3.4 km / 14 min = 950 XAF, short trips pay the 600 minimum', () {
+      expect(demoFare(3400, 840, 1, cityCode: 'bangui'), 950);
+      expect(demoFare(500, 60, 1, cityCode: 'bangui'), 600);
+      expect(demoFare(3400, 840, 1, cityCode: 'douala'), 1200);
+    });
+    test('the tariff follows the pickup city', () {
+      expect(demoCityFor(const GeoPoint(4.3647, 18.5839)), 'bangui');
+      expect(demoCityFor(const GeoPoint(4.0469, 9.6953)), 'douala');
+      expect(demoCityFor(null), 'bangui');
     });
   });
 

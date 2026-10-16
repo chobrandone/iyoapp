@@ -14,7 +14,10 @@ import '../widgets/buttons.dart';
 import 'map_illustration.dart';
 import 'marker_glyphs.dart';
 
-/// Douala city centre (Akwa), the default when no location is known yet.
+/// Bangui city centre, the default when no location is known yet (launch city).
+const LatLng banguiCenter = LatLng(4.3733, 18.5628);
+
+/// Douala city centre (Akwa).
 const LatLng doualaCenter = LatLng(4.0511, 9.7679);
 
 /// Yaoundé city centre.
