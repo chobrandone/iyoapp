@@ -1,15 +1,17 @@
 import 'dart:async';
+import 'dart:io' show Platform;
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:maplibre_gl/maplibre_gl.dart';
 
 import '../theme/iyo_theme.dart';
 import '../theme/tokens.dart';
 import '../widgets/buttons.dart';
 import 'map_illustration.dart';
-import 'map_style.dart';
 import 'marker_glyphs.dart';
 
 /// Douala city centre (Akwa), the default when no location is known yet.
@@ -18,10 +20,16 @@ const LatLng doualaCenter = LatLng(4.0511, 9.7679);
 /// Yaoundé city centre.
 const LatLng yaoundeCenter = LatLng(3.848, 11.5021);
 
-/// The Maps SDK key is compiled in with `--dart-define-from-file`. Without it the Google Maps
-/// SDK would fail on Android, so [IyoMapCard] draws the Figma map illustration instead.
-const String _mapsKey = String.fromEnvironment('GOOGLE_MAPS_API_KEY');
-bool get googleMapsAvailable => _mapsKey.isNotEmpty;
+/// Free vector map (OpenStreetMap data, no API key, no usage cap): the same light "Positron"
+/// style as the operations dashboard. Rendered by MapLibre.
+const String iyoMapStyleUrl = 'https://tiles.openfreemap.org/styles/positron';
+
+/// Live maps everywhere except widget tests (no platform views there) and builds made with
+/// `--dart-define=IYO_MAP=illustration`, which draw the Figma illustration instead.
+bool get liveMapsAvailable =>
+    !kIsWeb &&
+    const String.fromEnvironment('IYO_MAP') != 'illustration' &&
+    !Platform.environment.containsKey('FLUTTER_TEST');
 
 class IyoMapMarker {
   const IyoMapMarker({
@@ -80,32 +88,114 @@ class IyoMapCard extends StatefulWidget {
 }
 
 class _IyoMapCardState extends State<IyoMapCard> {
-  final _controller = Completer<GoogleMapController>();
+  MapLibreMapController? _controller;
+  bool _styleReady = false;
   IyoMarkerBitmaps? _bitmaps;
+
+  /// What is on the map now, so rebuilds only redraw when the content changes.
+  String _drawn = '';
+
+  /// Where the camera was last placed (it follows [IyoMapCard.center], e.g. a GPS fix).
+  LatLng? _placedCenter;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (googleMapsAvailable && _bitmaps == null) {
+    if (liveMapsAvailable && _bitmaps == null) {
       IyoMarkerBitmaps.load(MediaQuery.devicePixelRatioOf(context)).then((b) {
-        if (mounted) setState(() => _bitmaps = b);
+        if (!mounted) return;
+        _bitmaps = b;
+        unawaited(_draw());
       });
     }
   }
 
-  List<LatLng> get _points => [for (final m in widget.markers) m.position, ...widget.route];
+  @override
+  void didUpdateWidget(IyoMapCard old) {
+    super.didUpdateWidget(old);
+    unawaited(_draw());
+  }
 
-  Future<void> _fit(GoogleMapController c) async {
-    final points = _points;
-    if (!widget.fitToContent || points.length < 2) return;
-    await c.animateCamera(CameraUpdate.newLatLngBounds(_bounds(points), 40));
+  String get _signature => [
+    'c:${widget.center.latitude},${widget.center.longitude}',
+    for (final m in widget.markers)
+      '${m.id}:${m.kind.name}:${m.position.latitude},${m.position.longitude}:${m.heading}',
+    for (final p in widget.route) '${p.latitude},${p.longitude}',
+  ].join('|');
+
+  Future<void> _draw() async {
+    final c = _controller;
+    final bitmaps = _bitmaps;
+    if (c == null || bitmaps == null || !_styleReady) return;
+    final signature = _signature;
+    if (signature == _drawn) return;
+    final first = _drawn.isEmpty;
+    _drawn = signature;
+    final ink = _hex(IyoPalette.ink), accent = _hex(context.iyo.accent);
+    await c.clearLines();
+    await c.clearSymbols();
+    if (widget.route.length >= 2) {
+      await c.addLine(
+        LineOptions(geometry: widget.route, lineColor: ink, lineWidth: 7, lineJoin: 'round'),
+      );
+      await c.addLine(
+        LineOptions(geometry: widget.route, lineColor: accent, lineWidth: 4, lineJoin: 'round'),
+      );
+    }
+    for (final m in widget.markers) {
+      await c.addSymbol(
+        SymbolOptions(
+          geometry: m.position,
+          iconImage: 'iyo-${m.kind.name}',
+          // MapLibre draws added images at their pixel size, which already matches the screen.
+          iconSize: 1,
+          iconRotate: m.kind == IyoMarkerKind.car ? m.heading : 0,
+        ),
+      );
+    }
+    if (first || widget.fitToContent || widget.center != _placedCenter) {
+      await _fit(c, animate: !first);
+    }
+  }
+
+  Future<void> _fit(MapLibreMapController c, {bool animate = true}) async {
+    _placedCenter = widget.center;
+    final points = [for (final m in widget.markers) m.position, ...widget.route];
+    final CameraUpdate update;
+    if (widget.fitToContent && points.length >= 2) {
+      update = CameraUpdate.newLatLngBounds(
+        _bounds(points),
+        left: 48,
+        top: 48,
+        right: 48,
+        bottom: 48,
+      );
+    } else {
+      update = CameraUpdate.newLatLngZoom(widget.center, widget.zoom);
+    }
+    if (animate) {
+      await c.animateCamera(update);
+    } else {
+      await c.moveCamera(update);
+    }
+  }
+
+  Future<void> _onStyleLoaded() async {
+    final c = _controller;
+    final bitmaps = _bitmaps ?? await IyoMarkerBitmaps.load(MediaQuery.devicePixelRatioOf(context));
+    _bitmaps = bitmaps;
+    if (c == null) return;
+    for (final kind in IyoMarkerKind.values) {
+      await c.addImage('iyo-${kind.name}', bitmaps[kind]);
+    }
+    _styleReady = true;
+    _drawn = '';
+    await _draw();
   }
 
   Future<void> _recenter() async {
-    if (_controller.isCompleted) {
-      final c = await _controller.future;
-      await c.animateCamera(CameraUpdate.newLatLngZoom(widget.center, widget.zoom));
-    }
+    final c = _controller;
+    if (c != null) await _fit(c);
     widget.onRecenter?.call();
   }
 
@@ -113,61 +203,24 @@ class _IyoMapCardState extends State<IyoMapCard> {
   Widget build(BuildContext context) {
     final accent = context.iyo.accent;
     final Widget map;
-    if (googleMapsAvailable) {
-      final bitmaps = _bitmaps;
-      map = GoogleMap(
+    if (liveMapsAvailable) {
+      map = MapLibreMap(
+        styleString: iyoMapStyleUrl,
         initialCameraPosition: CameraPosition(target: widget.center, zoom: widget.zoom),
-        style: iyoMapStyleJson,
         myLocationEnabled: widget.showsUserLocation,
-        myLocationButtonEnabled: false,
         compassEnabled: false,
-        mapToolbarEnabled: false,
-        zoomControlsEnabled: false,
         rotateGesturesEnabled: false,
         tiltGesturesEnabled: false,
-        markers: {
-          if (bitmaps != null)
-            for (final m in widget.markers)
-              Marker(
-                markerId: MarkerId(m.id),
-                position: m.position,
-                icon: bitmaps[m.kind],
-                anchor: const Offset(0.5, 0.5),
-                rotation: m.heading,
-                flat: m.kind == IyoMarkerKind.car,
-              ),
+        attributionButtonPosition: AttributionButtonPosition.bottomLeft,
+        // The map sits inside scrolling screens: drag the map, not the page, when touching it.
+        gestureRecognizers: {
+          const Factory<OneSequenceGestureRecognizer>(EagerGestureRecognizer.new),
         },
-        polylines: {
-          if (widget.route.length >= 2) ...{
-            Polyline(
-              polylineId: const PolylineId('route-outline'),
-              points: widget.route,
-              color: IyoPalette.ink,
-              width: 7,
-              startCap: Cap.roundCap,
-              endCap: Cap.roundCap,
-              jointType: JointType.round,
-              zIndex: 1,
-            ),
-            Polyline(
-              polylineId: const PolylineId('route'),
-              points: widget.route,
-              color: accent,
-              width: 4,
-              startCap: Cap.roundCap,
-              endCap: Cap.roundCap,
-              jointType: JointType.round,
-              zIndex: 2,
-            ),
-          },
-        },
-        onMapCreated: (c) {
-          _controller.complete(c);
-          unawaited(_fit(c));
-        },
+        onMapCreated: (c) => _controller = c,
+        onStyleLoadedCallback: () => unawaited(_onStyleLoaded()),
       );
     } else {
-      // UI-only builds: the Figma illustration, with each marker kind in its Figma slot.
+      // Tests and illustration builds: the Figma illustration, each marker kind in its slot.
       map = IyoMapIllustration(
         accent: accent,
         labels: widget.labels,
@@ -211,6 +264,8 @@ class _IyoMapCardState extends State<IyoMapCard> {
     );
   }
 }
+
+String _hex(Color c) => '#${(c.toARGB32() & 0xFFFFFF).toRadixString(16).padLeft(6, '0')}';
 
 LatLngBounds _bounds(List<LatLng> points) {
   var south = points.first.latitude, north = south;

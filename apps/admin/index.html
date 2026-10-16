@@ -5,10 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="description" content="iyodriver operations dashboard" />
+    <meta name="theme-color" content="#faf7eb" />
     <title>iyodriver operations</title>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Logo splash while the dashboard loads; React replaces it on first render. -->
+    <div id="root">
+      <div
+        role="img"
+        aria-label="iyodriver operations"
+        style="
+          position: fixed;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #faf7eb;
+        "
+      >
+        <img src="/logo.png" alt="" width="240" height="240" />
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

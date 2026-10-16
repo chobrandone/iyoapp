@@ -42,10 +42,10 @@ Run the driver app the same way from `apps/driver`. Both can be installed on one
 | -------------------------- | ------------------------------------------------------------------------ |
 | `SUPABASE_URL`             | Supabase project URL                                                     |
 | `SUPABASE_PUBLISHABLE_KEY` | Supabase publishable (anon) key. **Never** the service-role key          |
-| `GOOGLE_MAPS_API_KEY`      | Maps SDK key, also written into the Android manifest by Gradle. Restrict it per app package + signing cert |
 
-Everything is optional for UI work: without Supabase keys the apps run UI-only, and without a Maps key
-`IyoMapCard` draws a schematic map instead of the Google map.
+Everything is optional for UI work: without Supabase keys the apps run on demo data. Maps are free
+OpenStreetMap vector maps (MapLibre + OpenFreeMap, no key); build with `--dart-define=IYO_MAP=illustration`
+to draw the schematic Figma map instead.
 
 In debug builds the home screen has a **Component gallery (dev)** button (`/dev/components`) to compare
 every shared widget with the Figma frames.

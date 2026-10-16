@@ -38,9 +38,12 @@ export function SignInScreen() {
         aria-labelledby="sign-in-title"
         className="flex w-full max-w-[400px] flex-col gap-4 rounded-2xl border border-line bg-white p-8"
       >
-        <div>
-          <p className="text-[25px] leading-[37px] font-bold">iyodriver</p>
-          <p className="text-[10px] text-sub">{t('workspace')}</p>
+        <div className="flex items-center gap-3">
+          <img src="/logo.png" alt="" width={56} height={56} className="rounded-xl" />
+          <div>
+            <p className="text-[25px] leading-[37px] font-bold">iyodriver</p>
+            <p className="text-[10px] text-sub">{t('workspace')}</p>
+          </div>
         </div>
         <div>
           <h1 id="sign-in-title" className="text-[20px] font-semibold">

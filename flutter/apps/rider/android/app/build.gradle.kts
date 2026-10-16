@@ -1,21 +1,9 @@
-import java.util.Base64
-
 plugins {
     id("com.android.application")
     id("kotlin-android")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
 }
-
-// Values passed with --dart-define / --dart-define-from-file (base64, comma separated).
-val dartDefines: Map<String, String> =
-    (project.findProperty("dart-defines") as String?)
-        ?.split(",")
-        ?.filter { it.isNotBlank() }
-        ?.associate {
-            val pair = String(Base64.getDecoder().decode(it)).split("=", limit = 2)
-            pair[0] to pair.getOrElse(1) { "" }
-        } ?: emptyMap()
 
 android {
     namespace = "com.iyodriver.rider"
@@ -41,7 +29,6 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         // Restrict this key to this package + signing certificate in Google Cloud.
-        manifestPlaceholders["googleMapsApiKey"] = dartDefines["GOOGLE_MAPS_API_KEY"] ?: ""
     }
 
     buildTypes {

@@ -325,9 +325,9 @@ class _ComponentGalleryState extends State<ComponentGallery> {
                 ),
               ]),
               _section('Map', [
-                if (!googleMapsAvailable)
+                if (!liveMapsAvailable)
                   const IyoText(
-                    'No GOOGLE_MAPS_API_KEY in this build: showing the schematic fallback map.',
+                    'Live maps are off in this build: showing the schematic fallback map.',
                     variant: IyoTextVariant.caption,
                     color: IyoPalette.textSecondary,
                   ),

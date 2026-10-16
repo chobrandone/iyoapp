@@ -2,13 +2,13 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/painting.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter/foundation.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../theme/tokens.dart';
 
 /// The three marker shapes from Figma, painted on a canvas so the same drawing is used for
-/// Google Maps bitmaps and for the schematic fallback map.
+/// live map marker images and for the schematic fallback map.
 enum IyoMarkerKind {
   /// "Car marker": 38 × 28 ink rounded rect (radius 8) with a white 22 px car.
   car(Size(38, 28)),
@@ -64,13 +64,16 @@ void _paintDot(Canvas canvas, Offset center) {
   canvas.drawCircle(center, 4, Paint()..color = IyoPalette.ink);
 }
 
-/// Rasterised marker icons for Google Maps, cached per device pixel ratio.
+/// Rasterised marker images (PNG) for the live map, cached per device pixel ratio.
 class IyoMarkerBitmaps {
-  IyoMarkerBitmaps._(this._icons);
+  IyoMarkerBitmaps._(this._icons, this.pixelRatio);
 
-  final Map<IyoMarkerKind, BitmapDescriptor> _icons;
+  final Map<IyoMarkerKind, Uint8List> _icons;
 
-  BitmapDescriptor operator [](IyoMarkerKind kind) => _icons[kind]!;
+  /// The device pixel ratio the PNGs were drawn at.
+  final double pixelRatio;
+
+  Uint8List operator [](IyoMarkerKind kind) => _icons[kind]!;
 
   static final Map<double, Future<IyoMarkerBitmaps>> _cache = {};
 
@@ -78,7 +81,7 @@ class IyoMarkerBitmaps {
       _cache[devicePixelRatio] ??= _render(devicePixelRatio);
 
   static Future<IyoMarkerBitmaps> _render(double dpr) async {
-    final icons = <IyoMarkerKind, BitmapDescriptor>{};
+    final icons = <IyoMarkerKind, Uint8List>{};
     for (final kind in IyoMarkerKind.values) {
       final recorder = ui.PictureRecorder();
       final canvas = Canvas(recorder)..scale(dpr);
@@ -88,8 +91,8 @@ class IyoMarkerBitmaps {
         (kind.size.height * dpr).ceil(),
       );
       final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
-      icons[kind] = BitmapDescriptor.bytes(bytes!.buffer.asUint8List(), imagePixelRatio: dpr);
+      icons[kind] = bytes!.buffer.asUint8List();
     }
-    return IyoMarkerBitmaps._(icons);
+    return IyoMarkerBitmaps._(icons, dpr);
   }
 }
