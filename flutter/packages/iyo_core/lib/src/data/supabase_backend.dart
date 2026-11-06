@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../supabase/db_enums.dart';
+import '../supabase/push_notifications.dart';
 import '../supabase/server_errors.dart';
 import 'earnings_models.dart';
 import 'models.dart';
@@ -135,7 +136,10 @@ class SupabaseBackend implements IyoBackend {
       });
 
   @override
-  Future<void> signOut() => _db.auth.signOut();
+  Future<void> signOut() async {
+    await forgetPushToken();
+    await _db.auth.signOut();
+  }
 
   // ---------------------------------------------------------------------------
   // Places (Edge Functions; keys stay server-side)

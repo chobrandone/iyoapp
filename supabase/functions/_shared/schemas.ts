@@ -1,9 +1,10 @@
 import { z } from './deps.ts';
 
-// Cameroon bounding box (with margin) — rejects obviously wrong coordinates early.
+// Africa's bounding box — rejects obviously wrong coordinates early. Whether a pickup is in a
+// served city is decided by estimate-fares.
 export const latLngSchema = z.object({
-  lat: z.number().min(1.5).max(13.5),
-  lng: z.number().min(8).max(16.5),
+  lat: z.number().min(-35).max(38),
+  lng: z.number().min(-26).max(52),
 });
 
 export const languageSchema = z.enum(['en', 'fr']).default('fr');

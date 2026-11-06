@@ -16,5 +16,6 @@ export 'src/format/validators.dart';
 export 'src/i18n/language.dart';
 export 'src/rides/ride_status.dart';
 export 'src/supabase/db_enums.dart';
+export 'src/supabase/push_notifications.dart';
 export 'src/supabase/server_errors.dart';
 export 'src/supabase/supabase_setup.dart';

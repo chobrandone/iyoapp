@@ -1,11 +1,16 @@
 // Google Places API (New) and Routes API, server-side only. Every request sends a field mask
 // so we are billed for the cheapest SKU that returns what the apps need.
+// Without the API keys, search and routing use the free OpenStreetMap services in osm.ts.
 import { HttpError, requireEnv } from './http.ts';
+import { osmPlaceDetails, osmRoute, osmSearch } from './osm.ts';
 
 export interface LatLng {
   lat: number;
   lng: number;
 }
+
+/** Countries place search covers: the launch market and its neighbour (Google allows up to 15). */
+const SERVICE_REGIONS = ['cf', 'cm'];
 
 const toGoogle = (p: LatLng) => ({ latitude: p.lat, longitude: p.lng });
 const seconds = (duration: string | undefined) => (duration ? Number.parseInt(duration, 10) : 0); // "123s"
@@ -43,11 +48,12 @@ export async function placesAutocomplete(params: {
   language: 'en' | 'fr';
   bias?: LatLng;
 }): Promise<PlaceSuggestion[]> {
-  const key = requireEnv('GOOGLE_PLACES_API_KEY');
+  const key = Deno.env.get('GOOGLE_PLACES_API_KEY');
+  if (!key) return osmSearch(params.input, params.language, params.bias);
   const body: Record<string, unknown> = {
     input: params.input,
     sessionToken: params.sessionToken,
-    includedRegionCodes: ['cm'],
+    includedRegionCodes: SERVICE_REGIONS,
     languageCode: params.language,
   };
   if (params.bias) {
@@ -87,13 +93,14 @@ export async function placeDetails(params: {
   sessionToken: string;
   language: 'en' | 'fr';
 }): Promise<PlaceDetails> {
+  const osm = osmPlaceDetails(params.placeId);
+  if (osm) return osm;
   const key = requireEnv('GOOGLE_PLACES_API_KEY');
   const url = new URL(
     `https://places.googleapis.com/v1/places/${encodeURIComponent(params.placeId)}`,
   );
   url.searchParams.set('sessionToken', params.sessionToken);
   url.searchParams.set('languageCode', params.language);
-  url.searchParams.set('regionCode', 'cm');
   const p = await googleFetch(
     url.toString(),
     { method: 'GET' },
@@ -119,7 +126,8 @@ export interface RouteResult {
 }
 
 export async function computeRoute(origin: LatLng, destination: LatLng): Promise<RouteResult> {
-  const key = requireEnv('GOOGLE_ROUTES_API_KEY');
+  const key = Deno.env.get('GOOGLE_ROUTES_API_KEY');
+  if (!key) return osmRoute(origin, destination);
   const data = await googleFetch(
     'https://routes.googleapis.com/directions/v2:computeRoutes',
     {
@@ -130,7 +138,6 @@ export async function computeRoute(origin: LatLng, destination: LatLng): Promise
         travelMode: 'DRIVE',
         routingPreference: 'TRAFFIC_AWARE',
         units: 'METRIC',
-        regionCode: 'cm',
       }),
     },
     key,

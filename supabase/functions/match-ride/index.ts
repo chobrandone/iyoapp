@@ -7,12 +7,13 @@
 //
 // Idempotent: call it again whenever the current offer was declined or expired. Callers:
 //   * the rider app right after request_ride, and on its matching screen while status = searching;
-//   * TODO(Phase 8): a pg_cron + pg_net job every few seconds for searching rides (service role),
-//     plus Expo push to the offered driver.
+//   * TODO(Phase 8): a pg_cron + pg_net job every few seconds for searching rides (service role).
+// The offered driver also gets a push, for when the app is in the background.
 import { getAdminClient, isServiceRequest, requireCaller } from '../_shared/auth.ts';
 import { z } from '../_shared/deps.ts';
 import { etasTo } from '../_shared/google.ts';
 import { HttpError, json, readBody, serve } from '../_shared/http.ts';
+import { sendPush } from '../_shared/push.ts';
 
 const bodySchema = z.object({ rideId: z.uuid() });
 
@@ -112,12 +113,21 @@ serve(['POST'], async (req) => {
       if (offerError.code === '23505') return json({ status, state: 'waiting' });
       throw offerError;
     }
-    // TODO(Phase 8): Expo push "New ride request" with a loud channel to best.driver_id.
-    return json({
-      status,
-      state: 'offered',
-      offerExpiresAt: (offer as { expires_at: string }).expires_at,
+    const { id: offerId, expires_at: offerExpiresAt } = offer as { id: string; expires_at: string };
+    const { data: driver } = await admin
+      .from('profiles')
+      .select('language')
+      .eq('id', best.driver_id)
+      .maybeSingle();
+    const english = driver?.language === 'en';
+    await sendPush(admin, best.driver_id, 'driver', {
+      title: english ? 'New ride request' : 'Nouvelle course',
+      body: english ? 'Open iyodriver to accept it.' : 'Ouvrez iyodriver pour l’accepter.',
+      data: { type: 'ride_offer', rideId, offerId },
+      channelId: 'ride_offers',
+      ttlSeconds: 15,
     });
+    return json({ status, state: 'offered', offerExpiresAt });
   }
 
   const { error: e } = await admin.rpc('server_transition_ride', {

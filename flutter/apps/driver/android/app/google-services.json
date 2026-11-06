@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "946782241469",
+    "project_id": "iyodriver-7217d",
+    "storage_bucket": "iyodriver-7217d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:946782241469:android:d16297a806af708b106dd4",
+        "android_client_info": {
+          "package_name": "com.iyodriver.driver"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD39qlc9jO46LgO6YMk7kPxB3myjRmAGNA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:946782241469:android:72cc95548b84db74106dd4",
+        "android_client_info": {
+          "package_name": "com.iyodriver.rider"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD39qlc9jO46LgO6YMk7kPxB3myjRmAGNA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

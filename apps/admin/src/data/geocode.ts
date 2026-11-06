@@ -1,5 +1,5 @@
 // Place search for the demo dashboard: OpenStreetMap's Nominatim (the same data as the map
-// tiles), limited to Cameroon. Searches run on Enter only, well within Nominatim's 1 request
+// tiles), limited to the Central African Republic and Cameroon. Searches run on Enter only, well within Nominatim's 1 request
 // per second policy. With Supabase the dashboard uses the places-autocomplete Edge Function.
 import type { Place } from './models';
 
@@ -19,7 +19,7 @@ export async function searchOsmPlaces(query: string, language: string): Promise<
   url.search = new URLSearchParams({
     q,
     format: 'jsonv2',
-    countrycodes: 'cm',
+    countrycodes: 'cf,cm',
     limit: '5',
     'accept-language': language,
   }).toString();
