@@ -108,7 +108,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ],
     );
     if (rent) {
-      final city = ref.watch(rentalDraftProvider).cityCode == 'yaounde' ? 'Yaoundé' : 'Douala';
+      final city = switch (ref.watch(rentalDraftProvider).cityCode) {
+        'douala' => 'Douala',
+        'yaounde' => 'Yaoundé',
+        _ => 'Bangui',
+      };
       return IyoScreenDefaults(
         blockGap: 14,
         child: IyoScreen(

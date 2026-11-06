@@ -93,6 +93,7 @@ class _DriverHomeScreenState extends ConsumerState<DriverHomeScreen> {
         GoOnlineResult.ok => null,
         GoOnlineResult.locationDenied => t.locationNeeded,
         GoOnlineResult.notApproved => t.reviewSubtitle,
+        GoOnlineResult.noVehicle => t.noActiveVehicle,
         GoOnlineResult.failed => t.errorGeneric,
       };
     });
@@ -315,9 +316,9 @@ class _RideRequestScreenState extends State<RideRequestScreen> with SingleTicker
           ],
           children: [
             DriverMap(
-              me: ride?.pickup.location ?? doualaDefault,
-              pickup: ride?.pickup.location ?? doualaDefault,
-              destination: ride?.dropoff.location ?? doualaDefault,
+              me: ride?.pickup.location ?? banguiDefault,
+              pickup: ride?.pickup.location ?? banguiDefault,
+              destination: ride?.dropoff.location ?? banguiDefault,
               height: 213,
             ),
             Row(

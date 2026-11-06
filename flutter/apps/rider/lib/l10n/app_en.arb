@@ -2,7 +2,7 @@
   "@@locale": "en",
   "placeholderFlowLabel": "Rider · 00",
   "placeholderTitle": "Your city. Your way.",
-  "placeholderSubtitle": "Rides and car rentals across Douala and Yaoundé.",
+  "placeholderSubtitle": "Rides and car rentals in Bangui.",
   "placeholderSampleFare": "Sample fare: {fare}",
   "@placeholderSampleFare": {
     "placeholders": {
@@ -11,7 +11,7 @@
       }
     }
   },
-  "placeholderSampleTime": "Local time (Douala): {time}",
+  "placeholderSampleTime": "Local time (Bangui): {time}",
   "@placeholderSampleTime": {
     "placeholders": {
       "time": {
@@ -584,7 +584,7 @@
   "locationDeniedTitle": "Location is off",
   "locationDeniedBody": "Allow location so drivers can find you, or type your pickup address.",
   "openSettings": "Open settings",
-  "searchPlaces": "Search a place in Douala or Yaoundé",
+  "searchPlaces": "Search a place in Bangui",
   "noPlacesFound": "No places found",
   "chooseTitle": "Choose a ride",
   "chooseSubtitle": "{distance} · about {minutes} min to {place}",
@@ -1191,7 +1191,7 @@
       }
     }
   },
-  "datesFootnote": "All times are local to Douala and Yaoundé. The return time must be after pickup. Late returns may incur an extra daily charge.",
+  "datesFootnote": "All times are local to Bangui. The return time must be after pickup. Late returns may incur an extra daily charge.",
   "continueDays": "Continue · {days}",
   "@continueDays": {
     "placeholders": {

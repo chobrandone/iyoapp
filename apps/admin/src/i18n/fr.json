@@ -1,5 +1,6 @@
 {
   "workspace": "ESPACE OPÉRATIONS",
+  "applicationNotSubmittedErr": "Ce chauffeur n’a pas encore soumis de dossier.",
   "cityLabel": "Bangui, République centrafricaine",
   "cityTimezone": "Bangui · WAT",
   "navOverview": "Vue d’ensemble",

@@ -82,16 +82,18 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
-        delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ];
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+    delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+  ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('en'), Locale('fr')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('en'),
+    Locale('fr')
+  ];
 
   /// No description provided for @placeholderFlowLabel.
   ///
@@ -108,7 +110,7 @@ abstract class AppLocalizations {
   /// No description provided for @placeholderSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Rides and car rentals across Douala and Yaoundé.'**
+  /// **'Rides and car rentals in Bangui.'**
   String get placeholderSubtitle;
 
   /// No description provided for @placeholderSampleFare.
@@ -120,7 +122,7 @@ abstract class AppLocalizations {
   /// No description provided for @placeholderSampleTime.
   ///
   /// In en, this message translates to:
-  /// **'Local time (Douala): {time}'**
+  /// **'Local time (Bangui): {time}'**
   String placeholderSampleTime(String time);
 
   /// No description provided for @placeholderSamplePhone.
@@ -1368,7 +1370,7 @@ abstract class AppLocalizations {
   /// No description provided for @searchPlaces.
   ///
   /// In en, this message translates to:
-  /// **'Search a place in Douala or Yaoundé'**
+  /// **'Search a place in Bangui'**
   String get searchPlaces;
 
   /// No description provided for @noPlacesFound.
@@ -2688,7 +2690,7 @@ abstract class AppLocalizations {
   /// No description provided for @datesFootnote.
   ///
   /// In en, this message translates to:
-  /// **'All times are local to Douala and Yaoundé. The return time must be after pickup. Late returns may incur an extra daily charge.'**
+  /// **'All times are local to Bangui. The return time must be after pickup. Late returns may incur an extra daily charge.'**
   String get datesFootnote;
 
   /// No description provided for @continueDays.
@@ -3320,18 +3322,18 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
+
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'en':
-      return AppLocalizationsEn();
-    case 'fr':
-      return AppLocalizationsFr();
+    case 'en': return AppLocalizationsEn();
+    case 'fr': return AppLocalizationsFr();
   }
 
   throw FlutterError(
     'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
     'an issue with the localizations generation tool. Please file an issue '
     'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.',
+    'that was used.'
   );
 }

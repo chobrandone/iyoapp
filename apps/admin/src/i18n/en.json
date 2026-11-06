@@ -1,5 +1,6 @@
 {
   "workspace": "OPERATIONS WORKSPACE",
+  "applicationNotSubmittedErr": "This driver has not submitted an application yet.",
   "cityLabel": "Bangui, Central African Republic",
   "cityTimezone": "Bangui · WAT",
   "navOverview": "Overview",

@@ -4,6 +4,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../supabase/db_enums.dart';
@@ -511,11 +512,17 @@ class SupabaseBackend implements IyoBackend {
   }
 
   @override
-  Stream<DriverAccount> watchAccount() => _db
-      .from('driver_profiles')
-      .stream(primaryKey: ['user_id'])
-      .eq('user_id', _uid)
-      .asyncMap((_) => _loadAccount());
+  Stream<DriverAccount> watchAccount() async* {
+    // Read directly first: the router sends drivers to onboarding from this value, so it must
+    // not wait for Realtime, which can be slow to subscribe or fail altogether.
+    yield await _loadAccount();
+    yield* _db
+        .from('driver_profiles')
+        .stream(primaryKey: ['user_id'])
+        .eq('user_id', _uid)
+        .asyncMap((_) => _loadAccount())
+        .handleError((Object e) => debugPrint('Driver account updates stopped: $e'));
+  }
 
   @override
   Future<void> saveIdentity({

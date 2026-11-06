@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:iyo_core/iyo_core.dart';
 
-/// Douala (Akwa), used until the first fix arrives.
-const GeoPoint doualaDefault = GeoPoint(4.0483, 9.7008);
+/// Bangui city centre, used until the first fix arrives.
+const GeoPoint banguiDefault = GeoPoint(4.3733, 18.5628);
 
 @immutable
 class DriverPosition {
@@ -105,7 +105,7 @@ final driverLocationServiceProvider = Provider<DriverLocationService>((ref) {
 /// Last known driver position (for the map).
 class LastPosition extends Notifier<DriverPosition> {
   @override
-  DriverPosition build() => const DriverPosition(doualaDefault);
+  DriverPosition build() => const DriverPosition(banguiDefault);
 
   void set(DriverPosition p) => state = p;
 

@@ -22,8 +22,8 @@ class LocationUnavailable extends LocationState {
   final bool permanently;
 }
 
-/// Douala (Akwa) — used when location is unavailable.
-const GeoPoint doualaDefault = GeoPoint(4.0469, 9.6953);
+/// Bangui city centre — used when location is unavailable.
+const GeoPoint banguiDefault = GeoPoint(4.3733, 18.5628);
 
 class LocationController extends AsyncNotifier<LocationState> {
   @override

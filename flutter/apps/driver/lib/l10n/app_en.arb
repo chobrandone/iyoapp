@@ -3,7 +3,7 @@
   "placeholderBadge": "Driver",
   "placeholderFlowLabel": "Driver · 00",
   "placeholderTitle": "Drive with iyodriver. Earn on your schedule.",
-  "placeholderSubtitle": "Accept rides and rental handovers in Douala and Yaoundé.",
+  "placeholderSubtitle": "Accept rides and rental handovers in Bangui.",
   "placeholderSampleFare": "Today's earnings: {fare}",
   "@placeholderSampleFare": {
     "placeholders": {
@@ -12,7 +12,7 @@
       }
     }
   },
-  "placeholderSampleTime": "Local time (Douala): {time}",
+  "placeholderSampleTime": "Local time (Bangui): {time}",
   "@placeholderSampleTime": {
     "placeholders": {
       "time": {
@@ -48,7 +48,7 @@
   "welcomeHeroTitle": "Drive.\nEarn.",
   "welcomeBadge": "Rides + rental handovers",
   "welcomeHeadline": "Drive with iyodriver.\nEarn on your schedule.",
-  "welcomeBody": "Accept rides and rental handovers in Douala and Yaoundé, and get paid to your mobile money.",
+  "welcomeBody": "Accept rides and rental handovers in Bangui, and get paid to your mobile money.",
   "getStarted": "Get started",
   "alreadyDriver": "Already a driver?",
   "logIn": "Log in",
@@ -193,6 +193,7 @@
   "rating": "Rating",
   "lastTrips": "Last 100 trips",
   "locationNeeded": "Location is needed to go online",
+  "noActiveVehicle": "You need an approved vehicle to go online. Please contact support.",
   "locationNeededBody": "Allow location \"all the time\" so riders can find you while you are online.",
   "openSettings": "Open settings",
   "onlineNotificationTitle": "You're online",

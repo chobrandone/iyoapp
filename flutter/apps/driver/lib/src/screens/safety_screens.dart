@@ -179,7 +179,7 @@ class _IncidentReportScreenState extends ConsumerState<IncidentReportScreen> {
     final t = context.t;
     final position = ref.watch(lastPositionProvider);
     // The default point is a placeholder until the first GPS fix; never send it as a location.
-    final at = position.point == doualaDefault ? null : position.point;
+    final at = position.point == banguiDefault ? null : position.point;
     final numbers = ref.watch(emergencyNumbersProvider).value ?? defaultEmergencyNumbers;
     final police = _police(numbers);
     final about =

@@ -311,7 +311,11 @@ function ReviewPanel({ d }: { d: AdminDriver }) {
       invalidate: [keys.drivers, keys.overview],
       success: (a) =>
         a.approve ? t('approvedToast', { name: d.name }) : t('sentBackToast', { name: d.name }),
-      errors: { documents_rejected: t('documentsRejectedErr'), note_required: t('noteRequired') },
+      errors: {
+        application_not_submitted: t('applicationNotSubmittedErr'),
+        documents_rejected: t('documentsRejectedErr'),
+        note_required: t('noteRequired'),
+      },
     },
   );
   const open = async (x: AdminDocument) => {
@@ -417,7 +421,7 @@ function ReviewPanel({ d }: { d: AdminDriver }) {
         tone="primary"
         block
         loading={decide.isPending && decide.variables?.approve}
-        disabled={d.status === 'approved' || decide.isPending}
+        disabled={d.status !== 'under_review' || decide.isPending}
         onClick={() => decide.mutate({ approve: true })}
       >
         {t('approveApplication')}

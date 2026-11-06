@@ -41,7 +41,11 @@ final chatProvider = StreamProvider.family<List<ChatEntry>, String>(
 );
 
 final driverAccountProvider = StreamProvider<DriverAccount>(
-  (ref) => ref.watch(backendProvider).watchAccount(),
+  (ref) {
+    // Reload when a different driver signs in on this phone.
+    ref.watch(profileProvider.select((p) => p.value?.id));
+    return ref.watch(backendProvider).watchAccount();
+  },
 );
 final driverOnlineProvider = StreamProvider<bool>(
   (ref) => ref.watch(backendProvider).watchOnline(),

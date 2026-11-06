@@ -4,7 +4,7 @@ import 'package:iyo_core/iyo_core.dart';
 import 'driver_location.dart';
 
 /// Result of trying to go online.
-enum GoOnlineResult { ok, locationDenied, notApproved, failed }
+enum GoOnlineResult { ok, locationDenied, notApproved, noVehicle, failed }
 
 /// Coordinates the online switch with location streaming. While online the app sends its
 /// position every 5 s (3 s on a trip); going offline stops all tracking (spec §7).
@@ -29,7 +29,11 @@ class OnlineController extends Notifier<bool> {
       _stream(const Duration(seconds: 5), notificationTitle, notificationBody);
       return GoOnlineResult.ok;
     } on BackendException catch (e) {
-      return e.code == 'driver_not_approved' ? GoOnlineResult.notApproved : GoOnlineResult.failed;
+      return switch (e.code) {
+        'driver_not_approved' => GoOnlineResult.notApproved,
+        'no_active_vehicle' => GoOnlineResult.noVehicle,
+        _ => GoOnlineResult.failed,
+      };
     } finally {
       state = false;
     }

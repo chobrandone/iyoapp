@@ -18,7 +18,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get placeholderTitle => 'Conduisez avec iyodriver. Gagnez à votre rythme.';
 
   @override
-  String get placeholderSubtitle => 'Acceptez des courses et des remises de véhicules à Douala et Yaoundé.';
+  String get placeholderSubtitle => 'Acceptez des courses et des remises de véhicules à Bangui.';
 
   @override
   String placeholderSampleFare(String fare) {
@@ -27,7 +27,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String placeholderSampleTime(String time) {
-    return 'Heure locale (Douala) : $time';
+    return 'Heure locale (Bangui) : $time';
   }
 
   @override
@@ -77,7 +77,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get welcomeHeadline => 'Conduisez avec iyodriver.\nGagnez à votre rythme.';
 
   @override
-  String get welcomeBody => 'Acceptez des courses et des remises de véhicules à Douala et Yaoundé, payées sur votre mobile money.';
+  String get welcomeBody => 'Acceptez des courses et des remises de véhicules à Bangui, payées sur votre mobile money.';
 
   @override
   String get getStarted => 'Commencer';
@@ -355,6 +355,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get locationNeeded => 'La localisation est nécessaire pour passer en ligne';
+
+  @override
+  String get noActiveVehicle => 'Il vous faut un véhicule approuvé pour passer en ligne. Contactez le support.';
 
   @override
   String get locationNeededBody => 'Autorisez la localisation « tout le temps » pour que les passagers vous trouvent en ligne.';

@@ -709,6 +709,7 @@ export class DemoAdminBackend implements AdminRepository {
     if (!d.approve && !d.note?.trim()) throw new BackendError('note_required');
     const docs = { ...driver.documents };
     if (d.approve) {
+      if (driver.status !== 'under_review') throw new BackendError('application_not_submitted');
       if (Object.values(docs).some((x) => x?.status === 'rejected')) {
         throw new BackendError('documents_rejected');
       }

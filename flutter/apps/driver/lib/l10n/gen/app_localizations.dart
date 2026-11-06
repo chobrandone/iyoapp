@@ -116,7 +116,7 @@ abstract class AppLocalizations {
   /// No description provided for @placeholderSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Accept rides and rental handovers in Douala and Yaoundé.'**
+  /// **'Accept rides and rental handovers in Bangui.'**
   String get placeholderSubtitle;
 
   /// No description provided for @placeholderSampleFare.
@@ -128,7 +128,7 @@ abstract class AppLocalizations {
   /// No description provided for @placeholderSampleTime.
   ///
   /// In en, this message translates to:
-  /// **'Local time (Douala): {time}'**
+  /// **'Local time (Bangui): {time}'**
   String placeholderSampleTime(String time);
 
   /// No description provided for @placeholderSamplePhone.
@@ -218,7 +218,7 @@ abstract class AppLocalizations {
   /// No description provided for @welcomeBody.
   ///
   /// In en, this message translates to:
-  /// **'Accept rides and rental handovers in Douala and Yaoundé, and get paid to your mobile money.'**
+  /// **'Accept rides and rental handovers in Bangui, and get paid to your mobile money.'**
   String get welcomeBody;
 
   /// No description provided for @getStarted.
@@ -730,6 +730,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Location is needed to go online'**
   String get locationNeeded;
+
+  /// No description provided for @noActiveVehicle.
+  ///
+  /// In en, this message translates to:
+  /// **'You need an approved vehicle to go online. Please contact support.'**
+  String get noActiveVehicle;
 
   /// No description provided for @locationNeededBody.
   ///
